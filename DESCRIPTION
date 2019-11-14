@@ -18,6 +18,8 @@ Depends:
 Imports:
     dccvalidator,
     synapser
+Suggests: 
+    testthat
 Remotes:
     Sage-Bionetworks/dccvalidator
 Encoding: UTF-8
