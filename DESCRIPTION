@@ -1,0 +1,24 @@
+Package: dccmonitor
+Title: Monitor Data Validation
+Version: 0.0.0.9000
+Authors@R: 
+    c(person(given = "Nicole",
+             family = "Kauer",
+             role = c("aut", "cre"),
+             email = "nicole.kauer@sagebase.org"),
+      person(given = "Sage Bionetworks",
+             role = "cph"))
+Maintainer: The package maintainer <nicole.kauer@sagebase.org>
+Description: Allows for monitoring of data uploaded via the
+    dccvalidator application. Functions for getting information
+    on the uploaded files, metadata validation status, and more.
+License: MIT + file LICENSE
+Depends:
+    R (>= 3.4)
+Imports:
+    dccvalidator,
+    synapser
+Remotes:
+    Sage-Bionetworks/dccvalidator
+Encoding: UTF-8
+LazyData: true
