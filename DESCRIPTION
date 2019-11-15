@@ -14,9 +14,9 @@ Description: Allows for monitoring of data uploaded via the
     on the uploaded files, metadata validation status, and more.
 License: MIT + file LICENSE
 Depends:
+    dccvalidator,
     R (>= 3.4)
 Imports:
-    dccvalidator,
     synapser
 Suggests: 
     testthat
