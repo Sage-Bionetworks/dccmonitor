@@ -1,3 +1,5 @@
 ^dccmonitor\.Rproj$
 ^\.Rproj\.user$
 ^LICENSE\.md$
+^renv$
+^renv\.lock$
