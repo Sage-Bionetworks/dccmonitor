@@ -1,0 +1,105 @@
+default:
+  parent: "syn20400157"
+  study_table: "syn11363298"
+  metadata_fileview: "syn21027019"
+  annotations_table: "syn10242922"
+  teams:
+    - "3320424"
+    - "273957"
+  templates:
+    manifest_template: "syn20820080"
+    individual_templates:
+      human: "syn12973254"
+      animal: "syn12973253"
+    biospecimen_templates:
+      general: "syn12973252"
+      drosophila: "syn20673251"
+    assay_templates:
+      rnaSeq: "syn12973256"
+  species_list:
+    - "mouse or other animal model"
+    - "human"
+    - "drosophila"
+  complete_columns:
+    manifest:
+      - "parent"
+    individual:
+      - "individualID"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+    assay:
+      - "specimenID"
+
+amp-ad:
+  parent: "syn20506363"
+  teams:
+    - "3320424"
+  templates:
+    assay_templates:
+      proteomics: "syn12973255"
+      single cell RNAseq: "syn21018360"
+      wholeGenomeSeq: "syn21018358"
+      wholeExomeSeq: "syn21078272"
+      NanoString: "syn21082744"
+  complete_columns:
+    manifest:
+      - "consortium"
+      - "study"
+      - "grant"
+      - "fileFormat"
+      - "parent"
+    individual:
+      - "individualID"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+    assay:
+      - "specimenID"
+
+pec:
+  parent: "syn20825282"
+  study_table: "syn20968992"
+  annotations_table: "syn20981788"
+  teams:
+    - "3323356"
+  templates:
+    manifest_template: "syn20782058"
+    individual_templates:
+      human: "syn20781820"
+      animal: "syn21053116"
+    biospecimen_templates:
+      general: "syn20768131"
+    assay_templates:
+      wholeGenomeSeq: "syn20980993"
+      rnaSeq: "syn20768650"
+      ATACSeq: "syn20768526"
+  species_list:
+    - "human"
+    - "animal model"
+  complete_columns:
+    manifest:
+      - "consortium"
+      - "study"
+      - "grant"
+      - "fileFormat"
+      - "parent"
+    individual:
+      - "individualID"
+      - "individualIdSource"
+      - "species"
+      - "reportedGender"
+      - "postmortem"
+      - "primaryDiagnosis"
+    biospecimen:
+      - "individualID"
+      - "specimenID"
+      - "organ"
+      - "tissue"
+      - "nucleicAcidSource"
+    assay:
+      - "specimenID"
+      - "platform"
+      - "libraryPrep"
+      - "libraryPreparationMethod"
+      - "runType"
