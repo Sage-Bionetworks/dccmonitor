@@ -18,10 +18,10 @@
     },
     "DT": {
       "Package": "DT",
-      "Version": "0.9",
+      "Version": "0.10",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "3713a75ea5f5bbc25579b20cbb7843f3"
+      "Hash": "546a6f7c1850ee0ca0ceba4d3616c2f6"
     },
     "MASS": {
       "Package": "MASS",
@@ -45,10 +45,10 @@
     },
     "R6": {
       "Package": "R6",
-      "Version": "2.4.0",
+      "Version": "2.4.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "92b50d943a7c76c67918c1e1beb68627"
+      "Hash": "32b894df8893259af194abdc2b1fc366"
     },
     "RColorBrewer": {
       "Package": "RColorBrewer",
@@ -59,10 +59,10 @@
     },
     "Rcpp": {
       "Package": "Rcpp",
-      "Version": "1.0.2",
+      "Version": "1.0.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "c25fa7d5684fa7001ddfea3755243975"
+      "Hash": "084336e3a1a0d358337525d7a394bb8b"
     },
     "askpass": {
       "Package": "askpass",
@@ -192,16 +192,16 @@
     },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.0.0.9006",
+      "Version": "0.0.0.9008",
       "Source": "GitHub",
-      "Remotes": "hadley/emo, Sage-Bionetworks/syndccutils/R",
+      "Remotes": "daattali/shinyjs, hadley/emo, Sage-Bionetworks/syndccutils/R",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "dccvalidator",
       "RemoteUsername": "Sage-Bionetworks",
       "RemoteRef": "master",
-      "RemoteSha": "cc2758de1892efd468a34f2d8633ac621577d89b",
-      "Hash": "58be754a01b198c9e61d40f6b0441b37"
+      "RemoteSha": "52f8dc9ccec8ff6ad9ffebf63f9d4433ee62c703",
+      "Hash": "f82fd17a85980f17607965f227679355"
     },
     "desc": {
       "Package": "desc",
@@ -337,10 +337,10 @@
     },
     "hexbin": {
       "Package": "hexbin",
-      "Version": "1.27.3",
+      "Version": "1.28.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "dd1a219a8e8212b1808640670893274e"
+      "Hash": "d27f27c4a31f461e71807ea18d5cfe61"
     },
     "highr": {
       "Package": "highr",
@@ -400,10 +400,10 @@
     },
     "knitr": {
       "Package": "knitr",
-      "Version": "1.25",
+      "Version": "1.26",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "33a3a009f5e7c3606d6851692bf703d9"
+      "Hash": "4a9bc248b52335212d8d36f9a4c6a6f0"
     },
     "labeling": {
       "Package": "labeling",
@@ -564,10 +564,15 @@
     },
     "plotly": {
       "Package": "plotly",
-      "Version": "4.9.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "637807e01b470d5a425c24aa7a33e63f"
+      "Version": "4.9.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteUsername": "ropensci",
+      "RemoteRepo": "plotly",
+      "RemoteRef": "master",
+      "RemoteSha": "006b69a5d092479878c60dda1caf999e2091a721",
+      "RemoteHost": "api.github.com",
+      "Hash": "6e0adffdaabec88cd3b5d93e3b02e13c"
     },
     "plyr": {
       "Package": "plyr",
@@ -648,10 +653,15 @@
     },
     "remotes": {
       "Package": "remotes",
-      "Version": "2.1.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "830aa73278dce9beba583bfe57a5c015"
+      "Version": "2.1.0.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "r-lib",
+      "RemoteRepo": "remotes",
+      "RemoteRef": "master",
+      "RemoteSha": "b9b9aa043f30e090a471560c16707855c2a10bce",
+      "Hash": "52f1066335265c7f28cf3bddb5abc5a2"
     },
     "renv": {
       "Package": "renv",
@@ -711,10 +721,10 @@
     },
     "rvest": {
       "Package": "rvest",
-      "Version": "0.3.4",
+      "Version": "0.3.5",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "76bb112bc3833454dc701230aa9cb3ed"
+      "Hash": "d2fec753d468d89309996067fb89e09d"
     },
     "scales": {
       "Package": "scales",
@@ -760,8 +770,8 @@
       "RemoteRepo": "shinyjs",
       "RemoteUsername": "daattali",
       "RemoteRef": "master",
-      "RemoteSha": "35b3efd9136fa7d1ecbde9d7629eb6abf69f275a",
-      "Hash": "e0bccbc792de429165365179d4924e52"
+      "RemoteSha": "6b21ff72dedbea29ee24cee90e96db530dc7bfd1",
+      "Hash": "5d9867679cf81a08c345e5570f73e902"
     },
     "skimr": {
       "Package": "skimr",
@@ -807,9 +817,9 @@
       "RemoteRepo": "syndccutils",
       "RemoteUsername": "Sage-Bionetworks",
       "RemoteRef": "master",
-      "RemoteSha": "550b4c0839457e3a48ff72636e028a9611065e5c",
+      "RemoteSha": "c0bef72a2a0d8cbdcc028e08dc835c177c000239",
       "RemoteSubdir": "R",
-      "Hash": "c0b54cfbfedd110dc18bd3400bae3138"
+      "Hash": "f8e9d4c30cdd8fcc7a60afc922aac454"
     },
     "sys": {
       "Package": "sys",
@@ -897,10 +907,10 @@
     },
     "xfun": {
       "Package": "xfun",
-      "Version": "0.10",
+      "Version": "0.11",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "b22f06440a75a69aa0c6c04cf5278d83"
+      "Hash": "7d51266ba491e922f72026a90552378b"
     },
     "xml2": {
       "Package": "xml2",
