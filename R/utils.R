@@ -72,3 +72,37 @@ get_template <- function(metadata_type, species = NA, assay_type = NA) {
   )
   template
 }
+
+#' Get the number of metadata files
+#'
+#' Get the number of metadata files in a study.
+#'
+#' @param study_view The file view for the study files.
+#'   At minimum, the study_view is a dataframe or tibble
+#'   with `metadataType` as a column name. Any `NA` in
+#'   this column is assumed to be documentation files,
+#'   all others are assumed to be metadata files.
+#' @param num_docs Number of document files that are in
+#'   the `study_view`. If `NULL`, will call
+#'   `num_doc_files()` to get the value. This is here in case
+#'   that the number of document files is known already.
+#' @return The number of metadata files present in the `study_view`.
+num_meta_files <- function(study_view, num_docs = NULL) {
+  if (is.null(num_docs)) {
+    num_docs <- num_doc_files(study_view)
+  }
+  num_files <- nrow(study_view) - num_docs
+  num_files
+}
+
+#' Get the number of documentation files
+#'
+#' Get the number of documentation files in a study.
+#'
+#' @inheritParams num_meta_files
+#' @return The number of documentation files present in
+#'   the `study_view`.
+num_doc_files <- function(study_view) {
+  num_docs <- sum(is.na(study_view$metadataType))
+  num_docs
+}
