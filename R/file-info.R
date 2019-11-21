@@ -60,7 +60,7 @@ get_user_name <- function(user_id) {
 #'
 #' Format a date to be readable and print nicely.
 #'
-#' @param date Date in...
+#' @param date POSIX date.
 #' @return Date as a string.
 format_date <- function(date) {
   as.character(date, format = "%Y-%m-%d %H:%M:%S", usetz = TRUE)

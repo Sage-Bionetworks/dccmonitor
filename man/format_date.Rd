@@ -7,7 +7,7 @@
 format_date(date)
 }
 \arguments{
-\item{date}{Date in...}
+\item{date}{POSIX date.}
 }
 \value{
 Date as a string.
