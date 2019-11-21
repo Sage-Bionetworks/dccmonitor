@@ -30,4 +30,7 @@ main <- function() {
   fileview <- get_all_file_data(fileview)
   # Runs checks on all files within all studies
   fileview <- validate_all_studies(fileview, annotations)
+
+  # Get a table with file information for printing
+  file_info_table <- create_info_table(fileview)
 }
