@@ -10,6 +10,10 @@ get_all_file_templates(fileview)
 \item{fileview}{Tibble with columns 'metadataType', 'species',
 and 'assay', at minimum, and one row per file.}
 }
+\value{
+Original tibble with extra column 'template',
+  holding the template synId for each file.
+}
 \description{
 Gathers all the template synIds from the config file for each file
 and attaches to table as a new column.
