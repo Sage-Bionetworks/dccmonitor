@@ -6,7 +6,7 @@
 #' @param fileview Tibble with columns 'id' and 'metadataType',
 #'   at minimum, and one row per file. 'id' is the synId
 #'   for the file.
-#' @returns Original tibble with extra column 'file_data' of
+#' @return Original tibble with extra column 'file_data' of
 #'   tibbles, holding the data from each file.
 get_all_file_data <- function(fileview) {
   data <- purrr::map2(
@@ -27,7 +27,7 @@ get_all_file_data <- function(fileview) {
 #'
 #' @param fileview Tibble with columns 'metadataType', 'species',
 #'   and 'assay', at minimum, and one row per file.
-#' @returns Original tibble with extra column 'template',
+#' @return Original tibble with extra column 'template',
 #'   holding the template synId for each file.
 get_all_file_templates <- function(fileview) {
   fileview <- tibble::add_column(fileview, template = NA)

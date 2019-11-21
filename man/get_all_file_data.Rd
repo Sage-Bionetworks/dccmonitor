@@ -11,6 +11,10 @@ get_all_file_data(fileview)
 at minimum, and one row per file. 'id' is the synId
 for the file.}
 }
+\value{
+Original tibble with extra column 'file_data' of
+  tibbles, holding the data from each file.
+}
 \description{
 Downloads all the file data and attaches
 to table as a tibble column.

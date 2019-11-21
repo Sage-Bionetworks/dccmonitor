@@ -68,7 +68,7 @@ validate_study <- function(study_table, annotations) {
         assay_biosp_ids <- dccvalidator::check_specimen_ids_match(
           study_table$file_data[[assay_index]],
           study_table$file_data[[
-            which(study_table$metadataType == "biospecimen")
+          which(study_table$metadataType == "biospecimen")
           ]],
           "assay",
           "biospecimen",
@@ -88,7 +88,7 @@ validate_study <- function(study_table, annotations) {
         biosp_manifest_ids <- dccvalidator::check_specimen_ids_match(
           study_table$file_data[[biosp_index]],
           study_table$file_data[[
-            which(study_table$metadataType == "manifest")
+          which(study_table$metadataType == "manifest")
           ]],
           "biospecimen",
           "manifest",
@@ -111,7 +111,7 @@ validate_study <- function(study_table, annotations) {
         indiv_manifest_ids <- dccvalidator::check_indiv_ids_match(
           study_table$file_data[[indiv_index]],
           study_table$file_data[[
-            which(study_table$metadataType == "manifest")
+          which(study_table$metadataType == "manifest")
           ]],
           "individual",
           "manifest",
@@ -126,7 +126,7 @@ validate_study <- function(study_table, annotations) {
         indiv_biosp_ids <- dccvalidator::check_indiv_ids_match(
           study_table$file_data[[indiv_index]],
           study_table$file_data[[
-            which(study_table$metadataType == "biospecimen")
+          which(study_table$metadataType == "biospecimen")
           ]],
           "individual",
           "biospecimen",
