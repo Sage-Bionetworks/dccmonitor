@@ -95,6 +95,24 @@ num_meta_files <- function(study_view, num_docs = NULL) {
   num_files
 }
 
+#' Get number of files in manifest
+#'
+#' Get the number of unique files in manifest.
+#'
+#' @inheritParams num_individuals
+#' @return The number of unique files in manifest or
+#'   0 if the  manifest is not in the `study_view`.
+num_manifest_files <- function(study_view) {
+  file_index <- get_file_indices(study_view, "manifest")[[1]]
+  if (length(file_index) > 0) {
+    # Manifest file should exist in set
+    num_files <- length(unique(study_view$file_data[[file_index]]$path))
+  } else {
+    num_files <- 0
+  }
+  num_files
+}
+
 #' Get the number of documentation files
 #'
 #' Get the number of documentation files in a study.
