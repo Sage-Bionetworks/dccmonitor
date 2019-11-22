@@ -7,8 +7,10 @@
 validate_study(study_table, annotations)
 }
 \arguments{
-\item{study_table}{Dataframe with fileview information for
-a single study.}
+\item{study_table}{Tibble with fileview information for
+a single study. Expected columns are: 'metadataType',
+'file_data' (tibble column with data for each file), assay,
+species.}
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: key, value, and columnType.}

@@ -34,8 +34,10 @@ validate_all_studies <- function(fileview, annotations) {
 #' to the study_table in a new 'results' column. The results
 #' are in list form with specific names for the tests.
 #'
-#' @param study_table Dataframe with fileview information for
-#'   a single study.
+#' @param study_table Tibble with fileview information for
+#'   a single study. Expected columns are: 'metadataType',
+#'   'file_data' (tibble column with data for each file), assay,
+#'   species.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
 #' @return study_table with a new column, 'results', that holds the
@@ -44,52 +46,44 @@ validate_study <- function(study_table, annotations) {
 
   # Add column to study_table for results lists
   study_table <- tibble::add_column(study_table, results = list(0))
-
+  study_meta_types <- study_table$metadataType[!is.na(study_table$metadataType)]
+  file_indices <- get_file_indices_named(study_table, study_meta_types)
   # Currently assuming only a single metadataType per study
-  for (type in study_table$metadataType) {
+  for (type in study_meta_types) {
     if (type == "manifest") {
-      # Must be NA, which is what the manifest should be
-      # Note that if more types come in, this would default incorrectly
-      manifest_index <- which(study_table$metadataType == "manifest")
       manifest_results <- validate_manifest(
-        study_table$file_data[[manifest_index]],
-        study_table$template[[manifest_index]],
+        study_table$file_data[[file_indices$manifest]],
+        study_table$template[[file_indices$manifest]],
         annotations = annotations
       )
-      study_table$results[[manifest_index]] <- I(manifest_results)
+      study_table$results[[file_indices$manifest]] <- I(manifest_results)
     } else if (type == "assay") {
-      assay_index <- which(study_table$metadataType == "assay")
       assay_results <- validate_assay_meta(
-        study_table$file_data[[assay_index]],
-        study_table$template[[assay_index]],
+        study_table$file_data[[file_indices$assay]],
+        study_table$template[[file_indices$assay]],
         annotations = annotations
       )
       if ("biospecimen" %in% study_table$metadataType) {
         assay_biosp_ids <- dccvalidator::check_specimen_ids_match(
-          study_table$file_data[[assay_index]],
-          study_table$file_data[[
-          which(study_table$metadataType == "biospecimen")
-          ]],
+          study_table$file_data[[file_indices$assay]],
+          study_table$file_data[[file_indices$biospecimen]],
           "assay",
           "biospecimen",
           bidirectional = FALSE
         )
         assay_results <- c(assay_results, assay_biosp_ids = assay_biosp_ids)
       }
-      study_table$results[[assay_index]] <- I(assay_results)
+      study_table$results[[file_indices$assay]] <- I(assay_results)
     } else if (type == "biospecimen") {
-      biosp_index <- which(study_table$metadataType == "biospecimen")
       biosp_results <- validate_biospecimen_meta(
-        study_table$file_data[[biosp_index]],
-        study_table$template[[biosp_index]],
+        study_table$file_data[[file_indices$biospecimen]],
+        study_table$template[[file_indices$biospecimen]],
         annotations
       )
       if ("manifest" %in% study_table$metadataType) {
         biosp_manifest_ids <- dccvalidator::check_specimen_ids_match(
-          study_table$file_data[[biosp_index]],
-          study_table$file_data[[
-          which(study_table$metadataType == "manifest")
-          ]],
+          study_table$file_data[[file_indices$biospecimen]],
+          study_table$file_data[[file_indices$manifest]],
           "biospecimen",
           "manifest",
           bidirectional = FALSE
@@ -99,20 +93,17 @@ validate_study <- function(study_table, annotations) {
           biosp_manifest_ids = biosp_manifest_ids
         )
       }
-      study_table$results[[biosp_index]] <- I(biosp_results)
+      study_table$results[[file_indices$biospecimen]] <- I(biosp_results)
     } else if (type == "individual") {
-      indiv_index <- which(study_table$metadataType == "individual")
       indiv_results <- validate_individual_meta(
-        study_table$file_data[[indiv_index]],
-        study_table$template[[indiv_index]],
+        study_table$file_data[[file_indices$individual]],
+        study_table$template[[file_indices$individual]],
         annotations
       )
       if ("manifest" %in% study_table$metadataType) {
         indiv_manifest_ids <- dccvalidator::check_indiv_ids_match(
-          study_table$file_data[[indiv_index]],
-          study_table$file_data[[
-          which(study_table$metadataType == "manifest")
-          ]],
+          study_table$file_data[[file_indices$individual]],
+          study_table$file_data[[file_indices$manifest]],
           "individual",
           "manifest",
           bidirectional = FALSE
@@ -124,10 +115,8 @@ validate_study <- function(study_table, annotations) {
       }
       if ("biospecimen" %in% study_table$metadataType) {
         indiv_biosp_ids <- dccvalidator::check_indiv_ids_match(
-          study_table$file_data[[indiv_index]],
-          study_table$file_data[[
-          which(study_table$metadataType == "biospecimen")
-          ]],
+          study_table$file_data[[file_indices$individual]],
+          study_table$file_data[[file_indices$biospecimen]],
           "individual",
           "biospecimen",
           bidirectional = FALSE
@@ -137,7 +126,7 @@ validate_study <- function(study_table, annotations) {
           indiv_biosp_ids = indiv_biosp_ids
         )
       }
-      study_table$results[[indiv_index]] <- I(indiv_results)
+      study_table$results[[file_indices$individual]] <- I(indiv_results)
     }
   }
   study_table
