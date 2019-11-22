@@ -20,9 +20,12 @@ Imports:
     config,
     dccvalidator,
     dplyr,
+    ggplot2,
     purrr,
+    skimr,
     synapser,
-    tibble
+    tibble,
+    visdat
 Suggests:
     lintr,
     testthat
