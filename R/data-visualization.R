@@ -43,7 +43,7 @@ data_summary <- function(data) {
 summarize_values <- function(values) {
   val_sum <- list()
   for (value in unique(values)) {
-    x_appeared <- length(which(values == value)) # nolint
+    x_appeared <- length(which(values == value))
     val_sum <- append(
       val_sum,
       glue::glue("{value} ({x_appeared})")
