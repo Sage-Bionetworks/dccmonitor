@@ -8,16 +8,23 @@
 #'   columns 'file_data', where each element is a tibble
 #'   with the data, and metadataType, where each element
 #'   is the metadataType for the file.
+#' @param meta_types List of metadata types to gather ids from.
+#'   Default is 'manifest', 'individual', and 'biospecimen'.
 #' @return Number of unique individual ids or 0 if no metadataTypes
 #'   individual, biospecimen, manifest exist in `study_view`.
-num_individuals <- function(study_view) {
-  files_of_interest <- c("manifest", "individual", "biospecimen")
-  file_indices <- get_file_indices(study_view, files_of_interest)
+num_individuals <- function(study_view,
+                            meta_types = c("manifest", "individual", "biospecimen")) { # nolint
+  file_indices <- get_file_indices_vector(study_view, meta_types)
 
   if (!is.null(file_indices)) {
     individuals <- list()
     for (index in file_indices) {
-      individuals <- c(individuals, study_view$file_data[[index]]$individualID)
+      if ("individualID" %in% names(study_view$file_data[[index]])) {
+        individuals <- c(
+          individuals,
+          study_view$file_data[[index]]$individualID
+        )
+      }
     }
     num_individuals <- length(unique(individuals))
   } else {
@@ -33,16 +40,20 @@ num_individuals <- function(study_view) {
 #' biospecimen metadata, and assay metadata.
 #'
 #' @inheritParams num_individuals
+#' @param meta_types List of metadata types to gather ids from.
+#'   Default is 'manifest', 'assay', and 'biospecimen'.
 #' @return Number of unique specimen ids or 0 if no metadataTypes
 #'   manifest, biospecimen, assay exist in `study_view`.
-num_specimens <- function(study_view) {
-  files_of_interest <- c("manifest", "biospecimen", "assay")
-  file_indices <- get_file_indices(study_view, files_of_interest)
+num_specimens <- function(study_view,
+                          meta_types = c("manifest", "biospecimen", "assay")) { # nolint
+  file_indices <- get_file_indices_vector(study_view, meta_types)
 
   if (!is.null(file_indices)) {
     specimens <- list()
     for (index in file_indices) {
-      specimens <- c(specimens, study_view$file_data[[index]]$specimenID)
+      if ("specimenID" %in% names(study_view$file_data[[index]])) {
+        specimens <- c(specimens, study_view$file_data[[index]]$specimenID)
+      }
     }
     num_specimens <- length(unique(specimens))
   } else {

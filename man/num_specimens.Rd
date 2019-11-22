@@ -4,18 +4,24 @@
 \alias{num_specimens}
 \title{Get number of specimens}
 \usage{
-num_specimens(study_view)
+num_specimens(study_view, meta_types = c("manifest", "biospecimen",
+  "assay"))
 }
 \arguments{
 \item{study_view}{The file view for a study, with the
 columns 'file_data', where each element is a tibble
 with the data, and metadataType, where each element
 is the metadataType for the file.}
+
+\item{meta_types}{List of metadata types to gather ids from.
+Default is 'manifest', 'assay', and 'biospecimen'.}
 }
 \value{
-Number of unique specimen ids.
+Number of unique specimen ids or 0 if no metadataTypes
+  manifest, biospecimen, assay exist in `study_view`.
 }
 \description{
 Get the number of unique specimens for a study
-from the metadata files.
+from the metadata files. Checks for ids in the manifest,
+biospecimen metadata, and assay metadata.
 }

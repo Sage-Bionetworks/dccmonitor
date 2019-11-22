@@ -4,18 +4,24 @@
 \alias{num_individuals}
 \title{Get number of individuals}
 \usage{
-num_individuals(study_view)
+num_individuals(study_view, meta_types = c("manifest", "individual",
+  "biospecimen"))
 }
 \arguments{
 \item{study_view}{The file view for a study, with the
 columns 'file_data', where each element is a tibble
 with the data, and metadataType, where each element
 is the metadataType for the file.}
+
+\item{meta_types}{List of metadata types to gather ids from.
+Default is 'manifest', 'individual', and 'biospecimen'.}
 }
 \value{
-Number of unique individual ids.
+Number of unique individual ids or 0 if no metadataTypes
+  individual, biospecimen, manifest exist in `study_view`.
 }
 \description{
 Get the number of unique individuals for a study
-from the metadata files.
+from the metadata files. Checks for ids in the manifest,
+individual metadata, and biospecimen metadata.
 }
