@@ -14,8 +14,8 @@ get_template(metadata_type, species = NA, assay_type = NA)
 \item{assay_type}{The type of assay.}
 }
 \value{
-synId for the template in Synapse, or `NULL` if template
-  not found in config file.
+synId for the template in Synapse, `NULL` if template
+  not found in config file, or `NA` if `metadata_type` is `NA`.
 }
 \description{
 Gets the template synId from the config file.

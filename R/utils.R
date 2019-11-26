@@ -48,10 +48,12 @@ get_data <- function(id, meta_type) {
 #' @param metadata_type The metadata type.
 #' @param species The species.
 #' @param assay_type The type of assay.
-#' @return synId for the template in Synapse, or `NULL` if template
-#'   not found in config file.
+#' @return synId for the template in Synapse, `NULL` if template
+#'   not found in config file, or `NA` if `metadata_type` is `NA`.
 get_template <- function(metadata_type, species = NA, assay_type = NA) {
-  template <- NULL
+  if (is.na(metadata_type)) {
+    return(NA)
+  }
   template <- switch(
     metadata_type,
     manifest = config::get("templates")$manifest_template,

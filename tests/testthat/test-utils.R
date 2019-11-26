@@ -1,12 +1,15 @@
 context("utils.R")
 
 test_that("get_template returns NULL if template not in config", {
-  res1 <- get_template(metadata_type = NA)
-  res2 <- get_template(metadata_type = "individual")
-  res3 <- get_template(metadata_type = "assay")
+  res1 <- get_template(metadata_type = "individual")
+  res2 <- get_template(metadata_type = "assay")
   expect_null(res1)
   expect_null(res2)
-  expect_null(res3)
+})
+
+test_that("get_template returns NA if metadata_type is NA", {
+  res1 <- get_template(metadata_type = NA)
+  expect_equal(res1, NA)
 })
 
 test_that("get_template returns correct default template", {
