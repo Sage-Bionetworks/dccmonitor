@@ -6,6 +6,9 @@
 #'
 #' @param data Dataframe or tibble with file data.
 visualize_data_types <- function(data) {
+  if (!inherits(data, "tbl_df") && !inherits(data, "data.frame")) {
+    return(NULL)
+  }
   visdat::vis_dat(data) +
     ggplot2::theme(text = ggplot2::element_text(size = 16))
 }
@@ -21,12 +24,15 @@ visualize_data_types <- function(data) {
 #' @param data Dataframe or tibble with file data.
 #' @return Tibble with summary information.
 data_summary <- function(data) {
-  data_sum <- skimr::skim_to_wide(data)
+  if (!inherits(data, "tbl_df") && !inherits(data, "data.frame")) {
+    return(NULL)
+  }
+  data_sum <- tibble::as_tibble(skimr::skim_to_wide(data))
   data_sum <- tibble::add_column(data_sum, `value (# occurrences)` = NA)
   for (var in data_sum$variable) {
     var_col <- which(names(data) == var)
     data_sum$`value (# occurrences)`[data_sum$variable == var] <-
-      summarize_values(data[, var_col])
+      summarize_values(data[[var_col]])
   }
   data_sum
 }
@@ -41,6 +47,9 @@ data_summary <- function(data) {
 #'   where the value is given with the number of
 #'   occurrences in parenthesis.
 summarize_values <- function(values) {
+  if (is.null(values)) {
+    return(NULL)
+  }
   val_sum <- list()
   for (value in unique(values)) {
     x_appeared <- length(which(values == value))
