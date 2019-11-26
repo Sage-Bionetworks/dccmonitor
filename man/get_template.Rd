@@ -7,14 +7,15 @@
 get_template(metadata_type, species = NA, assay_type = NA)
 }
 \arguments{
-\item{metadata_type}{The metadata type, or NA for manifest.}
+\item{metadata_type}{The metadata type.}
 
 \item{species}{The species.}
 
 \item{assay_type}{The type of assay.}
 }
 \value{
-synId for the template in Synapse.
+synId for the template in Synapse, or `NULL` if template
+  not found in config file.
 }
 \description{
 Gets the template synId from the config file.

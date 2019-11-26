@@ -45,23 +45,25 @@ get_data <- function(id, meta_type) {
 #'
 #' Gets the template synId from the config file.
 #'
-#' @param metadata_type The metadata type, or NA for manifest.
+#' @param metadata_type The metadata type.
 #' @param species The species.
 #' @param assay_type The type of assay.
-#' @return synId for the template in Synapse.
+#' @return synId for the template in Synapse, or `NULL` if template
+#'   not found in config file.
 get_template <- function(metadata_type, species = NA, assay_type = NA) {
+  template <- NULL
   template <- switch(
     metadata_type,
     manifest = config::get("templates")$manifest_template,
     individual = {
-      if (species != "human") {
+      if (!is.na(species) && species != "human") {
         config::get("templates")$individual_templates[["animal"]]
       } else {
         config::get("templates")$individual_templates[[species]]
       }
     },
     biospecimen = {
-      if (species != "drosophila") {
+      if (!is.na(species) && species != "drosophila") {
         config::get("templates")$biospecimen_templates[["general"]]
       } else {
         config::get("templates")$biospecimen_templates[[species]]
