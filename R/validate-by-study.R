@@ -36,10 +36,10 @@ validate_all_studies <- function(fileview, annotations) {
 #'
 #' @param study_table Tibble with fileview information for
 #'   a single study. Expected columns are: 'metadataType',
-#'   'file_data' (tibble column with data for each file), assay,
-#'   species.
+#'   'file_data' (tibble column with data for each file), 'assay',
+#'   'species', and 'template'.
 #' @param annotations A data frame of annotation definitions.
-#'   Must contain at least three columns: key, value, and columnType.
+#'   Must contain at least three columns: 'key', 'value', and 'columnType'.
 #' @return study_table with a new column, 'results', that holds the
 #'   result lists for each file in the table.
 validate_study <- function(study_table, annotations) {
@@ -71,7 +71,7 @@ validate_study <- function(study_table, annotations) {
           "biospecimen",
           bidirectional = FALSE
         )
-        assay_results <- c(assay_results, assay_biosp_ids = assay_biosp_ids)
+        assay_results[["assay_biosp_ids"]] <- assay_biosp_ids
       }
       study_table$results[[file_indices$assay]] <- I(assay_results)
     } else if (type == "biospecimen") {
@@ -88,10 +88,7 @@ validate_study <- function(study_table, annotations) {
           "manifest",
           bidirectional = FALSE
         )
-        biosp_results <- c(
-          biosp_results,
-          biosp_manifest_ids = biosp_manifest_ids
-        )
+        biosp_results[["biosp_manifest_ids"]] <- biosp_manifest_ids
       }
       study_table$results[[file_indices$biospecimen]] <- I(biosp_results)
     } else if (type == "individual") {
@@ -108,10 +105,7 @@ validate_study <- function(study_table, annotations) {
           "manifest",
           bidirectional = FALSE
         )
-        indiv_results <- c(
-          indiv_results,
-          indiv_manifest_ids = indiv_manifest_ids
-        )
+        indiv_results[["indiv_manifest_ids"]] <- indiv_manifest_ids
       }
       if ("biospecimen" %in% study_table$metadataType) {
         indiv_biosp_ids <- dccvalidator::check_indiv_ids_match(
@@ -121,10 +115,7 @@ validate_study <- function(study_table, annotations) {
           "biospecimen",
           bidirectional = FALSE
         )
-        indiv_results <- c(
-          indiv_results,
-          indiv_biosp_ids = indiv_biosp_ids
-        )
+        indiv_results[["indiv_biosp_ids"]] <- indiv_biosp_ids
       }
       study_table$results[[file_indices$individual]] <- I(indiv_results)
     }
