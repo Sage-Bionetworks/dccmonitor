@@ -31,13 +31,7 @@ validate_manifest <- function(manifest, template, annotations) {
   )
   complete_cols_manifest <- dccvalidator::check_cols_complete(
     manifest,
-    required_cols = c(
-      "consortium",
-      "study",
-      "grant",
-      "fileFormat",
-      "parent"
-    ),
+    required_cols = config::get(required_cols$manifest),
     success_msg = "All required columns are complete in the manifest",
     fail_msg = "Some required columns are incomplete in the manifest"
   )
@@ -84,7 +78,7 @@ validate_assay_meta <- function(assay, template, annotations) {
   )
   complete_cols_assay <- dccvalidator::check_cols_complete(
     assay,
-    required_cols = c("specimenID"),
+    required_cols = config::get(required_cols$assay),
     success_msg = "All required columns are complete in the assay metadata", # nolint
     fail_msg = "Some required columns are incomplete in the assay metadata" # nolint
   )
@@ -131,7 +125,7 @@ validate_biospecimen_meta <- function(biospecimen, template, annotations) {
   )
   complete_cols_biosp <- dccvalidator::check_cols_complete(
     biospecimen,
-    required_cols = c("individualID", "specimenID"),
+    required_cols = config::get(required_cols$biospecimen),
     success_msg = "All required columns are complete in the biospecimen metadata", # nolint
     fail_msg = "Some required columns are incomplete in the biospecimen metadata" # nolint
   )
@@ -179,7 +173,7 @@ validate_individual_meta <- function(individual, template, annotations) {
   )
   complete_cols_indiv <- dccvalidator::check_cols_complete(
     individual,
-    required_cols = c("individualID"),
+    required_cols = config::get(required_cols$individual),
     success_msg = "All required columns are complete in the individual metadata", # nolint
     fail_msg = "Some required columns are incomplete in the individual metadata" # nolint
   )
