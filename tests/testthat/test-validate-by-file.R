@@ -1,5 +1,6 @@
 context("validate-by-file.R")
 
+# nolint start
 manifest <- tibble::tribble(
   ~path, ~parent, ~individualID, ~specimenID, ~isMultiSpecimen, ~isModelSystem, ~fileFormat, ~consortium, ~study, ~grant, ~resourceType, ~dataType, ~dataSubtype, ~metadataType, ~analysisType, ~assay,
   "/mypath/assay.csv", "syn499234", NA, NA, "False", "False", "csv", "AMP-AD", "ACT", "R21MH102791", NA, NA, NA, "assay", NA, "rnaSeq",
@@ -8,7 +9,7 @@ manifest <- tibble::tribble(
   "/mypath/a1.csv", "syn499234", "a", "a1", "False", "False", "raw", "AMP-AD", "ACT", "R21MH102791", "experimentalData", "proteomics", "dataMatrix", NA, "data normalization", NA,
   "/mypath/b1.csv", "syn499234", "b", "b1", "False", "False", "raw", "AMP-AD", "ACT", "R21MH102791", "experimentalData", "proteomics", "dataMatrix", NA, "data normalization", NA,
   "/mypath/c1.csv", "syn499234", "c", "c1", "False", "False", "raw", "AMP-AD", "ACT", "R21MH102791", "experimentalData", "proteomics", "dataMatrix", NA, "data normalization", NA,
-  "/mypath/d1.csv", "syn499234", "d", "d1", "False", "False", "raw", "AMP-AD", "ACT", "R21MH102791", "experimentalData", "proteomics", "dataMatrix", NA, 'data normalization', NA
+  "/mypath/d1.csv", "syn499234", "d", "d1", "False", "False", "raw", "AMP-AD", "ACT", "R21MH102791", "experimentalData", "proteomics", "dataMatrix", NA, "data normalization", NA
 )
 
 assay <- tibble::tribble(
@@ -24,7 +25,7 @@ individual <- tibble::tribble(
   "a", "NIMH-HBCC", "Human", "male", "white", "hispanic or latino", 12, 98, "a person", 2017, "sure", "T", 3, 4, "Alzheimer Disease", "DSMV", "age",
   "b", "NIMH-HBCC", "Human", "female", "american indian", "hispanic or latino", 12, 78, "a person", 2017, "sure", "F", 5, 5, "Alzheimer Disease", "DSMV", "age",
   "c", "NIMH-HBCC", "Human", "male", "american indian", "hispanic or latino", 14, 84, "a person", 2017, "sure", "T", 4, 3.5, "Alzheimer Disease", "DSMV", "age",
-  "d", "NIMH-HBCC", "Human", "female", "pacific islander", "not hispanic or latino", 13, 63 , "a person", 2017, "nope", "T", 3, 4, "Bipolar Disorder", "DSMV", "age"
+  "d", "NIMH-HBCC", "Human", "female", "pacific islander", "not hispanic or latino", 13, 63, "a person", 2017, "nope", "T", 3, 4, "Bipolar Disorder", "DSMV", "age"
 )
 
 biospecimen <- tibble::tribble(
@@ -34,6 +35,7 @@ biospecimen <- tibble::tribble(
   "c", "c1", "NIMH-HBCC", "3/6/2018", "brain", "middle frontal gyrus", "words", "done", 0.05, 3, "bulk cell", "CD138+", 0,
   "d", "d1", "NIMH-HBCC", "3/6/2018", "brain", "middle frontal gyrus", "words", "done", 0.1, 7, "bulk cell", "CD138+", 0
 )
+# nolint end
 
 manifest_template <- "syn20820080"
 assay_template <- "syn12973256"
@@ -82,7 +84,12 @@ test_that("validate_manifest() returns list of correct objects", {
   )
 
   expect_true(all(unlist(
-    purrr::map(res1, function(x){inherits(x, "check_pass")})
+    purrr::map(
+      res1,
+      function(x) {
+        inherits(x, "check_pass")
+      }
+    )
   )))
   expect_equal(
     unlist(purrr::map(
@@ -139,7 +146,12 @@ test_that("validate_assay_meta() returns list of correct objects", {
   )
 
   expect_true(all(unlist(
-    purrr::map(res1, function(x){inherits(x, "check_pass")})
+    purrr::map(
+      res1,
+      function(x) {
+        inherits(x, "check_pass")
+        }
+    )
   )))
   expect_equal(
     unlist(purrr::map(
@@ -196,7 +208,12 @@ test_that("validate_individual_meta() returns list of correct objects", {
   )
 
   expect_true(all(unlist(
-    purrr::map(res1, function(x){inherits(x, "check_pass")})
+    purrr::map(
+      res1,
+      function(x) {
+        inherits(x, "check_pass")
+      }
+    )
   )))
   expect_equal(
     unlist(purrr::map(
@@ -254,7 +271,12 @@ test_that("validate_biospecimen_meta() returns list of correct objects", {
   )
 
   expect_true(all(unlist(
-    purrr::map(res1, function(x){inherits(x, "check_pass")})
+    purrr::map(
+      res1,
+      function(x) {
+        inherits(x, "check_pass")
+      }
+    )
   )))
   expect_equal(
     unlist(purrr::map(

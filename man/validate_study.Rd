@@ -9,11 +9,11 @@ validate_study(study_table, annotations)
 \arguments{
 \item{study_table}{Tibble with fileview information for
 a single study. Expected columns are: 'metadataType',
-'file_data' (tibble column with data for each file), assay,
-species.}
+'file_data' (tibble column with data for each file), 'assay',
+'species', and 'template'.}
 
 \item{annotations}{A data frame of annotation definitions.
-Must contain at least three columns: key, value, and columnType.}
+Must contain at least three columns: 'key', 'value', and 'columnType'.}
 }
 \value{
 study_table with a new column, 'results', that holds the
