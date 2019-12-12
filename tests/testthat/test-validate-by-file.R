@@ -35,13 +35,6 @@ biospecimen <- tibble::tribble(
   "d", "d1", "NIMH-HBCC", "3/6/2018", "brain", "middle frontal gyrus", "words", "done", 0.1, 7, "bulk cell", "CD138+", 0
 )
 
-view <- tibble::tribble(
-  ~metadataType, ~species, ~assay, ~template, ~file_data,
-  "manifest", NA, NA, "syn20820080", manifest,
-  "assay", "human", "rnaSeq", "syn12973256", assay,
-  "individual", "human", NA, "syn12973254", individual,
-  "biospecimen", "human", NA, "syn12973252", biospecimen
-)
 manifest_template <- "syn20820080"
 assay_template <- "syn12973256"
 indiv_template <- "syn12973254"
