@@ -200,8 +200,8 @@
       "RemoteRepo": "dccvalidator",
       "RemoteUsername": "Sage-Bionetworks",
       "RemoteRef": "master",
-      "RemoteSha": "52f8dc9ccec8ff6ad9ffebf63f9d4433ee62c703",
-      "Hash": "f82fd17a85980f17607965f227679355"
+      "RemoteSha": "bdfd7ecd414a58b721e11d50521a41e031f7cdd2",
+      "Hash": "3332fc1d1da325bd73cf95f2e743a6a7"
     },
     "desc": {
       "Package": "desc",
@@ -686,17 +686,17 @@
     },
     "rlang": {
       "Package": "rlang",
-      "Version": "0.4.1",
+      "Version": "0.4.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "3be3097a603e8a51dae89c372b920f97"
+      "Hash": "d963fc6d77b53554f438d82ef8cbea62"
     },
     "roxygen2": {
       "Package": "roxygen2",
-      "Version": "6.1.1",
+      "Version": "7.0.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "5c44ac973ec9b56efd7990e4b4464699"
+      "Hash": "2170a321eb6f0ade69a006bf22c656c8"
     },
     "rprojroot": {
       "Package": "rprojroot",
@@ -753,6 +753,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "09a0b3f7981711a00dc2477a7abc59ab"
+    },
+    "shinyWidgets": {
+      "Package": "shinyWidgets",
+      "Version": "0.4.9",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "6eb4b77ae9434b562257d0e95f8a0091"
     },
     "shinydashboard": {
       "Package": "shinydashboard",
@@ -830,10 +837,10 @@
     },
     "testthat": {
       "Package": "testthat",
-      "Version": "2.3.0",
+      "Version": "2.3.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "546f9348ba728fc3844ac74aabcc7839"
+      "Hash": "4d84e1019512baaf629c87edfd270f22"
     },
     "tibble": {
       "Package": "tibble",

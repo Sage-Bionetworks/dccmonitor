@@ -1,7 +1,6 @@
 default:
-  parent: "syn20400157"
   study_table: "syn11363298"
-  metadata_fileview: "syn21027019"
+  consortium_fileview: "syn21027019"
   annotations_table: "syn10242922"
   teams:
     - "3320424"

@@ -1,0 +1,40 @@
+.placeholder {
+    color: #696969;
+}
+
+details {
+    margin-left: 40px;
+}
+
+.result {
+    display: flex;
+}
+
+.wide {
+    flex: auto;
+}
+
+.btn-loading-container {
+  margin-left: 10px;
+  font-size: 1.2em;
+}
+.btn-done-indicator {
+  color: green;
+}
+.btn-err {
+  margin-top: 10px;
+  color: red;
+}
+
+footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    color: #A9A9A9;
+    padding: 10px;
+    flex-shrink: 0;
+}
+
+summary {
+    display: list-item
+}
