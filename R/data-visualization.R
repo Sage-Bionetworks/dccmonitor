@@ -28,6 +28,18 @@ data_summary <- function(data) {
     return(NULL)
   }
   data_sum <- tibble::as_tibble(skimr::skim_to_wide(data))
+  # Cut out excess info from skimr results
+  data_sum <- data_sum[, c(
+    "type",
+    "variable",
+    "missing",
+    "complete",
+    "n",
+    "min",
+    "max",
+    "empty",
+    "n_unique"
+  )]
   data_sum <- tibble::add_column(data_sum, `value (# occurrences)` = NA)
   for (var in data_sum$variable) {
     var_col <- which(names(data) == var)

@@ -18,7 +18,7 @@ main <- function() {
   synapser::synLogin(silent = TRUE)
 
   # Get the metadata fileview in team directory & make into a dataframe
-  fileview_id <- config::get("metadata_fileview")
+  fileview_id <- config::get("consortium_fileview")
   fileview <- get_all_studies_table(fileview_id)
 
   # Download annotation definitions

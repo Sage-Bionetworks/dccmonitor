@@ -4,8 +4,10 @@
 \alias{num_individuals}
 \title{Get number of individuals}
 \usage{
-num_individuals(study_view, meta_types = c("manifest", "individual",
-  "biospecimen"))
+num_individuals(
+  study_view,
+  meta_types = c("manifest", "individual", "biospecimen")
+)
 }
 \arguments{
 \item{study_view}{The file view for a study, with the

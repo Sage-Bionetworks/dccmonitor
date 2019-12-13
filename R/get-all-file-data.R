@@ -32,11 +32,14 @@ get_all_file_data <- function(fileview) {
 get_all_file_templates <- function(fileview) {
   fileview <- tibble::add_column(fileview, template = NA)
   for (file_index in seq_len(nrow(fileview))) {
-    fileview$template[file_index] <- get_template(
+    template <- get_template(
       fileview$metadataType[file_index],
       fileview$species[file_index],
       fileview$assay[file_index]
     )
+    if (!is.na(template)) {
+      fileview$template[file_index] <- template
+    }
   }
   fileview
 }
