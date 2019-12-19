@@ -15,6 +15,7 @@ default:
       drosophila: "syn20673251"
     assay_templates:
       rnaSeq: "syn12973256"
+      proteomics: "syn12973255"
   species_list:
     - "mouse or other animal model"
     - "human"
@@ -32,6 +33,7 @@ default:
 
 amp-ad:
   parent: "syn20506363"
+  consortium_fileview: "syn21448475"
   teams:
     - "3320424"
   templates:
