@@ -1,6 +1,6 @@
-#' Get synapse fileview
+#' @title Get synapse fileview
 #'
-#' Download a synapse fileview and return as a tibble.
+#' @description Download a synapse fileview and return as a tibble.
 #'
 #' @param fileview_id The synId for the full metadata Fileview.
 #' @return Tibble with the Fileview information.
@@ -9,9 +9,66 @@ get_all_studies_table <- function(fileview_id) {
   tibble::as_tibble(syntable$asDataFrame())
 }
 
-#' Get data from file
+#' @title Get study table with most recent metadata files
 #'
-#' Downloads a synapse file and returns data inside as a tibble.
+#' @description Filter fileview to get study specific table
+#' with most recent metadata files. The table will have all
+#' documentation files, but will only keep the most
+#' recent version of files for the following metadata
+#' types: biospecimen, manifest, assay, individual.
+#'
+#' @param study The study name.
+#' @inheritParams get_all_file_templates
+filter_study_table_latest <- function(fileview, study) {
+  study_table <- fileview[which(fileview$study == study), ]
+  metadata_types <- unique(
+    study_table$metadataType[!is.na(study_table$metadataType)]
+  )
+  # Remove all "old" metadata files
+  for (type in metadata_types) {
+    file_indices <- get_file_indices_vector(study_table, type)
+    if (length(file_indices) > 1) {
+      times <- study_table$modifiedOn[file_indices]
+      times <- times[!is.na(times)]
+      most_recent_time <- get_most_recent_time(times)
+      to_remove <- intersect(
+        file_indices,
+        which(study_table$modifiedOn != most_recent_time)
+      )
+      if (length(to_remove) > 0) {
+        study_table <- study_table[-to_remove, ]
+      }
+    }
+  }
+  study_table
+}
+
+#' @title Get most recent time
+#'
+#' @description Get the most recent time from within
+#' a list of POSIX times.
+#'
+#' @param times Vector of POSIX times.
+#' @return The most recent time in `times`.
+get_most_recent_time <- function(times) {
+  if (length(times) <= 1) {
+    return(times)
+  }
+  most_recent <- times[1]
+  for (date_time in times) {
+    if (date_time > most_recent) {
+      most_recent <- date_time
+    }
+  }
+  # The date_time sometimes becomes "seconds since epoch"
+  # The origin date used here appears to be correct
+  as.POSIXct(most_recent, origin = "1970-01-01", tz = "UTC")
+}
+
+#' @title Get data from file
+#'
+#' @description Downloads a synapse file and returns data
+#' inside as a tibble.
 #'
 #' @param id The synId for the file.
 #' @param meta_type The metadata type of the file.
@@ -41,9 +98,9 @@ get_data <- function(id, meta_type) {
   return(tibble::as_tibble(data))
 }
 
-#' Gets the template synId
+#' @title Gets the template synId
 #'
-#' Gets the template synId from the config file.
+#' @description Gets the template synId from the config file.
 #'
 #' @param metadata_type The metadata type.
 #' @param species The species.
