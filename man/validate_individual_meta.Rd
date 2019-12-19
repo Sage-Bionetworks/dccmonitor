@@ -19,6 +19,6 @@ List of condition objects indicating whether the manifest
   has passed each validation check.
 }
 \description{
-Validates the individual metadata according to specific
-requirements and returns list of results.
+Validates the individual metadata according to
+specific requirements and returns list of results.
 }

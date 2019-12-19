@@ -1,6 +1,6 @@
-#' Validation of manifest
+#' @title Validation of manifest
 #'
-#' Validates the manifest according to specific
+#' @description Validates the manifest according to specific
 #' requirements and returns list of results.
 #'
 #' @param manifest Manifest data in dataframe.
@@ -47,9 +47,9 @@ validate_manifest <- function(manifest, template, annotations) {
   return(manifest_results)
 }
 
-#' Validation of assay metadata
+#' @title Validation of assay metadata
 #'
-#' Validates the assay metadata according to specific
+#' @description Validates the assay metadata according to specific
 #' requirements and returns list of results.
 #'
 #' @param assay Assay metadata in dataframe.
@@ -93,10 +93,10 @@ validate_assay_meta <- function(assay, template, annotations) {
   assay_results
 }
 
-#' Validation of biospecimen metadata
+#' @title Validation of biospecimen metadata
 #'
-#' Validates the biospecimen metadata according to specific
-#' requirements and returns list of results.
+#' @description Validates the biospecimen metadata according to
+#' specific requirements and returns list of results.
 #'
 #' @param biospecimen Biospecimen metadata in dataframe.
 #' @param annotations A data frame of annotation definitions.
@@ -141,10 +141,10 @@ validate_biospecimen_meta <- function(biospecimen, template, annotations) {
   biosp_results
 }
 
-#' Validation of individual metadata
+#' @title Validation of individual metadata
 #'
-#' Validates the individual metadata according to specific
-#' requirements and returns list of results.
+#' @description Validates the individual metadata according to
+#' specific requirements and returns list of results.
 #'
 #' @param individual Individual metadata in dataframe.
 #' @param annotations A data frame of annotation definitions.

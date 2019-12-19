@@ -18,5 +18,6 @@ The number of documentation files present in
   the `study_view`.
 }
 \description{
-Get the number of documentation files in a study.
+Get the number of documentation files
+in a study.
 }

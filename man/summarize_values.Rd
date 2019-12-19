@@ -15,6 +15,6 @@ String with the form "value1 (2), value2 (4)",
   occurrences in parenthesis.
 }
 \description{
-Get a list of values present and the number of times
-each variable appeared.
+Get a list of values present and
+the number of times each variable appeared.
 }

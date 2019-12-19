@@ -2,7 +2,7 @@
 % Please edit documentation in R/file-info-table.R
 \name{create_info_table}
 \alias{create_info_table}
-\title{Create a nice, printable version of the file information}
+\title{Create a nice, printable version of the file info}
 \usage{
 create_info_table(fileview)
 }

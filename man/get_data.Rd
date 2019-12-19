@@ -17,5 +17,6 @@ all other types currently assumed to be csv file.}
 Data from file in tibble.
 }
 \description{
-Downloads a synapse file and returns data inside as a tibble.
+Downloads a synapse file and returns data
+inside as a tibble.
 }

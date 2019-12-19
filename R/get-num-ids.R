@@ -1,6 +1,6 @@
-#' Get number of individuals
+#' @title Get number of individuals
 #'
-#' Get the number of unique individuals for a study
+#' @description Get the number of unique individuals for a study
 #' from the metadata files. Checks for ids in the manifest,
 #' individual metadata, and biospecimen metadata.
 #'
@@ -33,9 +33,9 @@ num_individuals <- function(study_view,
   num_individuals
 }
 
-#' Get number of specimens
+#' @title Get number of specimens
 #'
-#' Get the number of unique specimens for a study
+#' @description Get the number of unique specimens for a study
 #' from the metadata files. Checks for ids in the manifest,
 #' biospecimen metadata, and assay metadata.
 #'

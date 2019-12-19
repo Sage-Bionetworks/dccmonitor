@@ -1,6 +1,6 @@
-#' Visualize data types
+#' @title Visualize data types
 #'
-#' Visualize the data class types, including
+#' @description Visualize the data class types, including
 #' missing data, using the visdat and ggplot
 #' packages.
 #'
@@ -13,9 +13,9 @@ visualize_data_types <- function(data) {
     ggplot2::theme(text = ggplot2::element_text(size = 16))
 }
 
-#' Get summary of data
+#' @title Get summary of data
 #'
-#' Get a summary of the data using the skimr
+#' @description Get a summary of the data using the skimr
 #' package, along with a custom function that appends an
 #' extra column with a string showing each value for
 #' a given variable and the number of times the value
@@ -49,10 +49,10 @@ data_summary <- function(data) {
   data_sum
 }
 
-#' Summarize values present
+#' @title Summarize values present
 #'
-#' Get a list of values present and the number of times
-#' each variable appeared.
+#' @description Get a list of values present and
+#' the number of times each variable appeared.
 #'
 #' @param values The values to summarize in a list.
 #' @return String with the form "value1 (2), value2 (4)",

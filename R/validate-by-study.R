@@ -1,7 +1,7 @@
-#' Validate all studies
+#' @title Validate all studies
 #'
-#' Validate metadata and manifest files for every study in
-#' consortium. Returns the fileview table with a new 'results'
+#' @description Validate metadata and manifest files for every study
+#' in consortium. Returns the fileview table with a new 'results'
 #' column that contains a list of validation results for each
 #' file.
 #'
@@ -28,10 +28,10 @@ validate_all_studies <- function(fileview, annotations) {
   full_results
 }
 
-#' Validate a study
+#' @title Validate a study
 #'
-#' Run validation checks for a single study and appends the results
-#' to the study_table in a new 'results' column. The results
+#' @description Run validation checks for a single study and appends
+#' the results to the study_table in a new 'results' column. The results
 #' are in list form with specific names for the tests.
 #'
 #' @param study_table Tibble with fileview information for

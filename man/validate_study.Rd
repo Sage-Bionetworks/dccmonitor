@@ -20,7 +20,7 @@ study_table with a new column, 'results', that holds the
   result lists for each file in the table.
 }
 \description{
-Run validation checks for a single study and appends the results
-to the study_table in a new 'results' column. The results
+Run validation checks for a single study and appends
+the results to the study_table in a new 'results' column. The results
 are in list form with specific names for the tests.
 }

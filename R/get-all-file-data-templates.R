@@ -1,6 +1,6 @@
-#' Get data for all files in table
+#' @title Get data for all files in table
 #'
-#' Downloads all the file data and attaches
+#' @description Downloads all the file data and attaches
 #' to table as a tibble column.
 #'
 #' @param fileview Tibble with columns 'id' and 'metadataType',
@@ -24,10 +24,10 @@ get_all_file_data <- function(fileview) {
   fileview
 }
 
-#' Get the templates for all files in table
+#' @title Get the templates for all files in table
 #'
-#' Gathers all the template synIds from the config file for each file
-#' and attaches to table as a new column.
+#' @description Gathers all the template synIds from the config
+#' file for each file and attaches to table as a new column.
 #'
 #' @param fileview Tibble with columns 'metadataType', 'species',
 #'   and 'assay', at minimum, and one row per file.

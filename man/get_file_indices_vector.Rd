@@ -19,6 +19,6 @@ Vector of indices of `study_view` for which
   the metadataType exists; `NULL` if none exist.
 }
 \description{
-Get the file indices for `study_view` based on
-metadataType.
+Get the file indices for `study_view` based
+on metadataType.
 }

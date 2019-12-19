@@ -17,8 +17,8 @@ The fileview table with a new column, 'results', with
   a list of validation results for every file.
 }
 \description{
-Validate metadata and manifest files for every study in
-consortium. Returns the fileview table with a new 'results'
+Validate metadata and manifest files for every study
+in consortium. Returns the fileview table with a new 'results'
 column that contains a list of validation results for each
 file.
 }

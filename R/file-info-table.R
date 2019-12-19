@@ -1,6 +1,6 @@
-#' Create a nice, printable version of the file information
+#' @title Create a nice, printable version of the file info
 #'
-#' Uses the fileview to create a table of relevant
+#' @description Uses the fileview to create a table of relevant
 #' file information.
 #'
 #' @param fileview The fileview table. Assumes the following
@@ -45,9 +45,9 @@ create_info_table <- function(fileview) {
   info_table
 }
 
-#' Get the user name
+#' @title Get the user name
 #'
-#' Get the user name based on Synapse Id.
+#' @description Get the user name based on Synapse Id.
 #'
 #' @param user_id Synapse id as a string or number.
 #' @return User name as a string.
@@ -56,9 +56,9 @@ get_user_name <- function(user_id) {
   profile$userName
 }
 
-#' Format date
+#' @title Format date
 #'
-#' Format a date to be readable and print nicely.
+#' @description Format a date to be readable and print nicely.
 #'
 #' @param date POSIX date.
 #' @return Date as a string.
