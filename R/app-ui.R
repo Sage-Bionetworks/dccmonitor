@@ -17,7 +17,6 @@ app_ui <- function(request) {
     dashboardSidebar(
       sidebarMenu(
         menuItem("Validation Status", tabName = "validation")
-        #menuItem("Annotations", tabName = "annotations")
       )
     ),
 
@@ -34,10 +33,8 @@ app_ui <- function(request) {
           # Use shinyjs
           shinyjs::useShinyjs(),
 
-          ## Need to replace with appropriate code for creating these w/o forced names
-          study_overview_ui("WayCool"),
-          study_overview_ui("SuperCool"),
-          study_overview_ui("TotesCool")
+          # UI for all studies
+          uiOutput("all_studies")
         ),
         class = "tab-content"
       )
@@ -46,6 +43,7 @@ app_ui <- function(request) {
 }
 
 #' @import shiny
+#' @keywords internal
 golem_add_external_resources <- function() {
   addResourcePath(
     "www", system.file("app/www", package = "dccmonitor")

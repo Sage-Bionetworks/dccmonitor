@@ -1,4 +1,6 @@
-#' Run the Shiny application
+#' @title Run the Shiny application
+#'
+#' @description Run the Shiny application
 #'
 #' @param ... Additional golem options passed to [golem::with_golem_options()]
 #' @export

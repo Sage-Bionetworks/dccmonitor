@@ -1,10 +1,11 @@
-#' UI for the study overview module
+#' @title UI for the study overview module
 #'
-#' Creates the UI for the study overview module.
+#' @description Creates the UI for the study overview
+#' module.
 #'
 #' @param id Id for the module
 study_overview_ui <- function(id) {
-  ns = NS(id)
+  ns <- NS(id)
 
   tagList(
     div(
@@ -50,20 +51,21 @@ study_overview_ui <- function(id) {
   )
 }
 
-#' Server for the study overview module
+#' @title Server for the study overview module
 #'
-#' Server for the study overview module.
+#' @description Server for the study overview module.
 #'
 #' @inheritParams app_server
 #' @param fileview The fileview for a specific study.
 #' @param annotations A dataframe of annotation definitions.
-study_overview_server <- function(input, output, session, fileview, annotations) {
+study_overview_server <- function(input, output, session,
+                                  fileview, annotations) {
   session <- getDefaultReactiveDomain()
 
   stat_values <- reactiveValues(
     num_files = num_meta_files(fileview()),
     num_docs = num_doc_files(fileview()),
-    success_rate = 87
+    success_rate = 0
   )
 
   data <- reactiveValues(
@@ -73,8 +75,12 @@ study_overview_server <- function(input, output, session, fileview, annotations)
   observe({
     temp <- get_all_file_data(fileview())
     data$study_view <- validate_study(temp, annotations)
-    data$all_results <- purrr::flatten(data$study_view$results)
-    stat_values$success_rate <- percent_pass_validation(data$all_results)
+    data$all_results <- purrr::flatten(
+      data$study_view$results[which(!is.na(data$study_view$metadataType))]
+    )
+    if (length(data$all_results) > 0) {
+      stat_values$success_rate <- percent_pass_validation(data$all_results)
+    }
   })
 
   observe({
@@ -112,7 +118,11 @@ study_overview_server <- function(input, output, session, fileview, annotations)
       session = session,
       inputId = "file_to_summarize",
       label = "Choose file to view",
-      choices = unique(data$study_view$metadataType[!is.na(data$study_view$metadataType)])
+      choices = unique(
+        data$study_view$metadataType[
+          !is.na(data$study_view$metadataType)
+        ]
+      )
     )
 
     callModule(

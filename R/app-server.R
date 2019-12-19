@@ -33,42 +33,47 @@ app_server <- function(input, output, session) {
       user = user
     )
 
-
-    ## Need to use non-forced list of names
-    studynames <- c("WayCool", "TotesCool", "SuperCool")
+    # Download annotation definitions
+    annotations <- dccvalidator::get_synapse_annotations()
 
     # Should be in config
     fileview_id <- config::get("consortium_fileview")
     # Get the Fileview in team directory & make into a dataframe
     fileview <- get_all_studies_table(fileview_id)
     fileview <- get_all_file_templates(fileview)
-    view_waycool <- reactive({fileview[which(fileview$study == "WayCool"), ]})
-    view_supercool <- reactive({fileview[which(fileview$study == "SuperCool"), ]})
-    view_totescool <- reactive({fileview[which(fileview$study == "TotesCool"), ]})
 
-    # Download annotation definitions
-    annotations <- dccvalidator::get_synapse_annotations()
+    output$all_studies <- renderUI({
+      set_up_ui(fileview)
+    })
 
-    callModule(
-      study_overview_server,
-      "WayCool",
-      session = getDefaultReactiveDomain(),
-      fileview = view_waycool,
-      annotations = annotations
-    )
-    callModule(
-      study_overview_server,
-      "SuperCool",
-      session = getDefaultReactiveDomain(),
-      fileview = view_supercool,
-      annotations = annotations
-    )
-    callModule(
-      study_overview_server,
-      "TotesCool",
-      session = getDefaultReactiveDomain(),
-      fileview = view_totescool,
-      annotations = annotations
-    )
+    # Setup study server functions
+    studies <- unique(fileview$study)
+    for (study in studies) {
+      view <- reactive({
+        filter_study_table_latest(fileview, study)
+      })
+      callModule(
+        study_overview_server,
+        study,
+        session = getDefaultReactiveDomain(),
+        fileview = view,
+        annotations = annotations
+      )
+    }
   })
+}
+
+#' @title Setup UI for all studies
+#'
+#' @description Setup UI for all studies in the fileview.
+#'
+#' @param fileview A data frame with at least
+#'   one column, `study`.
+set_up_ui <- function(fileview) {
+  studies <- unique(fileview$study)
+  html_studies <- ""
+  for (study in studies) {
+    html_studies <- c(html_studies, study_overview_ui(study))
+  }
+  html_studies
 }
