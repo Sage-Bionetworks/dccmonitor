@@ -1,13 +1,14 @@
-#' Create a nice, printable version of the file information
+#' @title Create a nice, printable version of the file info
 #'
-#' Uses the fileview to create a table of relevant
+#' @description Uses the fileview to create a table of relevant
 #' file information.
 #'
 #' @param fileview The fileview table. Assumes the following
 #'   columns exist:
 #'     name, id, currentVersion, metadataType, species,
-#'     assay, createdBy, createdOn, modifiedOn
-create_info_table <- function(fileview) {
+#'     assay, createdBy, createdOn, modifiedOn.
+#' @param syn Synapse client object.
+create_info_table <- function(fileview, syn) {
   info_table <- fileview[, c(
     "name",
     "id",
@@ -20,11 +21,15 @@ create_info_table <- function(fileview) {
     "modifiedOn"
   )]
 
+  # Rename currentVersion to just version for better printing
+  names(info_table)[which(names(info_table) == "currentVersion")] <-
+    "version"
+
   # Give user name versus user id
   info_table$createdBy <- purrr::map( # nolint
     info_table$createdBy,
     function(x) {
-      get_user_name(x)
+      get_user_name(x, syn)
     }
   )
 
@@ -45,23 +50,28 @@ create_info_table <- function(fileview) {
   info_table
 }
 
-#' Get the user name
+#' @title Get the user name
 #'
-#' Get the user name based on Synapse Id.
+#' @description Get the user name based on Synapse Id.
 #'
 #' @param user_id Synapse id as a string or number.
+#' @param syn Synapse client object.
 #' @return User name as a string.
-get_user_name <- function(user_id) {
-  profile <- synapser::synGetUserProfile(as.character(user_id))
+get_user_name <- function(user_id, syn) {
+  profile <- syn$getUserProfile(as.character(user_id))
   profile$userName
 }
 
-#' Format date
+#' @title Format date
 #'
-#' Format a date to be readable and print nicely.
+#' @description Format a date to be readable and print nicely.
 #'
 #' @param date POSIX date.
 #' @return Date as a string.
 format_date <- function(date) {
-  as.character(date, format = "%Y-%m-%d %H:%M:%S", usetz = TRUE)
+  as.character(
+    as.POSIXlt(as.double(date / 1000), origin = "1970-01-01"),
+    format = "%Y-%m-%d %H:%M",
+    usetz = TRUE
+  )
 }

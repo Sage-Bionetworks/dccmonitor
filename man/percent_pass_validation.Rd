@@ -6,6 +6,11 @@
 \usage{
 percent_pass_validation(results)
 }
+\arguments{
+\item{results}{A list of `dccvalidator` results,
+which are of the type `check_pass`, `check_fail`,
+or `check_warn`.}
+}
 \value{
 Percent of validation checks passed, rounded
   to the nearest whole number.

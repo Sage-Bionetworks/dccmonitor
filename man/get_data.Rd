@@ -4,7 +4,7 @@
 \alias{get_data}
 \title{Get data from file}
 \usage{
-get_data(id, meta_type)
+get_data(id, meta_type, syn)
 }
 \arguments{
 \item{id}{The synId for the file.}
@@ -12,10 +12,13 @@ get_data(id, meta_type)
 \item{meta_type}{The metadata type of the file.
 "manifest" assumes tab-delimited text file;
 all other types currently assumed to be csv file.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 Data from file in tibble.
 }
 \description{
-Downloads a synapse file and returns data inside as a tibble.
+Downloads a synapse file and returns data
+inside as a tibble.
 }

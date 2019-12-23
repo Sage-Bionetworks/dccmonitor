@@ -1,19 +1,21 @@
-#' Validation of manifest
+#' @title Validation of manifest
 #'
-#' Validates the manifest according to specific
+#' @description Validates the manifest according to specific
 #' requirements and returns list of results.
 #'
 #' @param manifest Manifest data in dataframe.
 #' @param template The assay template.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
+#' @param syn Synapse client object.
 #' @return List of condition objects indicating whether the manifest
 #'   has passed each validation check.
-validate_manifest <- function(manifest, template, annotations) {
+validate_manifest <- function(manifest, template, annotations, syn) {
   # Do checks
   missing_cols_manifest <- dccvalidator::check_cols_manifest(
     manifest,
-    template
+    template,
+    syn = syn
   )
   annotation_keys_manifest <- dccvalidator::check_annotation_keys(
     manifest,
@@ -47,22 +49,24 @@ validate_manifest <- function(manifest, template, annotations) {
   return(manifest_results)
 }
 
-#' Validation of assay metadata
+#' @title Validation of assay metadata
 #'
-#' Validates the assay metadata according to specific
+#' @description Validates the assay metadata according to specific
 #' requirements and returns list of results.
 #'
 #' @param assay Assay metadata in dataframe.
 #' @param template The assay template.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
+#' @param syn Synapse client object.
 #' @return List of condition objects indicating whether the assay
 #'   has passed each validation check.
-validate_assay_meta <- function(assay, template, annotations) {
+validate_assay_meta <- function(assay, template, annotations, syn) {
   # Do checks
   missing_cols_assay <- dccvalidator::check_cols_assay(
     assay,
-    template
+    template,
+    syn = syn
   )
   annotation_values_assay <- dccvalidator::check_annotation_values(
     assay,
@@ -93,22 +97,24 @@ validate_assay_meta <- function(assay, template, annotations) {
   assay_results
 }
 
-#' Validation of biospecimen metadata
+#' @title Validation of biospecimen metadata
 #'
-#' Validates the biospecimen metadata according to specific
-#' requirements and returns list of results.
+#' @description Validates the biospecimen metadata according to
+#' specific requirements and returns list of results.
 #'
 #' @param biospecimen Biospecimen metadata in dataframe.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
 #' @param template The biospecimen template.
+#' @param syn Synapse client object.
 #' @return List of condition objects indicating whether the manifest
 #'   has passed each validation check.
-validate_biospecimen_meta <- function(biospecimen, template, annotations) {
+validate_biospecimen_meta <- function(biospecimen, template, annotations, syn) {
   # Do checks
   missing_cols_biosp <- dccvalidator::check_cols_biospecimen(
     biospecimen,
-    template
+    template,
+    syn = syn
   )
   annotation_values_biosp <- dccvalidator::check_annotation_values(
     biospecimen,
@@ -141,22 +147,25 @@ validate_biospecimen_meta <- function(biospecimen, template, annotations) {
   biosp_results
 }
 
-#' Validation of individual metadata
+#' @title Validation of individual metadata
 #'
-#' Validates the individual metadata according to specific
-#' requirements and returns list of results.
+#' @description Validates the individual metadata according to
+#' specific requirements and returns list of results.
 #'
 #' @param individual Individual metadata in dataframe.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
 #' @param template The individual template.
+#' @param syn Synapse client object.
 #' @return List of condition objects indicating whether the manifest
 #'   has passed each validation check.
-validate_individual_meta <- function(individual, template, annotations) {
+validate_individual_meta <- function(individual, template,
+                                     annotations, syn = syn) {
   # Do checks
   missing_cols_indiv <- dccvalidator::check_cols_individual(
     individual,
-    template
+    template,
+    syn = syn
   )
   annotation_values_indiv <- dccvalidator::check_annotation_values(
     individual,

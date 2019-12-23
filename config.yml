@@ -1,7 +1,6 @@
 default:
-  parent: "syn20400157"
   study_table: "syn11363298"
-  metadata_fileview: "syn21027019"
+  consortium_fileview: "syn21027019"
   annotations_table: "syn10242922"
   teams:
     - "3320424"
@@ -16,6 +15,7 @@ default:
       drosophila: "syn20673251"
     assay_templates:
       rnaSeq: "syn12973256"
+      proteomics: "syn12973255"
   species_list:
     - "mouse or other animal model"
     - "human"
@@ -33,6 +33,7 @@ default:
 
 amp-ad:
   parent: "syn20506363"
+  consortium_fileview: "syn21448475"
   teams:
     - "3320424"
   templates:
@@ -42,6 +43,8 @@ amp-ad:
       wholeGenomeSeq: "syn21018358"
       wholeExomeSeq: "syn21078272"
       NanoString: "syn21082744"
+      snpArray: "syn21372586"
+      TMT quantitation: "syn21433357"
   complete_columns:
     manifest:
       - "consortium"

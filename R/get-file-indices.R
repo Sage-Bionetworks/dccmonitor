@@ -1,8 +1,8 @@
-#' Get named file indices by metadataType
+#' @title Get named file indices by metadataType
 #'
-#' Get the file indices for `study_view` based on metadataType
-#' and return as list with file metadataType as name of the
-#' elements.
+#' @description Get the file indices for `study_view` based
+#' on metadataType and return as list with file metadataType
+#' as name of the elements.
 #'
 #' @export
 #' @inheritParams get_file_indices
@@ -13,10 +13,10 @@ get_file_indices_named <- function(study_view, meta_types) {
   file_indices
 }
 
-#' Get file indices by metadataType
+#' @title Get file indices by metadataType
 #'
-#' Get the file indices for `study_view` based on
-#' metadataType.
+#' @description Get the file indices for `study_view` based
+#' on metadataType.
 #'
 #' @export
 #' @inheritParams get_file_indices
@@ -28,10 +28,10 @@ get_file_indices_vector <- function(study_view, meta_types) {
   unlist(file_indices)
 }
 
-#' Get file indices by metadataType
+#' @title Get file indices by metadataType
 #'
-#' Get the file indices for `study_view` based on
-#' metadataType.
+#' @description Get the file indices for `study_view` based
+#' on metadataType.
 #'
 #' @inheritParams num_individuals
 #' @param meta_types List of metadataTypes.

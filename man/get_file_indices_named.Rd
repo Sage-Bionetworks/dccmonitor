@@ -19,7 +19,7 @@ Named list of indices from `study_view` for which
   the metadataType exists; `NULL` if none exist.
 }
 \description{
-Get the file indices for `study_view` based on metadataType
-and return as list with file metadataType as name of the
-elements.
+Get the file indices for `study_view` based
+on metadataType and return as list with file metadataType
+as name of the elements.
 }

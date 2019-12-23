@@ -4,7 +4,7 @@
 \alias{validate_individual_meta}
 \title{Validation of individual metadata}
 \usage{
-validate_individual_meta(individual, template, annotations)
+validate_individual_meta(individual, template, annotations, syn = syn)
 }
 \arguments{
 \item{individual}{Individual metadata in dataframe.}
@@ -13,12 +13,14 @@ validate_individual_meta(individual, template, annotations)
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: key, value, and columnType.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 List of condition objects indicating whether the manifest
   has passed each validation check.
 }
 \description{
-Validates the individual metadata according to specific
-requirements and returns list of results.
+Validates the individual metadata according to
+specific requirements and returns list of results.
 }

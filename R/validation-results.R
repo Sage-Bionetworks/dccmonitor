@@ -1,9 +1,11 @@
-#' Percent of passing validation results
+#' @title Percent of passing validation results
 #'
-#' Gives the overall percentage of validation
+#' @description Gives the overall percentage of validation
 #' results that are passing.
 #'
-#' @inheritParams results
+#' @param results A list of `dccvalidator` results,
+#'   which are of the type `check_pass`, `check_fail`,
+#'   or `check_warn`.
 #' @return Percent of validation checks passed, rounded
 #'   to the nearest whole number.
 percent_pass_validation <- function(results) {

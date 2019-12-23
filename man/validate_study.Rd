@@ -4,7 +4,7 @@
 \alias{validate_study}
 \title{Validate a study}
 \usage{
-validate_study(study_table, annotations)
+validate_study(study_table, annotations, syn)
 }
 \arguments{
 \item{study_table}{Tibble with fileview information for
@@ -14,13 +14,15 @@ a single study. Expected columns are: 'metadataType',
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: 'key', 'value', and 'columnType'.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 study_table with a new column, 'results', that holds the
   result lists for each file in the table.
 }
 \description{
-Run validation checks for a single study and appends the results
-to the study_table in a new 'results' column. The results
+Run validation checks for a single study and appends
+the results to the study_table in a new 'results' column. The results
 are in list form with specific names for the tests.
 }

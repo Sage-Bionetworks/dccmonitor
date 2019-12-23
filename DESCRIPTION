@@ -1,6 +1,6 @@
 Package: dccmonitor
 Title: Monitor Data Validation
-Version: 0.0.0.9000
+Version: 0.0.0.9004
 Authors@R: 
     c(person(given = "Nicole",
              family = "Kauer",
@@ -14,24 +14,27 @@ Description: Allows for monitoring of data uploaded via the
     on the uploaded files, metadata validation status, and more.
 License: MIT + file LICENSE
 Depends:
-    dccvalidator,
-    R (>= 3.4)
+    dccvalidator (>= 0.0.0.9009),
+    R (>= 3.4),
+    shinyBS
 Imports:
     config,
-    dccvalidator,
     dplyr,
     ggplot2,
+    golem,
     purrr,
+    reticulate,
+    shiny,
+    shinydashboard,
+    shinyjs (>= 1.0.1.9006),
     skimr,
-    synapser,
     tibble,
     visdat
 Suggests:
-    lintr,
+    devtools,
     testthat
 Remotes:
-    jimhester/lintr,
     Sage-Bionetworks/dccvalidator
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2

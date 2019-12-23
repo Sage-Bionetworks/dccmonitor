@@ -1,16 +1,17 @@
-#' Validate all studies
+#' @title Validate all studies
 #'
-#' Validate metadata and manifest files for every study in
-#' consortium. Returns the fileview table with a new 'results'
+#' @description Validate metadata and manifest files for every study
+#' in consortium. Returns the fileview table with a new 'results'
 #' column that contains a list of validation results for each
 #' file.
 #'
 #' @param fileview The fileview table.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
+#' @param syn Synapse client object.
 #' @return The fileview table with a new column, 'results', with
 #'   a list of validation results for every file.
-validate_all_studies <- function(fileview, annotations) {
+validate_all_studies <- function(fileview, annotations, syn) {
 
   # Get the list of study names
   study_names <- unique(fileview$study)
@@ -19,7 +20,7 @@ validate_all_studies <- function(fileview, annotations) {
   # Run validation checks on each set of study files
   for (name in study_names) {
     study_table <- fileview[fileview$study == name, ]
-    results <- validate_study(study_table, annotations)
+    results <- validate_study(study_table, annotations, syn)
     full_results <- rbind(
       full_results,
       results
@@ -28,10 +29,10 @@ validate_all_studies <- function(fileview, annotations) {
   full_results
 }
 
-#' Validate a study
+#' @title Validate a study
 #'
-#' Run validation checks for a single study and appends the results
-#' to the study_table in a new 'results' column. The results
+#' @description Run validation checks for a single study and appends
+#' the results to the study_table in a new 'results' column. The results
 #' are in list form with specific names for the tests.
 #'
 #' @param study_table Tibble with fileview information for
@@ -40,9 +41,10 @@ validate_all_studies <- function(fileview, annotations) {
 #'   'species', and 'template'.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: 'key', 'value', and 'columnType'.
+#' @param syn Synapse client object.
 #' @return study_table with a new column, 'results', that holds the
 #'   result lists for each file in the table.
-validate_study <- function(study_table, annotations) {
+validate_study <- function(study_table, annotations, syn) {
 
   # Add column to study_table for results lists
   study_table <- tibble::add_column(study_table, results = list(0))
@@ -54,14 +56,27 @@ validate_study <- function(study_table, annotations) {
       manifest_results <- validate_manifest(
         study_table$file_data[[file_indices$manifest]],
         study_table$template[[file_indices$manifest]],
-        annotations = annotations
+        annotations = annotations,
+        syn
       )
+      meta_files_in_manifest <- dccvalidator::check_files_manifest(
+        study_table$file_data[[file_indices$manifest]],
+        c(
+          study_table$name[file_indices$individual],
+          study_table$name[file_indices$assay],
+          study_table$name[file_indices$biospecimen]
+        ),
+        success_msg = "Manifest file contains all metadata files",
+        fail_msg = "Manifest file does not contain all metadata files"
+      )
+      manifest_results[["meta_files_in_manifest"]] <- meta_files_in_manifest
       study_table$results[[file_indices$manifest]] <- I(manifest_results)
     } else if (type == "assay") {
       assay_results <- validate_assay_meta(
         study_table$file_data[[file_indices$assay]],
         study_table$template[[file_indices$assay]],
-        annotations = annotations
+        annotations = annotations,
+        syn
       )
       if ("biospecimen" %in% study_table$metadataType) {
         assay_biosp_ids <- dccvalidator::check_specimen_ids_match(
@@ -78,7 +93,8 @@ validate_study <- function(study_table, annotations) {
       biosp_results <- validate_biospecimen_meta(
         study_table$file_data[[file_indices$biospecimen]],
         study_table$template[[file_indices$biospecimen]],
-        annotations
+        annotations,
+        syn
       )
       if ("manifest" %in% study_table$metadataType) {
         biosp_manifest_ids <- dccvalidator::check_specimen_ids_match(
@@ -95,7 +111,8 @@ validate_study <- function(study_table, annotations) {
       indiv_results <- validate_individual_meta(
         study_table$file_data[[file_indices$individual]],
         study_table$template[[file_indices$individual]],
-        annotations
+        annotations,
+        syn
       )
       if ("manifest" %in% study_table$metadataType) {
         indiv_manifest_ids <- dccvalidator::check_indiv_ids_match(

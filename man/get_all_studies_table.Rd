@@ -4,10 +4,12 @@
 \alias{get_all_studies_table}
 \title{Get synapse fileview}
 \usage{
-get_all_studies_table(fileview_id)
+get_all_studies_table(fileview_id, syn)
 }
 \arguments{
 \item{fileview_id}{The synId for the full metadata Fileview.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 Tibble with the Fileview information.

@@ -1,6 +1,6 @@
-#' Get the number of metadata files
+#' @title Get the number of metadata files
 #'
-#' Get the number of metadata files in a study.
+#' @description Get the number of metadata files in a study.
 #'
 #' @param study_view The file view for the study files.
 #'   At minimum, the study_view is a dataframe or tibble
@@ -20,9 +20,9 @@ num_meta_files <- function(study_view, num_docs = NULL) {
   num_files
 }
 
-#' Get number of files in manifest
+#' @title Get number of files in manifest
 #'
-#' Get the number of unique files in manifest.
+#' @description Get the number of unique files in manifest.
 #'
 #' @inheritParams num_individuals
 #' @return The number of unique files in manifest or
@@ -40,7 +40,8 @@ num_manifest_files <- function(study_view) {
 
 #' Get the number of documentation files
 #'
-#' Get the number of documentation files in a study.
+#' @description Get the number of documentation files
+#' in a study.
 #'
 #' @inheritParams num_meta_files
 #' @return The number of documentation files present in

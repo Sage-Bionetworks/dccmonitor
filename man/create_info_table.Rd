@@ -2,15 +2,17 @@
 % Please edit documentation in R/file-info-table.R
 \name{create_info_table}
 \alias{create_info_table}
-\title{Create a nice, printable version of the file information}
+\title{Create a nice, printable version of the file info}
 \usage{
-create_info_table(fileview)
+create_info_table(fileview, syn)
 }
 \arguments{
 \item{fileview}{The fileview table. Assumes the following
 columns exist:
   name, id, currentVersion, metadataType, species,
-  assay, createdBy, createdOn, modifiedOn}
+  assay, createdBy, createdOn, modifiedOn.}
+
+\item{syn}{Synapse client object.}
 }
 \description{
 Uses the fileview to create a table of relevant
