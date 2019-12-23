@@ -4,10 +4,12 @@
 \alias{get_user_name}
 \title{Get the user name}
 \usage{
-get_user_name(user_id)
+get_user_name(user_id, syn)
 }
 \arguments{
 \item{user_id}{Synapse id as a string or number.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 User name as a string.

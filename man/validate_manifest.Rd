@@ -4,7 +4,7 @@
 \alias{validate_manifest}
 \title{Validation of manifest}
 \usage{
-validate_manifest(manifest, template, annotations)
+validate_manifest(manifest, template, annotations, syn)
 }
 \arguments{
 \item{manifest}{Manifest data in dataframe.}
@@ -13,6 +13,8 @@ validate_manifest(manifest, template, annotations)
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: key, value, and columnType.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 List of condition objects indicating whether the manifest

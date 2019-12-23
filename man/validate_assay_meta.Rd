@@ -4,7 +4,7 @@
 \alias{validate_assay_meta}
 \title{Validation of assay metadata}
 \usage{
-validate_assay_meta(assay, template, annotations)
+validate_assay_meta(assay, template, annotations, syn)
 }
 \arguments{
 \item{assay}{Assay metadata in dataframe.}
@@ -13,6 +13,8 @@ validate_assay_meta(assay, template, annotations)
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: key, value, and columnType.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 List of condition objects indicating whether the assay

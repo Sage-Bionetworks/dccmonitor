@@ -7,12 +7,12 @@
 get_most_recent_time(times)
 }
 \arguments{
-\item{times}{Vector of POSIX times.}
+\item{times}{Vector of numeric times in seconds since epoch.}
 }
 \value{
 The most recent time in `times`.
 }
 \description{
 Get the most recent time from within
-a list of POSIX times.
+a list of POSIX times in the form of seconds since epoch.
 }

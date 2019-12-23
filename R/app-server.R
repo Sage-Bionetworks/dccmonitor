@@ -9,6 +9,7 @@
 #' @param session Shiny session
 #' @export
 app_server <- function(input, output, session) {
+  syn <- synapse$Synapse()
   session$sendCustomMessage(type = "readCookie", message = list())
 
   # Show message if user is not logged in to synapse
@@ -23,23 +24,24 @@ app_server <- function(input, output, session) {
 
   # Do stuff if authorized
   observeEvent(input$cookie, {
-    synapser::synLogin(sessionToken = input$cookie)
+    syn$login(sessionToken = input$cookie)
 
     # Check if user is in AMP-AD Consortium team (needed to access
     # project), and if they are a certified user.
-    user <- synapser::synGetUserProfile()
-    membership <- dccvalidator:::check_team_membership(
+    user <- syn$getUserProfile()
+    membership <- dccvalidator::check_team_membership(
       teams = config::get("teams"),
-      user = user
+      user = user,
+      syn = syn
     )
 
     # Download annotation definitions
-    annotations <- dccvalidator::get_synapse_annotations()
+    annotations <- dccvalidator::get_synapse_annotations(syn = syn)
 
     # Should be in config
     fileview_id <- config::get("consortium_fileview")
     # Get the Fileview in team directory & make into a dataframe
-    fileview <- get_all_studies_table(fileview_id)
+    fileview <- get_all_studies_table(fileview_id, syn)
     fileview <- get_all_file_templates(fileview)
 
     output$all_studies <- renderUI({
@@ -57,7 +59,8 @@ app_server <- function(input, output, session) {
         study,
         session = getDefaultReactiveDomain(),
         fileview = view,
-        annotations = annotations
+        annotations = annotations,
+        syn = syn
       )
     }
   })

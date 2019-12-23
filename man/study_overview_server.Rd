@@ -4,7 +4,7 @@
 \alias{study_overview_server}
 \title{Server for the study overview module}
 \usage{
-study_overview_server(input, output, session, fileview, annotations)
+study_overview_server(input, output, session, fileview, annotations, syn)
 }
 \arguments{
 \item{input}{Shiny input}
@@ -16,6 +16,8 @@ study_overview_server(input, output, session, fileview, annotations)
 \item{fileview}{The fileview for a specific study.}
 
 \item{annotations}{A dataframe of annotation definitions.}
+
+\item{syn}{Synapse client object.}
 }
 \description{
 Server for the study overview module.

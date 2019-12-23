@@ -4,7 +4,7 @@
 \alias{validate_study}
 \title{Validate a study}
 \usage{
-validate_study(study_table, annotations)
+validate_study(study_table, annotations, syn)
 }
 \arguments{
 \item{study_table}{Tibble with fileview information for
@@ -14,6 +14,8 @@ a single study. Expected columns are: 'metadataType',
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: 'key', 'value', and 'columnType'.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 study_table with a new column, 'results', that holds the

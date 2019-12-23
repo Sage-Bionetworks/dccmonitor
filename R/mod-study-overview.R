@@ -58,8 +58,9 @@ study_overview_ui <- function(id) {
 #' @inheritParams app_server
 #' @param fileview The fileview for a specific study.
 #' @param annotations A dataframe of annotation definitions.
+#' @param syn Synapse client object.
 study_overview_server <- function(input, output, session,
-                                  fileview, annotations) {
+                                  fileview, annotations, syn) {
   session <- getDefaultReactiveDomain()
 
   stat_values <- reactiveValues(
@@ -69,12 +70,29 @@ study_overview_server <- function(input, output, session,
   )
 
   data <- reactiveValues(
-    study_view = fileview(),
-    all_results = NULL
+    study_view = fileview()
   )
   observe({
-    temp <- get_all_file_data(fileview())
-    data$study_view <- validate_study(temp, annotations)
+    output$infotable <- renderTable({
+      create_info_table(fileview(), syn)
+    })
+
+    files_present <- unique(
+      data$study_view$metadataType[
+        !is.na(data$study_view$metadataType)
+        ]
+    )
+    if (length(files_present) > 0) {
+      updateSelectInput(
+        session = session,
+        inputId = "file_to_summarize",
+        label = "Choose file to view",
+        choices = files_present
+      )
+    }
+
+    temp <- get_all_file_data(fileview(), syn)
+    data$study_view <- validate_study(temp, annotations, syn)
     data$all_results <- purrr::flatten(
       data$study_view$results[which(!is.na(data$study_view$metadataType))]
     )
@@ -83,7 +101,14 @@ study_overview_server <- function(input, output, session,
     }
   })
 
-  observe({
+  observeEvent(data$all_results, {
+    callModule(
+      dccvalidator::results_boxes_server,
+      id = "results",
+      session = session,
+      results = data$all_results
+    )
+
     output$infobox_ui <- renderUI({
       fluidRow(
         valueBox(
@@ -109,37 +134,17 @@ study_overview_server <- function(input, output, session,
         )
       )
     })
-
-    output$infotable <- renderTable({
-      create_info_table(fileview())
-    })
-
-    updateSelectInput(
-      session = session,
-      inputId = "file_to_summarize",
-      label = "Choose file to view",
-      choices = unique(
-        data$study_view$metadataType[
-          !is.na(data$study_view$metadataType)
-        ]
-      )
-    )
-
-    callModule(
-      dccvalidator::results_boxes_server,
-      id = "results",
-      session = session,
-      results = data$all_results
-    )
   })
 
   observeEvent(input$file_to_summarize, {
-    data_index <- which(data$study_view$metadataType == input$file_to_summarize)
-    output$datafilevisdat <- renderPlot({
-      visualize_data_types(data$study_view$file_data[[data_index]])
-    })
-    output$data_details <- renderTable({
-      data_summary(data$study_view$file_data[[data_index]])
-    })
+    if (input$file_to_summarize != "") {
+      data_index <- which(data$study_view$metadataType == input$file_to_summarize)
+      output$datafilevisdat <- renderPlot({
+        visualize_data_types(data$study_view$file_data[[data_index]])
+      })
+      output$data_details <- renderTable({
+        data_summary(data$study_view$file_data[[data_index]])
+      })
+    }
   })
 }
