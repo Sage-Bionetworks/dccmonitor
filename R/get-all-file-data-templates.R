@@ -6,15 +6,16 @@
 #' @param fileview Tibble with columns 'id' and 'metadataType',
 #'   at minimum, and one row per file. 'id' is the synId
 #'   for the file.
+#' @param syn Synapse client object.
 #' @return Original tibble with extra column 'file_data' of
 #'   tibbles, holding the data from each file.
-get_all_file_data <- function(fileview) {
+get_all_file_data <- function(fileview, syn) {
   data <- purrr::map2(
     fileview$id,
     fileview$metadataType,
     function(id, type) {
       if (!is.na(type)) {
-        get_data(id, type)
+        get_data(id, type, syn)
       } else {
         type
       }

@@ -4,12 +4,14 @@
 \alias{get_all_file_data}
 \title{Get data for all files in table}
 \usage{
-get_all_file_data(fileview)
+get_all_file_data(fileview, syn)
 }
 \arguments{
 \item{fileview}{Tibble with columns 'id' and 'metadataType',
 at minimum, and one row per file. 'id' is the synId
 for the file.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 Original tibble with extra column 'file_data' of

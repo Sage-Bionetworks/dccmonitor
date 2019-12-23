@@ -4,13 +4,15 @@
 \alias{validate_all_studies}
 \title{Validate all studies}
 \usage{
-validate_all_studies(fileview, annotations)
+validate_all_studies(fileview, annotations, syn)
 }
 \arguments{
 \item{fileview}{The fileview table.}
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: key, value, and columnType.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 The fileview table with a new column, 'results', with

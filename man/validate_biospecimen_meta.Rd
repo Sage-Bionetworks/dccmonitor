@@ -4,7 +4,7 @@
 \alias{validate_biospecimen_meta}
 \title{Validation of biospecimen metadata}
 \usage{
-validate_biospecimen_meta(biospecimen, template, annotations)
+validate_biospecimen_meta(biospecimen, template, annotations, syn)
 }
 \arguments{
 \item{biospecimen}{Biospecimen metadata in dataframe.}
@@ -13,6 +13,8 @@ validate_biospecimen_meta(biospecimen, template, annotations)
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: key, value, and columnType.}
+
+\item{syn}{Synapse client object.}
 }
 \value{
 List of condition objects indicating whether the manifest

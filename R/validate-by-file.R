@@ -7,13 +7,15 @@
 #' @param template The assay template.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
+#' @param syn Synapse client object.
 #' @return List of condition objects indicating whether the manifest
 #'   has passed each validation check.
-validate_manifest <- function(manifest, template, annotations) {
+validate_manifest <- function(manifest, template, annotations, syn) {
   # Do checks
   missing_cols_manifest <- dccvalidator::check_cols_manifest(
     manifest,
-    template
+    template,
+    syn = syn
   )
   annotation_keys_manifest <- dccvalidator::check_annotation_keys(
     manifest,
@@ -56,13 +58,15 @@ validate_manifest <- function(manifest, template, annotations) {
 #' @param template The assay template.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
+#' @param syn Synapse client object.
 #' @return List of condition objects indicating whether the assay
 #'   has passed each validation check.
-validate_assay_meta <- function(assay, template, annotations) {
+validate_assay_meta <- function(assay, template, annotations, syn) {
   # Do checks
   missing_cols_assay <- dccvalidator::check_cols_assay(
     assay,
-    template
+    template,
+    syn = syn
   )
   annotation_values_assay <- dccvalidator::check_annotation_values(
     assay,
@@ -102,13 +106,15 @@ validate_assay_meta <- function(assay, template, annotations) {
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
 #' @param template The biospecimen template.
+#' @param syn Synapse client object.
 #' @return List of condition objects indicating whether the manifest
 #'   has passed each validation check.
-validate_biospecimen_meta <- function(biospecimen, template, annotations) {
+validate_biospecimen_meta <- function(biospecimen, template, annotations, syn) {
   # Do checks
   missing_cols_biosp <- dccvalidator::check_cols_biospecimen(
     biospecimen,
-    template
+    template,
+    syn = syn
   )
   annotation_values_biosp <- dccvalidator::check_annotation_values(
     biospecimen,
@@ -150,13 +156,16 @@ validate_biospecimen_meta <- function(biospecimen, template, annotations) {
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: key, value, and columnType.
 #' @param template The individual template.
+#' @param syn Synapse client object.
 #' @return List of condition objects indicating whether the manifest
 #'   has passed each validation check.
-validate_individual_meta <- function(individual, template, annotations) {
+validate_individual_meta <- function(individual, template,
+                                     annotations, syn = syn) {
   # Do checks
   missing_cols_indiv <- dccvalidator::check_cols_individual(
     individual,
-    template
+    template,
+    syn = syn
   )
   annotation_values_indiv <- dccvalidator::check_annotation_values(
     individual,
