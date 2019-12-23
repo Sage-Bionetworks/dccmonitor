@@ -31,6 +31,7 @@ Imports:
     tibble,
     visdat
 Suggests:
+    devtools,
     testthat
 Remotes:
     Sage-Bionetworks/dccvalidator
