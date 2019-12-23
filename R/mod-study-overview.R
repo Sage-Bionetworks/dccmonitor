@@ -77,16 +77,19 @@ study_overview_server <- function(input, output, session,
       create_info_table(fileview(), syn)
     })
 
-    updateSelectInput(
-      session = session,
-      inputId = "file_to_summarize",
-      label = "Choose file to view",
-      choices = unique(
-        data$study_view$metadataType[
-          !is.na(data$study_view$metadataType)
+    files_present <- unique(
+      data$study_view$metadataType[
+        !is.na(data$study_view$metadataType)
         ]
-      )
     )
+    if (length(files_present) > 0) {
+      updateSelectInput(
+        session = session,
+        inputId = "file_to_summarize",
+        label = "Choose file to view",
+        choices = files_present
+      )
+    }
 
     temp <- get_all_file_data(fileview(), syn)
     data$study_view <- validate_study(temp, annotations, syn)
@@ -134,12 +137,14 @@ study_overview_server <- function(input, output, session,
   })
 
   observeEvent(input$file_to_summarize, {
-    data_index <- which(data$study_view$metadataType == input$file_to_summarize)
-    output$datafilevisdat <- renderPlot({
-      visualize_data_types(data$study_view$file_data[[data_index]])
-    })
-    output$data_details <- renderTable({
-      data_summary(data$study_view$file_data[[data_index]])
-    })
+    if (input$file_to_summarize != "") {
+      data_index <- which(data$study_view$metadataType == input$file_to_summarize)
+      output$datafilevisdat <- renderPlot({
+        visualize_data_types(data$study_view$file_data[[data_index]])
+      })
+      output$data_details <- renderTable({
+        data_summary(data$study_view$file_data[[data_index]])
+      })
+    }
   })
 }
