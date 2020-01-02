@@ -22,7 +22,7 @@ library(dccmonitor)
 shiny::runApp()
 ```
 
-Note: The application takes time to fully populate the validation information and currently does not have a progress indicator. As long as the application has not crashed (completely grayed out), it will populate the study boxes after the validation checks have run for all studies represented in the `consortium_fileview` (see Customization for details on this file view).
+**Note:** The application takes time to fully populate the validation information and currently does not have a progress indicator. As long as the application has not crashed (completely grayed out), it will populate the study boxes after the validation checks have run for all studies represented in the `consortium_fileview` (see Customization for details on this file view).
 
 ## Customization
 
