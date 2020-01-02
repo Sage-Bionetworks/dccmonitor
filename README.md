@@ -37,7 +37,7 @@ Of the configuration options, only two are specific to dccmonitor while the rest
     - biospecimen metadata: study, species, metadataType = biospecimen
     - assay metadata: study, species, assay, metadataType = assay
 
-Simply set a configuration for the application in the config.yml and change "default" in run-app.R to your configuration name before running.
+Simply set a configuration for the application in the config.yml and change "default" in app.R to your configuration name before running.
 
 ### Validation Checks
 
