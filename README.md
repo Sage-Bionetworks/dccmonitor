@@ -16,10 +16,13 @@ devtools::install_github("Sage-Bionetworks/dccmonitor")
 Using the dccmonitor shiny application requires that the user have a Synapse account, and the user needs access to the specific Synapse folder of interest for monitoring (see Customization for details).
 
 After installing the package, the following will run the application locally:
+
 ``` R
 library(dccmonitor)
 shiny::runApp()
 ```
+
+Note: The application takes time to fully populate the validation information and currently does not have a progress indicator. As long as the application has not crashed (completely grayed out), it will populate the study boxes after the validation checks have run for all studies represented in the `consortium_fileview` (see Customization for details on this file view).
 
 ## Customization
 
