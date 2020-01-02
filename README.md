@@ -45,11 +45,11 @@ dccmonitor uses dccvalidator to validate the metadata and manifest files. Curren
 
 #### validate-by-study.R
 
-	- `validate_study()`: handles the validation of an individual study, sending files on to be validated by themselves and doing validation checks across files.
+- `validate_study()`: handles the validation of an individual study, sending files on to be validated by themselves and doing validation checks across files.
 
 #### validate-by-file.R
 
-	- `validate_manifest()`: validation checks specific to the manifest.
-	- `validate_individual_meta()`: validation checks specific to the individual metadata.
-	- `validate_biospecimen_meta()`: validation checks specific to the biospecimen metadata.
-	- `validate_assay_meta()`: validation checks specific to the assay metadata.
+- `validate_manifest()`: validation checks specific to the manifest.
+- `validate_individual_meta()`: validation checks specific to the individual metadata.
+- `validate_biospecimen_meta()`: validation checks specific to the biospecimen metadata.
+- `validate_assay_meta()`: validation checks specific to the assay metadata.
