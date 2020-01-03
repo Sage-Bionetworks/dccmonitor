@@ -6,7 +6,7 @@ This package is intended to assist Sage Bionetworks data curators to check the s
 
 ## Requirements
 
-dccmonitor uses the reticulate package with the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient). See the [reticulate documentation](https://rstudio.github.io/reticulate/#python-version) for more information on setting up reticulate to work with your local Python environment. Additionally, see the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient) for installation instructions.
+dccmonitor uses the reticulate package with the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient). See the [reticulate documentation](https://rstudio.github.io/reticulate/#python-version) for more information on setting up reticulate to work with your local Python environment. Additionally, see the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient) for installation instructions. The Synapse Python Client should be installed in the same Python environment used by reticulate.
 
 Using the dccmonitor Shiny application requires that the user have a Synapse account, and have permission to access necessary Synapse files. These files include the specific Synapse folder of interest for monitoring (see [Customization](https://github.com/Sage-Bionetworks/dccmonitor/tree/update-readme#customization) for details), along with access to all dccvalidator Synapse dependencies (ex: template and annotation files).
 
