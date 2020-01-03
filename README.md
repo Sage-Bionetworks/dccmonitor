@@ -1,6 +1,6 @@
 # dccmonitor
 
-This package is intended to assist data curators to check the status of metadata and documentation files uploaded via the [dccvalidator](https://sage-bionetworks.github.io/dccvalidator/) shiny application. dccmonitor is primarily a shiny application, with the ability to use functions for gathering validation information using the package functions only, if desired.
+This package is intended to assist Sage Bionetworks data curators to check the status of metadata and documentation files uploaded via the [dccvalidator](https://sage-bionetworks.github.io/dccvalidator/) shiny application. dccmonitor is primarily a shiny application, with the ability to use functions for gathering validation information using the package functions only, if desired.
 
 **Note:** The application takes time to fully populate the validation information and currently does not have a progress indicator. The application will initialize the study boxes after checking for team membership and gathering the studies represented in the `consortium_fileview` (see Customization for details on this file view). After this, the application will populate the study boxes after the validation checks have run for all represented studies.
 
@@ -8,7 +8,7 @@ This package is intended to assist data curators to check the status of metadata
 
 dccmonitor uses the reticulate package with the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient). See the [reticulate documentation](https://rstudio.github.io/reticulate/#python-version) for more information on setting up reticulate to work with your local Python environment. Additionally, see the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient) for installation instructions.
 
-Using the dccmonitor Shiny application requires that the user have a Synapse account, and have permission to access necessary Synapse files. These files include the specific Synapse folder of interest for monitoring (see Customization for details), along with access to all dccvalidator Synapse dependencies (ex: template and annotation files).
+Using the dccmonitor Shiny application requires that the user have a Synapse account, and have permission to access necessary Synapse files. These files include the specific Synapse folder of interest for monitoring (see [Customization](https://github.com/Sage-Bionetworks/dccmonitor/tree/update-readme#customization) for details), along with access to all dccvalidator Synapse dependencies (ex: template and annotation files).
 
 ## Installation and Use
 
@@ -22,17 +22,17 @@ dccmonitor can be installed via devtools:
 devtools::install_github("Sage-Bionetworks/dccmonitor")
 ```
 
-To run the Shiny application, there needs to be a config.yml file in the working directory with the required options (see Customization). AFter creating the config.yml file, the application can be run with:
+To run the Shiny application, there needs to be a config.yml file in the working directory with the required options (see [Customization](https://github.com/Sage-Bionetworks/dccmonitor/tree/update-readme#customization)). After creating the config.yml file, the application can be run with:
 
 ``` R
 library(dccmonitor)
-Sys.setenv(R_CONFIG_ACTIVE = "default") # Replace "default" with the configuration name if using a non-default configuration.
+Sys.setenv(R_CONFIG_ACTIVE = "default") # Replace "default" with the configuration name if not using default.
 run_app()
 ```
 
 ### Cloning Repository
 
-[Clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) to a local directory. Customize the config.yml file, as needed (see Customization).
+[Clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) to a local directory. Customize the config.yml file, as needed (see [Customization](https://github.com/Sage-Bionetworks/dccmonitor/tree/update-readme#customization)).
 
 If your working directory is the application directory, you can change the app.R file to have your configuration name, if not using the default configuration. Then the following will start the app:
 
@@ -47,7 +47,7 @@ Customizing the application is done via the config.yml file and the specific fil
 
 ### config.yml
 
-A configuration file is required for the application behave correctly. Create a configuration for the application called config.yml in your working directory, if you have installed the package, or alter the config.yml file in the cloned repository. Then change "default" in app.R to your configuration name, if your options are not under the default settings, before running.
+A configuration file is required for the application behave correctly. Create a configuration for the application called config.yml in your working directory, if you have installed the package, or alter the config.yml file in the cloned repository. If not using default as your configuration, set the active configuration as described in the instructions for your choice of installation, [package](https://github.com/Sage-Bionetworks/dccmonitor/tree/update-readme#package-installation) or [cloned repository](https://github.com/Sage-Bionetworks/dccmonitor/tree/update-readme#cloning-repository).
 
 Of the configuration options, only two are specific to dccmonitor while the rest are used to customize the dccvalidator checks. The dccmonitor specific configurations are:
 
