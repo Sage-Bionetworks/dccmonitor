@@ -2,27 +2,44 @@
 
 This package is intended to assist data curators to check the status of metadata and documentation files uploaded via the [dccvalidator](https://sage-bionetworks.github.io/dccvalidator/) shiny application. dccmonitor is primarily a shiny application, with the ability to use functions for gathering validation information using the package functions only, if desired.
 
-## Installation
+**Note:** The application takes time to fully populate the validation information and currently does not have a progress indicator. The application will initialize the study boxes after checking for team membership and gathering the studies represented in the `consortium_fileview` (see Customization for details on this file view). After this, the application will populate the study boxes after the validation checks have run for all represented studies.
+
+## Requirements
 
 dccmonitor uses the reticulate package with the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient). See the [reticulate documentation](https://rstudio.github.io/reticulate/#python-version) for more information on setting up reticulate to work with your local Python environment. Additionally, see the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient) for installation instructions.
 
+Using the dccmonitor Shiny application requires that the user have a Synapse account, and have permission to access necessary Synapse files. These files include the specific Synapse folder of interest for monitoring (see Customization for details), along with access to all dccvalidator Synapse dependencies (ex: template and annotation files).
+
+## Installation and Use
+
+dccmonitor can be installed and used in two ways: package installation, and cloning the repository.
+
+### Package Installation
+
 dccmonitor can be installed via devtools:
+
 ``` R
 devtools::install_github("Sage-Bionetworks/dccmonitor")
 ```
 
-## Shiny Application
-
-Using the dccmonitor shiny application requires that the user have a Synapse account, and the user needs access to the specific Synapse folder of interest for monitoring (see Customization for details).
-
-After installing the package, the following will run the application locally:
+To run the Shiny application, there needs to be a config.yml file in the working directory with the required options (see Customization). AFter creating the config.yml file, the application can be run with:
 
 ``` R
 library(dccmonitor)
-shiny::runApp()
+Sys.setenv(R_CONFIG_ACTIVE = "default") # Replace "default" with the configuration name if using a non-default configuration.
+run_app()
 ```
 
-**Note:** The application takes time to fully populate the validation information and currently does not have a progress indicator. The application will initialize the study boxes after checking for team membership and gathering the studies represented in the `consortium_fileview` (see Customization for details on this file view). After this, the application will populate the study boxes after the validation checks have run for all represented studies.
+### Cloning Repository
+
+[Clone the repository](https://help.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository) to a local directory. Customize the config.yml file, as needed (see Customization).
+
+If your working directory is the application directory, you can change the app.R file to have your configuration name, if not using the default configuration. Then the following will start the app:
+
+``` R
+renv::restore() # Update project package library
+shiny::runApp()
+```
 
 ## Customization
 
@@ -30,7 +47,9 @@ Customizing the application is done via the config.yml file and the specific fil
 
 ### config.yml
 
-Of the configuration options, only two are specific to dccmonitor while the rest are used to customize the dccvalidator checks (see [Customizing the dccvalidator](https://sage-bionetworks.github.io/dccvalidator/articles/customizing-dccvalidator.html)). The dccmonitor specific configurations are:
+A configuration file is required for the application behave correctly. Create a configuration for the application called config.yml in your working directory, if you have installed the package, or alter the config.yml file in the cloned repository. Then change "default" in app.R to your configuration name, if your options are not under the default settings, before running.
+
+Of the configuration options, only two are specific to dccmonitor while the rest are used to customize the dccvalidator checks. The dccmonitor specific configurations are:
 
 - `teams`: Synapse team ID. This is used to verify that the user is a member of the team and, therefore, has access to the folder containing the metadata and documentation files of interest.
 - `consortium_fileview`: Synapse file view ID. A Synapse file view that shows all the files in the `parent` folder (this is the folder that dccvalidator uploads metadata and documentation files to), along with their annotations. The file view should include the columns: id, name, createdOn, createdBy, modifiedOn, currentVersion, study, metadataType, species, assay. Note that the following file-specific annotations are required for dccmonitor to function properly:
@@ -40,11 +59,16 @@ Of the configuration options, only two are specific to dccmonitor while the rest
     - biospecimen metadata: study, species, metadataType = biospecimen
     - assay metadata: study, species, assay, metadataType = assay
 
-Create a configuration for the application in the config.yml and change "default" in app.R to your configuration name before running.
+A brief overview of the dccvalidator specific configurations are below, but more information can be found in the [dccvalidator documentation](https://sage-bionetworks.github.io/dccvalidator/articles/customizing-dccvalidator.html#configuration-options):
 
+- `annotations_table`: Synapse ID for the annotations master table.
+- `templates`: List of master templates for each type of metadata or manifest file.
+- `species_list`: List of species.
+- `complete_columns`: List of columns that are required to be complete for each type of metadata or manifest file.
+  
 ### Validation Checks
 
-dccmonitor uses dccvalidator to validate the metadata and manifest files. Currently, this is done in a set of functions that are updated to mirror the most recent version of the dccvalidator application. To customize the validation checks, the following functions would need to be changed:
+dccmonitor uses dccvalidator to validate the metadata and manifest files. Currently, this is done in a set of functions that are updated to mirror the most recent version of the dccvalidator application. To customize the validation checks performed, the following functions would need to be changed:
 
 #### validate-by-study.R
 
