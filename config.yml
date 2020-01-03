@@ -1,5 +1,4 @@
 default:
-  study_table: "syn11363298"
   consortium_fileview: "syn21027019"
   annotations_table: "syn10242922"
   teams:
@@ -32,7 +31,6 @@ default:
       - "specimenID"
 
 amp-ad:
-  parent: "syn20506363"
   consortium_fileview: "syn21448475"
   teams:
     - "3320424"
@@ -61,8 +59,6 @@ amp-ad:
       - "specimenID"
 
 pec:
-  parent: "syn20825282"
-  study_table: "syn20968992"
   annotations_table: "syn20981788"
   teams:
     - "3323356"
