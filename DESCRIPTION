@@ -23,6 +23,7 @@ Imports:
     ggplot2,
     golem,
     purrr,
+    reactable,
     reticulate,
     shiny,
     shinydashboard,
