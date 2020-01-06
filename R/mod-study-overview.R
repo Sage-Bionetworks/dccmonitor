@@ -41,7 +41,7 @@ study_overview_ui <- function(id) {
               tabPanel(
                 "File Details",
                 br(),
-                tableOutput(ns("data_details"))
+                reactable::reactableOutput(ns("data_details"))
               )
             )
           )
@@ -80,7 +80,7 @@ study_overview_server <- function(input, output, session,
     files_present <- unique(
       data$study_view$metadataType[
         !is.na(data$study_view$metadataType)
-        ]
+      ]
     )
     if (length(files_present) > 0) {
       updateSelectInput(
@@ -138,12 +138,60 @@ study_overview_server <- function(input, output, session,
 
   observeEvent(input$file_to_summarize, {
     if (input$file_to_summarize != "") {
-      data_index <- which(data$study_view$metadataType == input$file_to_summarize)
+      data_index <- which(
+        data$study_view$metadataType == input$file_to_summarize
+      )
       output$datafilevisdat <- renderPlot({
         visualize_data_types(data$study_view$file_data[[data_index]])
       })
-      output$data_details <- renderTable({
-        data_summary(data$study_view$file_data[[data_index]])
+      output$data_details <- reactable::renderReactable({
+        reactable::reactable(
+          data_summary(data$study_view$file_data[[data_index]]),
+          highlight = TRUE,
+          searchable = TRUE,
+          resizable = TRUE,
+          columns = list(
+            variable = reactable::colDef(
+              name = "Variable",
+              width = 125
+            ),
+            type = reactable::colDef(
+              name = "Type",
+              width = 75
+            ),
+            missing = reactable::colDef(
+              name = "Missing",
+              maxWidth = 75
+            ),
+            complete = reactable::colDef(
+              name = "Complete",
+              maxWidth = 75
+            ),
+            n = reactable::colDef(
+              name = "n",
+              maxWidth = 75
+            ),
+            min = reactable::colDef(
+              name = "Min",
+              maxWidth = 75
+            ),
+            max = reactable::colDef(
+              name = "Max",
+              maxWidth = 75
+            ),
+            empty = reactable::colDef(
+              name = "# Empty",
+              maxWidth = 75
+            ),
+            n_unique = reactable::colDef(
+              name = "# Unique",
+              maxWidth = 75
+            ),
+            value_occurrence = reactable::colDef(
+              name = "Value (# Occurrences)"
+            )
+          )
+        )
       })
     }
   })

@@ -4,8 +4,7 @@
 \alias{num_specimens}
 \title{Get number of specimens}
 \usage{
-num_specimens(study_view, meta_types = c("manifest", "biospecimen",
-  "assay"))
+num_specimens(study_view, meta_types = c("manifest", "biospecimen", "assay"))
 }
 \arguments{
 \item{study_view}{The file view for a study, with the
