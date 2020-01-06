@@ -3,7 +3,7 @@ default:
   consortium_fileview: "syn21027019"
   annotations_table: "syn10242922"
   teams:
-    - "3320424"
+    - "3346847"
     - "273957"
   templates:
     manifest_template: "syn20820080"
@@ -35,7 +35,7 @@ amp-ad:
   parent: "syn20506363"
   consortium_fileview: "syn21448475"
   teams:
-    - "3320424"
+    - "3346847"
   templates:
     assay_templates:
       proteomics: "syn12973255"
