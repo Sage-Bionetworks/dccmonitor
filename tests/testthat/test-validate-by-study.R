@@ -21,11 +21,11 @@ assay <- tibble::tribble(
 )
 
 individual <- tibble::tribble(
-  ~individualID, ~individualIdSource, ~species, ~sex, ~race, ~ethnicity, ~yearsEducation, ~ageDeath, ~descriptionDeath, ~yearAutopsy, ~apoeGenotype, ~pmi, ~pH, ~brainWeight, ~diagnosis, ~diagnosisCriteria, ~causeDeath,
-  "a", "NIMH-HBCC", "Human", "male", "white", "hispanic or latino", 12, 98, "a person", 2017, "sure", "T", 3, 4, "Alzheimer Disease", "DSMV", "age",
-  "b", "NIMH-HBCC", "Human", "female", "american indian", "hispanic or latino", 12, 78, "a person", 2017, "sure", "F", 5, 5, "Alzheimer Disease", "DSMV", "age",
-  "c", "NIMH-HBCC", "Human", "male", "american indian", "hispanic or latino", 14, 84, "a person", 2017, "sure", "T", 4, 3.5, "Alzheimer Disease", "DSMV", "age",
-  "d", "NIMH-HBCC", "Human", "female", "pacific islander", "not hispanic or latino", 13, 63, "a person", 2017, "nope", "T", 3, 4, "Bipolar Disorder", "DSMV", "age"
+  ~individualID, ~individualIdSource, ~species, ~sex, ~race, ~ethnicity, ~yearsEducation, ~ageDeath, ~descriptionDeath, ~yearAutopsy, ~apoeGenotype, ~pmi, ~pH, ~brainWeight, ~diagnosis, ~diagnosisCriteria, ~causeDeath, ~mannerDeath, ~CERAD, ~Braak,
+  "a", "NIMH-HBCC", "Human", "male", "white", "hispanic or latino", 12, 98, "a person", 2017, "sure", "T", 3, 4, "Alzheimer Disease", "DSMV", "age", "age", "stuff", "morestuff",
+  "b", "NIMH-HBCC", "Human", "female", "american indian", "hispanic or latino", 12, 78, "a person", 2017, "sure", "F", 5, 5, "Alzheimer Disease", "DSMV", "age", "age", "stuff", "morestuff",
+  "c", "NIMH-HBCC", "Human", "male", "american indian", "hispanic or latino", 14, 84, "a person", 2017, "sure", "T", 4, 3.5, "Alzheimer Disease", "DSMV", "age", "age", "stuff", "morestuff",
+  "d", "NIMH-HBCC", "Human", "female", "pacific islander", "not hispanic or latino", 13, 63, "a person", 2017, "nope", "T", 3, 4, "Bipolar Disorder", "DSMV", "age", "age", "stuff", "morestuff"
 )
 
 biospecimen <- tibble::tribble(
@@ -43,9 +43,11 @@ indiv_template <- "syn12973254"
 biosp_template <- "syn12973252"
 
 # Download annotation definitions
-synapser::synLogin()
+syn <- attempt_instantiate()
+attempt_login(syn)
 annotations <- dccvalidator::get_synapse_annotations(
-  synID = config::get("annotations_table")
+  synID = config::get("annotations_table"),
+  syn
 )
 
 # ----- validate_study()
@@ -55,7 +57,7 @@ test_that("validate_study() manifest logic works correctly", {
     ~study, ~species, ~assay, ~metadataType, ~template, ~file_data,
     "mystudy", NA, NA, "manifest", manifest_template, manifest
   )
-  res <- validate_study(view, annotations)
+  res <- validate_study(view, annotations, syn)
   expect_equal(length(res$results[[1]]), 5)
   expect_equal(
     res$results[[1]]$missing_cols$message,
@@ -73,8 +75,8 @@ test_that("validate_study() assay logic works correctly", {
     "mystudy", "human", "rnaSeq", "assay", assay_template, assay,
     "mystudy", "human", NA, "biospecimen", biosp_template, biospecimen
   )
-  res1 <- validate_study(view1, annotations)
-  res2 <- validate_study(view2, annotations)
+  res1 <- validate_study(view1, annotations, syn)
+  res2 <- validate_study(view2, annotations, syn)
 
   expect_equal(length(res1$results[[1]]), 4)
   expect_equal(
@@ -85,7 +87,7 @@ test_that("validate_study() assay logic works correctly", {
   expect_equal(length(res2$results[[1]]), 5)
   expect_equal(
     res2$results[[1]]$assay_biosp_ids$message,
-    "All specimenID values match between assay and biospecimen"
+    "All specimenID values match between biospecimen and assay"
   )
 })
 
@@ -99,8 +101,8 @@ test_that("validate_study() biospecimen logic works correctly", {
     "mystudy", "human", NA, "biospecimen", biosp_template, biospecimen,
     "mystudy", NA, NA, "manifest", manifest_template, manifest
   )
-  res1 <- validate_study(view1, annotations)
-  res2 <- validate_study(view2, annotations)
+  res1 <- validate_study(view1, annotations, syn)
+  res2 <- validate_study(view2, annotations, syn)
 
   expect_equal(length(res1$results[[1]]), 5)
   expect_equal(
@@ -136,10 +138,10 @@ test_that("validate_study() individual logic works correctly", {
     "mystudy", "human", NA, "biospecimen", biosp_template, biospecimen,
     "mystudy", NA, NA, "manifest", manifest_template, manifest
   )
-  res1 <- validate_study(view1, annotations)
-  res2 <- validate_study(view2, annotations)
-  res3 <- validate_study(view3, annotations)
-  res4 <- validate_study(view4, annotations)
+  res1 <- validate_study(view1, annotations, syn)
+  res2 <- validate_study(view2, annotations, syn)
+  res3 <- validate_study(view3, annotations, syn)
+  res4 <- validate_study(view4, annotations, syn)
 
   expect_equal(length(res1$results[[1]]), 5)
   expect_equal(
@@ -178,7 +180,7 @@ test_that("validate_study() gets results for all files", {
     "mystudy", "human", "rnaSeq", "assay", assay_template, assay,
     "mystudy", NA, NA, "manifest", manifest_template, manifest
   )
-  res <- validate_study(view, annotations)
+  res <- validate_study(view, annotations, syn)
 
   expect_equal(
     unlist(purrr::map(
@@ -233,7 +235,7 @@ test_that("validate_all_studies() gets results for all studies", {
     "mystudy2", "human", "rnaSeq", "assay", assay_template, assay,
     "mystudy2", NA, NA, "manifest", manifest_template, manifest
   )
-  res <- validate_all_studies(view, annotations)
+  res <- validate_all_studies(view, annotations, syn)
 
   expect_equal(
     unlist(purrr::map(

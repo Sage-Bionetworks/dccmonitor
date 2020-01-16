@@ -21,11 +21,11 @@ assay <- tibble::tribble(
 )
 
 individual <- tibble::tribble(
-  ~individualID, ~individualIdSource, ~species, ~sex, ~race, ~ethnicity, ~yearsEducation, ~ageDeath, ~descriptionDeath, ~yearAutopsy, ~apoeGenotype, ~pmi, ~pH, ~brainWeight, ~diagnosis, ~diagnosisCriteria, ~causeDeath,
-  "a", "NIMH-HBCC", "Human", "male", "white", "hispanic or latino", 12, 98, "a person", 2017, "sure", "T", 3, 4, "Alzheimer Disease", "DSMV", "age",
-  "b", "NIMH-HBCC", "Human", "female", "american indian", "hispanic or latino", 12, 78, "a person", 2017, "sure", "F", 5, 5, "Alzheimer Disease", "DSMV", "age",
-  "c", "NIMH-HBCC", "Human", "male", "american indian", "hispanic or latino", 14, 84, "a person", 2017, "sure", "T", 4, 3.5, "Alzheimer Disease", "DSMV", "age",
-  "d", "NIMH-HBCC", "Human", "female", "pacific islander", "not hispanic or latino", 13, 63, "a person", 2017, "nope", "T", 3, 4, "Bipolar Disorder", "DSMV", "age"
+  ~individualID, ~individualIdSource, ~species, ~sex, ~race, ~ethnicity, ~yearsEducation, ~ageDeath, ~descriptionDeath, ~yearAutopsy, ~apoeGenotype, ~pmi, ~pH, ~brainWeight, ~diagnosis, ~diagnosisCriteria, ~causeDeath, ~mannerDeath, ~CERAD, ~Braak,
+  "a", "NIMH-HBCC", "Human", "male", "white", "hispanic or latino", 12, 98, "a person", 2017, "sure", "T", 3, 4, "Alzheimer Disease", "DSMV", "age", "age", "stuff", "morestuff",
+  "b", "NIMH-HBCC", "Human", "female", "american indian", "hispanic or latino", 12, 78, "a person", 2017, "sure", "F", 5, 5, "Alzheimer Disease", "DSMV", "age", "age", "stuff", "morestuff",
+  "c", "NIMH-HBCC", "Human", "male", "american indian", "hispanic or latino", 14, 84, "a person", 2017, "sure", "T", 4, 3.5, "Alzheimer Disease", "DSMV", "age", "age", "stuff", "morestuff",
+  "d", "NIMH-HBCC", "Human", "female", "pacific islander", "not hispanic or latino", 13, 63, "a person", 2017, "nope", "T", 3, 4, "Bipolar Disorder", "DSMV", "age", "age", "stuff", "morestuff"
 )
 
 biospecimen <- tibble::tribble(
@@ -42,10 +42,13 @@ assay_template <- "syn12973256"
 indiv_template <- "syn12973254"
 biosp_template <- "syn12973252"
 
+syn <- attempt_instantiate()
+attempt_login(syn)
+
 # Download annotation definitions
-synapser::synLogin()
 annotations <- dccvalidator::get_synapse_annotations(
-  synID = config::get("annotations_table")
+  synID = config::get("annotations_table"),
+  syn = syn
 )
 
 # ----- validate_manifest()
@@ -54,7 +57,8 @@ test_that("validate_manifest() returns list with check names", {
   res <- validate_manifest(
     manifest,
     manifest_template,
-    annotations
+    annotations,
+    syn
   )
   expect_type(res, "list")
   expect_named(
@@ -73,14 +77,16 @@ test_that("validate_manifest() returns list of correct objects", {
   res1 <- validate_manifest(
     manifest,
     manifest_template,
-    annotations
+    annotations,
+    syn
   )
 
   manifest2 <- manifest[, -which(names(manifest) == "assay")]
   res2 <- validate_manifest(
     manifest2,
     manifest_template,
-    annotations
+    annotations,
+    syn
   )
 
   expect_true(all(unlist(
@@ -116,7 +122,8 @@ test_that("validate_assay_meta() returns list with check names", {
   res <- validate_assay_meta(
     assay,
     assay_template,
-    annotations
+    annotations,
+    syn
   )
   expect_type(res, "list")
   expect_named(
@@ -134,7 +141,8 @@ test_that("validate_assay_meta() returns list of correct objects", {
   res1 <- validate_assay_meta(
     assay,
     assay_template,
-    annotations
+    annotations,
+    syn
   )
 
   assay2 <- assay
@@ -142,7 +150,8 @@ test_that("validate_assay_meta() returns list of correct objects", {
   res2 <- validate_assay_meta(
     assay2,
     assay_template,
-    annotations
+    annotations,
+    syn
   )
 
   expect_true(all(unlist(
@@ -177,7 +186,8 @@ test_that("validate_individual_meta() returns list with check names", {
   res <- validate_individual_meta(
     individual,
     indiv_template,
-    annotations
+    annotations,
+    syn
   )
   expect_type(res, "list")
   expect_named(
@@ -196,7 +206,8 @@ test_that("validate_individual_meta() returns list of correct objects", {
   res1 <- validate_individual_meta(
     individual,
     indiv_template,
-    annotations
+    annotations,
+    syn
   )
 
   individual2 <- individual
@@ -204,7 +215,8 @@ test_that("validate_individual_meta() returns list of correct objects", {
   res2 <- validate_individual_meta(
     individual2,
     indiv_template,
-    annotations
+    annotations,
+    syn
   )
 
   expect_true(all(unlist(
@@ -240,7 +252,8 @@ test_that("validate_biospecimen_meta() returns list with check names", {
   res <- validate_biospecimen_meta(
     biospecimen,
     biosp_template,
-    annotations
+    annotations,
+    syn
   )
   expect_type(res, "list")
   expect_named(
@@ -259,7 +272,8 @@ test_that("validate_biospecimen_meta() returns list of correct objects", {
   res1 <- validate_biospecimen_meta(
     biospecimen,
     biosp_template,
-    annotations
+    annotations,
+    syn
   )
 
   biospecimen2 <- biospecimen
@@ -267,7 +281,8 @@ test_that("validate_biospecimen_meta() returns list of correct objects", {
   res2 <- validate_biospecimen_meta(
     biospecimen2,
     biosp_template,
-    annotations
+    annotations,
+    syn
   )
 
   expect_true(all(unlist(
