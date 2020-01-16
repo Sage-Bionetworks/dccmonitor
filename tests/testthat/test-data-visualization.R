@@ -38,7 +38,7 @@ test_that("data_summary returns table with custom value column", {
   )
   res <- data_summary(data)
   expect_true(inherits(res, "tbl_df"))
-  expect_equal(as.list(res$`value (# occurrences)`), expected)
+  expect_equal(as.list(res$value_occurrence), expected)
 })
 
 test_that("summarize_values returns string summary", {
