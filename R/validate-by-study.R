@@ -80,10 +80,10 @@ validate_study <- function(study_table, annotations, syn) {
       )
       if ("biospecimen" %in% study_table$metadataType) {
         assay_biosp_ids <- dccvalidator::check_specimen_ids_match(
-          study_table$file_data[[file_indices$assay]],
           study_table$file_data[[file_indices$biospecimen]],
-          "assay",
+          study_table$file_data[[file_indices$assay]],
           "biospecimen",
+          "assay",
           bidirectional = FALSE
         )
         assay_results[["assay_biosp_ids"]] <- assay_biosp_ids
