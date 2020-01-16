@@ -36,7 +36,11 @@ app_server <- function(input, output, session) {
     )
 
     # Download annotation definitions
-    annotations <- dccvalidator::get_synapse_annotations(syn = syn)
+    annotations <- purrr::map_dfr(
+      config::get("annotations_table"),
+      dccvalidator::get_synapse_annotations,
+      syn = syn
+    )
 
     # Should be in config
     fileview_id <- config::get("consortium_fileview")
