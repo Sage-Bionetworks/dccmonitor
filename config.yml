@@ -3,7 +3,6 @@ default:
   annotations_table: "syn10242922"
   teams:
     - "3346847"
-    - "273957"
   templates:
     manifest_template: "syn20820080"
     individual_templates:
@@ -32,6 +31,9 @@ default:
 
 amp-ad:
   consortium_fileview: "syn21448475"
+  annotations_table:
+    - "syn10242922"
+    - "syn21459391"
   teams:
     - "3346847"
   templates:
