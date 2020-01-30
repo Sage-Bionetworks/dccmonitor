@@ -44,6 +44,11 @@ study_overview_ui <- function(id) {
                 reactable::reactableOutput(ns("data_details"))
               )
             )
+          ),
+          tabPanel(
+            "Annotations",
+            br(),
+            edit_annotations_ui(ns("annots"))
           )
         )
       )

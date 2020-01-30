@@ -29,6 +29,7 @@ Imports:
     shiny,
     shinydashboard,
     shinyjs (>= 1.0.1.9006),
+    shinyWidgets,
     skimr,
     tibble,
     visdat
