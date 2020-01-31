@@ -3,6 +3,7 @@
 #' @description Creates the UI for the study overview
 #' module.
 #'
+#' @importFrom dccvalidator results_boxes_ui
 #' @param id Id for the module
 study_overview_ui <- function(id) {
   ns <- NS(id)
@@ -55,6 +56,7 @@ study_overview_ui <- function(id) {
 #'
 #' @description Server for the study overview module.
 #'
+#' @importFrom dccvalidator results_boxes_server
 #' @inheritParams app_server
 #' @param fileview The fileview for a specific study.
 #' @param annotations A dataframe of annotation definitions.
@@ -91,11 +93,8 @@ study_overview_server <- function(input, output, session,
       )
     }
 
-    temp <- get_all_file_data(fileview(), syn)
-    data$study_view <- validate_study(temp, annotations, syn)
-    data$all_results <- purrr::flatten(
-      data$study_view$results[which(!is.na(data$study_view$metadataType))]
-    )
+    data$study_view <- get_all_file_data(fileview(), syn)
+    data$all_results <- validate_study(data$study_view, annotations, syn)
     if (length(data$all_results) > 0) {
       stat_values$success_rate <- percent_pass_validation(data$all_results)
     }

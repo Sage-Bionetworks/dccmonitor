@@ -10,7 +10,7 @@ validate_study(study_table, annotations, syn)
 \item{study_table}{Tibble with fileview information for
 a single study. Expected columns are: 'metadataType',
 'file_data' (tibble column with data for each file), 'assay',
-'species', and 'template'.}
+'species'. Should have, at most, one row per metadataType.}
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: 'key', 'value', and 'columnType'.}
@@ -18,11 +18,11 @@ Must contain at least three columns: 'key', 'value', and 'columnType'.}
 \item{syn}{Synapse client object.}
 }
 \value{
-study_table with a new column, 'results', that holds the
-  result lists for each file in the table.
+Named list of check results. Returns `NULL` if there are no rows.
 }
 \description{
-Run validation checks for a single study and appends
-the results to the study_table in a new 'results' column. The results
-are in list form with specific names for the tests.
+Run validation checks for a single study and return the
+results. Validation checks are run via `dccvalidator::check_all()`. It
+is assumed that there is, at most, one row per metadataType in the
+`study_table` passed in.
 }

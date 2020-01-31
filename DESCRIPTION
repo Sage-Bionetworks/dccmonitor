@@ -36,7 +36,7 @@ Suggests:
     devtools,
     testthat
 Remotes:
-    Sage-Bionetworks/dccvalidator
+    Sage-Bionetworks/dccvalidator@check-all-function
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
