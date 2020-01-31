@@ -62,8 +62,9 @@ amp-ad:
 
 pec:
   annotations_table: "syn20981788"
+  consortium_fileview: "syn21560413"
   teams:
-    - "3323356"
+    - "3328037"
   templates:
     manifest_template: "syn20782058"
     individual_templates:
