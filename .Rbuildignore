@@ -4,3 +4,4 @@
 ^renv$
 ^renv\.lock$
 ^config\.yml$
+^app\.R$
