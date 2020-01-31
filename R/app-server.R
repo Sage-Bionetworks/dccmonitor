@@ -4,6 +4,8 @@
 #'
 #' @import shiny
 #' @import shinydashboard
+#' @importFrom dccvalidator check_team_membership check_certified_user
+#'   report_unsatisfied_requirements
 #' @param input Shiny input
 #' @param output Shiny output
 #' @param session Shiny session
@@ -34,38 +36,46 @@ app_server <- function(input, output, session) {
       user = user,
       syn = syn
     )
-
-    # Download annotation definitions
-    annotations <- purrr::map_dfr(
-      config::get("annotations_table"),
-      dccvalidator::get_synapse_annotations,
+    certified <- dccvalidator::check_certified_user(user$ownerId, syn = syn)
+    dccvalidator:::report_unsatisfied_requirements(
+      membership,
+      certified,
       syn = syn
     )
 
-    # Should be in config
-    fileview_id <- config::get("consortium_fileview")
-    # Get the Fileview in team directory & make into a dataframe
-    fileview <- get_all_studies_table(fileview_id, syn)
-    fileview <- get_all_file_templates(fileview)
-
-    output$all_studies <- renderUI({
-      set_up_ui(fileview)
-    })
-
-    # Setup study server functions
-    studies <- unique(fileview$study)
-    for (study in studies) {
-      view <- reactive({
-        filter_study_table_latest(fileview, study)
-      })
-      callModule(
-        study_overview_server,
-        study,
-        session = getDefaultReactiveDomain(),
-        fileview = view,
-        annotations = annotations,
+    if (inherits(membership, "check_pass")) {
+      # Download annotation definitions
+      annotations <- purrr::map_dfr(
+        config::get("annotations_table"),
+        dccvalidator::get_synapse_annotations,
         syn = syn
       )
+
+      # Should be in config
+      fileview_id <- config::get("consortium_fileview")
+      # Get the Fileview in team directory & make into a dataframe
+      fileview <- get_all_studies_table(fileview_id, syn)
+      fileview <- get_all_file_templates(fileview)
+
+      output$all_studies <- renderUI({
+        set_up_ui(fileview)
+      })
+
+      # Setup study server functions
+      studies <- unique(fileview$study)
+      for (study in studies) {
+        view <- reactive({
+          filter_study_table_latest(fileview, study)
+        })
+        callModule(
+          study_overview_server,
+          study,
+          session = getDefaultReactiveDomain(),
+          fileview = view,
+          annotations = annotations,
+          syn = syn
+        )
+      }
     }
   })
 }
