@@ -37,7 +37,7 @@ app_server <- function(input, output, session) {
       syn = syn
     )
     certified <- dccvalidator::check_certified_user(user$ownerId, syn = syn)
-    dccvalidator:::report_unsatisfied_requirements(
+    dccvalidator::report_unsatisfied_requirements(
       membership,
       certified,
       syn = syn
