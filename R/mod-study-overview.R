@@ -97,6 +97,7 @@ study_overview_server <- function(input, output, session,
     }
 
     temp <- get_all_file_data(fileview(), syn)
+    callModule(edit_annotations_server, "annots", temp)
     data$study_view <- validate_study(temp, annotations, syn)
     data$all_results <- purrr::flatten(
       data$study_view$results[which(!is.na(data$study_view$metadataType))]
