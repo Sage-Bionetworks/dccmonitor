@@ -99,7 +99,7 @@ edit_annotations_server <- function(input, output, session, fileview) {
         },
         content = function(file) {
           metadata_subset <- all_metadata[, input$annot_keys]
-          write.csv(metadata_subset, file, row.names = FALSE)
+          utils::write.csv(metadata_subset, file, row.names = FALSE)
         }
       )
     })
