@@ -2,7 +2,7 @@
 % Please edit documentation in R/mod-edit-annotations.R
 \name{edit_annotations_server}
 \alias{edit_annotations_server}
-\title{}
+\title{Edit annotations module server}
 \usage{
 edit_annotations_server(input, output, session, fileview)
 }
@@ -16,5 +16,5 @@ edit_annotations_server(input, output, session, fileview)
 \item{fileview}{The fileview for a specific study.}
 }
 \description{
-
+Server function for the edit annotations module.
 }

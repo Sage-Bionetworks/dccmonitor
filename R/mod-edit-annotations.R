@@ -1,9 +1,8 @@
-#' @title
+#' @title Edit annotations module UI
 #'
-#' @description
+#' @description UI function for the edit annotations module.
 #'
 #' @param id Module id.
-#' @param keys List of annotation keys present in dataset.
 edit_annotations_ui <- function(id) {
   ns <- NS(id)
 
@@ -42,9 +41,9 @@ edit_annotations_ui <- function(id) {
   )
 }
 
-#' @title
+#' @title Edit annotations module server
 #'
-#' @description
+#' @description Server function for the edit annotations module.
 #'
 #' @inheritParams study_overview_server
 edit_annotations_server <- function(input, output, session, fileview) {
@@ -103,7 +102,5 @@ edit_annotations_server <- function(input, output, session, fileview) {
           write.csv(metadata_subset, file, row.names = FALSE)
         }
       )
-
     })
-
 }

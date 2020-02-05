@@ -2,15 +2,13 @@
 % Please edit documentation in R/mod-edit-annotations.R
 \name{edit_annotations_ui}
 \alias{edit_annotations_ui}
-\title{}
+\title{Edit annotations module UI}
 \usage{
 edit_annotations_ui(id)
 }
 \arguments{
 \item{id}{Module id.}
-
-\item{keys}{List of annotation keys present in dataset.}
 }
 \description{
-
+UI function for the edit annotations module.
 }
