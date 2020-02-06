@@ -58,6 +58,13 @@
       "Repository": "CRAN",
       "Hash": "a0356f14b4a68dd51a67c5d469d40c70"
     },
+    "V8": {
+      "Package": "V8",
+      "Version": "3.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7d1118179f4cb56f5e49e58b166999fe"
+    },
     "askpass": {
       "Package": "askpass",
       "Version": "1.1",
@@ -179,15 +186,15 @@
     },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.0.0.9009",
+      "Version": "0.1.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteUsername": "Sage-Bionetworks",
-      "RemoteRepo": "dccvalidator",
-      "RemoteRef": "master",
-      "RemoteSha": "fe88aad82592b155a13c77c036cbeb0ee7179bcf",
       "RemoteHost": "api.github.com",
-      "Hash": "46a6fbf31e561ca470b7648e467f187e"
+      "RemoteRepo": "dccvalidator",
+      "RemoteUsername": "Sage-Bionetworks",
+      "RemoteRef": "master",
+      "RemoteSha": "1bae109bb46747939e4a1e1656a188e6d5bf2967",
+      "Hash": "29cfdd1e16effb41b6d6055eaa83bf53"
     },
     "desc": {
       "Package": "desc",
@@ -235,18 +242,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "7067d90c1c780bfe80c0d497e3d7b49d"
-    },
-    "emo": {
-      "Package": "emo",
-      "Version": "0.0.0.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteUsername": "hadley",
-      "RemoteRepo": "emo",
-      "RemoteRef": "master",
-      "RemoteSha": "3f03b11491ce3d6fc5601e210927eff73bf8e350",
-      "RemoteHost": "api.github.com",
-      "Hash": "5ece31a6c0f94811e6bef59482d87164"
     },
     "evaluate": {
       "Package": "evaluate",
@@ -374,6 +369,13 @@
       "Repository": "CRAN",
       "Hash": "bc5739654d032acf531356e32e0d0f54"
     },
+    "jsonvalidate": {
+      "Package": "jsonvalidate",
+      "Version": "1.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "81054bf17db72db68871baefcfd209cf"
+    },
     "knitr": {
       "Package": "knitr",
       "Version": "1.25",
@@ -415,13 +417,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "dc0e9c03b3635ff433b045ce6bf0612d"
-    },
-    "lubridate": {
-      "Package": "lubridate",
-      "Version": "1.7.4",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "796afeea047cda6bdb308d374a33eeb6"
     },
     "magrittr": {
       "Package": "magrittr",
@@ -467,10 +462,10 @@
     },
     "nlme": {
       "Package": "nlme",
-      "Version": "3.1-141",
+      "Version": "3.1-143",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "cebdbe755f3d628b6afd82490b1eb63a"
+      "Hash": "7518d3b54a24f9291735a25467997858"
     },
     "openssl": {
       "Package": "openssl",
@@ -478,13 +473,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "49f7258fd86ebeaea1df24d9ded00478"
-    },
-    "pack": {
-      "Package": "pack",
-      "Version": "0.1-1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "c4f814b30334e8bc6124647794781a09"
     },
     "packrat": {
       "Package": "packrat",
@@ -684,13 +672,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "6d3dbb5d528c8f726861018472bc668c"
-    },
-    "rjson": {
-      "Package": "rjson",
-      "Version": "0.2.20",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "7d597f982ee6263716b6a2f28efd29fa"
     },
     "rlang": {
       "Package": "rlang",
