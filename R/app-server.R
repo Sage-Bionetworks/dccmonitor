@@ -55,7 +55,6 @@ app_server <- function(input, output, session) {
       fileview_id <- config::get("consortium_fileview")
       # Get the Fileview in team directory & make into a dataframe
       fileview <- get_all_studies_table(fileview_id, syn)
-      fileview <- get_all_file_templates(fileview)
 
       output$all_studies <- renderUI({
         set_up_ui(fileview)
