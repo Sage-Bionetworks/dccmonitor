@@ -186,15 +186,15 @@
     },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.0.0.9011",
+      "Version": "0.1.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "dccvalidator",
       "RemoteUsername": "Sage-Bionetworks",
-      "RemoteRef": "check-all-function",
-      "RemoteSha": "e2e76cdfb0e81479b15b6d9a11819af087ea617a",
-      "Hash": "0ed1244a1e48bca5a13c47f2bfb3af71"
+      "RemoteRef": "master",
+      "RemoteSha": "1bae109bb46747939e4a1e1656a188e6d5bf2967",
+      "Hash": "29cfdd1e16effb41b6d6055eaa83bf53"
     },
     "desc": {
       "Package": "desc",
