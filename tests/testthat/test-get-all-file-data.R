@@ -1,19 +1,18 @@
 context("get-all-file-data.R")
 
-data <- tibble::tribble(
-  ~metadataType, ~species, ~assay,
-  "manifest", NA, NA,
-  "individual", "human", NA,
-  "biospecimen", "human", NA,
-  "assay", "human", "rnaSeq",
-  NA, NA, NA
+view <- tibble::tribble(
+  ~metadataType, ~species, ~assay, ~id,
+  "manifest", NA, NA, "syn21249871",
+  "individual", "human", NA, "syn21249874",
+  "biospecimen", "human", NA, "syn21249873",
+  "assay", "human", "proteomics", "syn21249872"
 )
 
-test_that("get_all_file_templates gets templates for all valid rows", {
-  res <- get_all_file_templates(data)
-  expect_equal(res$template[1], "syn20820080")
-  expect_equal(res$template[2], "syn12973254")
-  expect_equal(res$template[3], "syn12973252")
-  expect_equal(res$template[4], "syn12973256")
-  expect_true(is.na(res$template[5]))
+syn <- attempt_instantiate()
+attempt_login(syn)
+
+test_that("get_all_file_data returns file data as appended list column", {
+  skip_if_not(logged_in(syn = syn))
+  res <- get_all_file_data(view, syn)
+  expect_true(inherits(res$file_data, "list"))
 })

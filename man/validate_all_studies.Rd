@@ -15,12 +15,12 @@ Must contain at least three columns: key, value, and columnType.}
 \item{syn}{Synapse client object.}
 }
 \value{
-The fileview table with a new column, 'results', with
-  a list of validation results for every file.
+Named list of check results, where the names of the list refer
+  to the study. Returns NULL if no studies in fileview.
 }
 \description{
 Validate metadata and manifest files for every study
-in consortium. Returns the fileview table with a new 'results'
-column that contains a list of validation results for each
-file.
+in consortium. Returns a named list of validation results, where the name
+refers to the study name. The validation checks are done via
+`dccvalidator::check_all()`.
 }

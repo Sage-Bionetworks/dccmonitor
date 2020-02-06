@@ -13,7 +13,8 @@ or `check_warn`.}
 }
 \value{
 Percent of validation checks passed, rounded
-  to the nearest whole number.
+  to the nearest whole number. Returns 0 if `results` is `NULL` or if
+  all checks in `results` are `NULL`.
 }
 \description{
 Gives the overall percentage of validation
