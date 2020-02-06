@@ -64,6 +64,7 @@ Of the configuration options, only two are specific to dccmonitor while the rest
 A brief overview of the dccvalidator specific configurations are below, but more information can be found in the [dccvalidator documentation](https://sage-bionetworks.github.io/dccvalidator/articles/customizing-dccvalidator.html#configuration-options):
 
 - `annotations_table`: Synapse ID for the annotations master table.
+- `annotations_link`: Address for the annotations website.
 - `templates`: List of master templates for each type of metadata or manifest file.
 - `species_list`: List of species.
 - `complete_columns`: List of columns that are required to be complete for each type of metadata or manifest file.
