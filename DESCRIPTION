@@ -24,6 +24,7 @@ Imports:
     golem,
     purrr,
     reactable,
+    readr,
     reticulate,
     shiny,
     shinyBS,

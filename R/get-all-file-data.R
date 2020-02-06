@@ -41,20 +41,10 @@ get_data <- function(id, meta_type, syn) {
   file_info <- syn$get(id)
 
   if (meta_type == "manifest") {
-    data <- utils::read.table(
-      file_info$path,
-      sep = "\t",
-      header = TRUE,
-      na.strings = "",
-      stringsAsFactors = FALSE
-    )
+    data <- readr::read_tsv(file_info$path)
   } else {
-    data <- utils::read.csv(
-      file_info$path,
-      na.strings = "",
-      stringsAsFactors = FALSE
-    )
+    data <- readr::read_csv(file_info$path)
   }
 
-  return(tibble::as_tibble(data))
+  return(data)
 }
