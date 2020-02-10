@@ -143,9 +143,10 @@ study_overview_server <- function(input, output, session,
       output$datafilevisdat <- renderPlot({
         visualize_data_types(data$study_view$file_data[[data_index]])
       })
+      file_summary <- data_summary(data$study_view$file_data[[data_index]])
       output$data_details <- reactable::renderReactable({
         reactable::reactable(
-          data_summary(data$study_view$file_data[[data_index]]),
+          file_summary,
           highlight = TRUE,
           searchable = TRUE,
           resizable = TRUE,
@@ -187,7 +188,38 @@ study_overview_server <- function(input, output, session,
               maxWidth = 75
             ),
             value_occurrence = reactable::colDef(
-              name = "Value (# Occurrences)"
+              name = "Value (# Occurrences)",
+              cell = function(value) {
+                if (nchar(value) > 40) {
+                  return(glue::glue("{substr(value, 1, 40)}..."))
+                } else {
+                  return(value)
+                }
+              },
+              details = function(index) {
+                # browser()
+                value <- file_summary[index, "value_occurrence"]
+                if (nchar(value) > 40) {
+                  return(htmltools::div(
+                    shinydashboardPlus::boxPad(
+                      br(),
+                      glue::glue("{value[[1]]}"),
+                      br(),
+                      br(),
+                      width = 12,
+                      color = "gray")
+                    )
+                  )
+                } else {
+                  return(NULL)
+                }
+              }
+
+                # reactable::JS("function(rowInfo) { return rowInfo.row['value_occurrence'] }")
+
+              # aggregate = reactable::JS(
+              #     "function(values, rows) { if (values.length < 30) { return values } else { return values.substr(1, 30) } }"
+              # )
             )
           )
         )

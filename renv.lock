@@ -750,6 +750,13 @@
       "Repository": "CRAN",
       "Hash": "133639dc106955eee4ffb8ec73edac37"
     },
+    "shinydashboardPlus": {
+      "Package": "shinydashboardPlus",
+      "Version": "0.7.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7e3b01c98e487d003d7e189ceb8317cd"
+    },
     "shinyjs": {
       "Package": "shinyjs",
       "Version": "1.0.1.9006",
