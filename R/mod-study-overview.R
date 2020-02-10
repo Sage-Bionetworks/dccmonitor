@@ -214,12 +214,6 @@ study_overview_server <- function(input, output, session,
                   return(NULL)
                 }
               }
-
-                # reactable::JS("function(rowInfo) { return rowInfo.row['value_occurrence'] }")
-
-              # aggregate = reactable::JS(
-              #     "function(values, rows) { if (values.length < 30) { return values } else { return values.substr(1, 30) } }"
-              # )
             )
           )
         )
