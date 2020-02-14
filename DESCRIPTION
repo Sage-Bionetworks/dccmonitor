@@ -1,6 +1,6 @@
 Package: dccmonitor
 Title: Monitor Data Validation
-Version: 0.0.0.9004
+Version: 0.0.0.9005
 Authors@R: 
     c(person(given = "Nicole",
              family = "Kauer",
@@ -15,19 +15,22 @@ Description: Allows for monitoring of data uploaded via the
 License: MIT + file LICENSE
 Depends:
     dccvalidator (>= 0.0.0.9009),
-    R (>= 3.4),
-    shinyBS
+    R (>= 3.4)
 Imports:
     config,
     dplyr,
     ggplot2,
     glue,
     golem,
+    htmltools,
     purrr,
     reactable,
+    readr,
     reticulate,
     shiny,
+    shinyBS,
     shinydashboard,
+    shinydashboardPlus,
     shinyjs (>= 1.0.1.9006),
     shinyWidgets,
     skimr,

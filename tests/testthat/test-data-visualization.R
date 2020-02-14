@@ -32,9 +32,9 @@ test_that("data_summary returns NULL if data is wrong class", {
 
 test_that("data_summary returns table with custom value column", {
   expected <- list(
-    "a (1), b (1), c (1)",
-    "TRUE (1), FALSE (2)",
-    "1 (2), 2 (1)"
+    "a (1),  b (1),  c (1)",
+    "TRUE (1),  FALSE (2)",
+    "1 (2),  2 (1)"
   )
   res <- data_summary(data)
   expect_true(inherits(res, "tbl_df"))
@@ -51,9 +51,9 @@ test_that("summarize_values returns string summary", {
   res3 <- summarize_values(val3)
   res4 <- summarize_values(val4)
   expect_equal(res1, "a (3)")
-  expect_equal(res2, "a (1), b (2)")
-  expect_equal(res3, "a (1), b (1), c (1)")
-  expect_equal(res4, "1 (2), 2 (2)")
+  expect_equal(res2, "a (1),  b (2)")
+  expect_equal(res3, "a (1),  b (1),  c (1)")
+  expect_equal(res4, "1 (2),  2 (2)")
 })
 
 test_that("summarize_values returns NULL if values = NULL", {

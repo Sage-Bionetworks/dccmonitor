@@ -3,6 +3,7 @@
 #' @description Creates the UI for the study overview
 #' module.
 #'
+#' @importFrom dccvalidator results_boxes_ui
 #' @param id Id for the module
 study_overview_ui <- function(id) {
   ns <- NS(id)
@@ -60,6 +61,7 @@ study_overview_ui <- function(id) {
 #'
 #' @description Server for the study overview module.
 #'
+#' @importFrom dccvalidator results_boxes_server
 #' @inheritParams app_server
 #' @param fileview The fileview for a specific study.
 #' @param annotations A dataframe of annotation definitions.
@@ -96,12 +98,9 @@ study_overview_server <- function(input, output, session,
       )
     }
 
-    temp <- get_all_file_data(fileview(), syn)
-    callModule(edit_annotations_server, "annots", temp)
-    data$study_view <- validate_study(temp, annotations, syn)
-    data$all_results <- purrr::flatten(
-      data$study_view$results[which(!is.na(data$study_view$metadataType))]
-    )
+    data$study_view <- get_all_file_data(fileview(), syn)
+    callModule(edit_annotations_server, "annots", data$study_view)
+    data$all_results <- validate_study(data$study_view, annotations, syn)
     if (length(data$all_results) > 0) {
       stat_values$success_rate <- percent_pass_validation(data$all_results)
     }
@@ -150,9 +149,10 @@ study_overview_server <- function(input, output, session,
       output$datafilevisdat <- renderPlot({
         visualize_data_types(data$study_view$file_data[[data_index]])
       })
+      file_summary <- data_summary(data$study_view$file_data[[data_index]])
       output$data_details <- reactable::renderReactable({
         reactable::reactable(
-          data_summary(data$study_view$file_data[[data_index]]),
+          file_summary,
           highlight = TRUE,
           searchable = TRUE,
           resizable = TRUE,
@@ -194,7 +194,32 @@ study_overview_server <- function(input, output, session,
               maxWidth = 75
             ),
             value_occurrence = reactable::colDef(
-              name = "Value (# Occurrences)"
+              name = "Value (# Occurrences)",
+              cell = function(value) {
+                if (nchar(value) > 40) {
+                  return(glue::glue("{substr(value, 1, 40)}..."))
+                } else {
+                  return(value)
+                }
+              },
+              details = function(index) {
+                # browser()
+                value <- file_summary[index, "value_occurrence"]
+                if (nchar(value) > 40) {
+                  return(htmltools::div(
+                    shinydashboardPlus::boxPad(
+                      br(),
+                      glue::glue("{value[[1]]}"),
+                      br(),
+                      br(),
+                      width = 12,
+                      color = "gray")
+                    )
+                  )
+                } else {
+                  return(NULL)
+                }
+              }
             )
           )
         )

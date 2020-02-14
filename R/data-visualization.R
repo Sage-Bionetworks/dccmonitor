@@ -70,6 +70,6 @@ summarize_values <- function(values) {
       glue::glue("{value} ({x_appeared})")
     )
   }
-  val_sum_string <- glue::glue_collapse(val_sum, sep = ", ")
+  val_sum_string <- glue::glue_collapse(val_sum, sep = ",  ")
   val_sum_string
 }

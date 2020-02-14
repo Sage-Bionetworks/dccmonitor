@@ -53,7 +53,7 @@ A configuration file is required for the application to behave correctly. Create
 
 Of the configuration options, only two are specific to dccmonitor while the rest are used to customize the dccvalidator checks. The dccmonitor specific configurations are:
 
-- `teams`: Synapse team ID. This is used to verify that the user is a member of the team and, therefore, has access to the folder containing the metadata and documentation files of interest.
+- `teams`: Synapse administration team ID. The app data should only be accessible to curators with admin privileges.
 - `consortium_fileview`: Synapse file view ID. A Synapse file view that shows all the files in the `parent` folder (this is the folder that dccvalidator uploads metadata and documentation files to), along with their annotations. The file view should include the columns: id, name, createdOn, createdBy, modifiedOn, currentVersion, study, metadataType, species, assay. Note that the following file-specific annotations are required for dccmonitor to function properly:
     - documentation: study
     - manifest: study, metadataType = manifest
@@ -64,6 +64,7 @@ Of the configuration options, only two are specific to dccmonitor while the rest
 A brief overview of the dccvalidator specific configurations are below, but more information can be found in the [dccvalidator documentation](https://sage-bionetworks.github.io/dccvalidator/articles/customizing-dccvalidator.html#configuration-options):
 
 - `annotations_table`: Synapse ID for the annotations master table.
+- `annotations_link`: Address for the annotations website.
 - `templates`: List of master templates for each type of metadata or manifest file.
 - `species_list`: List of species.
 - `complete_columns`: List of columns that are required to be complete for each type of metadata or manifest file.
