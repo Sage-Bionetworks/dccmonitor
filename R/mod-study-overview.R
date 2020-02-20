@@ -29,22 +29,7 @@ study_overview_ui <- function(id) {
           tabPanel(
             "Data Summary",
             br(),
-            selectInput(
-              ns("file_to_summarize"),
-              label = "Choose file to view",
-              choices = ""
-            ),
-            tabsetPanel(
-              tabPanel(
-                "File Overview",
-                plotOutput(ns("datafilevisdat"))
-              ),
-              tabPanel(
-                "File Details",
-                br(),
-                reactable::reactableOutput(ns("data_details"))
-              )
-            )
+            dccvalidator::file_summary_ui(ns("summary"))
           )
         )
       )
@@ -78,22 +63,24 @@ study_overview_server <- function(input, output, session,
     output$infotable <- renderTable({
       create_info_table(fileview(), syn)
     })
-
-    files_present <- unique(
+    data$study_view <- get_all_file_data(fileview(), syn)
+    # File summary module setup
+    file_types_present <- unique(
       data$study_view$metadataType[
         !is.na(data$study_view$metadataType)
       ]
     )
-    if (length(files_present) > 0) {
-      updateSelectInput(
-        session = session,
-        inputId = "file_to_summarize",
-        label = "Choose file to view",
-        choices = files_present
+    if (length(file_types_present) > 0) {
+      file_indices <- get_file_indices_named(
+        data$study_view,
+        file_types_present
       )
+      file_list <- reactive({purrr::map(file_indices, function(index) {
+        tibble::as_tibble(data$study_view$file_data[[index]])
+      })})
+      callModule(dccvalidator::file_summary_server, "summary", file_list)
     }
 
-    data$study_view <- get_all_file_data(fileview(), syn)
     data$all_results <- validate_study(data$study_view, annotations, syn)
     if (length(data$all_results) > 0) {
       stat_values$success_rate <- percent_pass_validation(data$all_results)
@@ -133,65 +120,5 @@ study_overview_server <- function(input, output, session,
         )
       )
     })
-  })
-
-  observeEvent(input$file_to_summarize, {
-    if (input$file_to_summarize != "") {
-      data_index <- which(
-        data$study_view$metadataType == input$file_to_summarize
-      )
-      output$datafilevisdat <- renderPlot({
-        visualize_data_types(data$study_view$file_data[[data_index]])
-      })
-      output$data_details <- reactable::renderReactable({
-        reactable::reactable(
-          data_summary(data$study_view$file_data[[data_index]]),
-          highlight = TRUE,
-          searchable = TRUE,
-          resizable = TRUE,
-          columns = list(
-            variable = reactable::colDef(
-              name = "Variable",
-              width = 125
-            ),
-            type = reactable::colDef(
-              name = "Type",
-              width = 75
-            ),
-            missing = reactable::colDef(
-              name = "Missing",
-              maxWidth = 75
-            ),
-            complete = reactable::colDef(
-              name = "Complete",
-              maxWidth = 75
-            ),
-            n = reactable::colDef(
-              name = "n",
-              maxWidth = 75
-            ),
-            min = reactable::colDef(
-              name = "Min",
-              maxWidth = 75
-            ),
-            max = reactable::colDef(
-              name = "Max",
-              maxWidth = 75
-            ),
-            empty = reactable::colDef(
-              name = "# Empty",
-              maxWidth = 75
-            ),
-            n_unique = reactable::colDef(
-              name = "# Unique",
-              maxWidth = 75
-            ),
-            value_occurrence = reactable::colDef(
-              name = "Value (# Occurrences)"
-            )
-          )
-        )
-      })
-    }
   })
 }
