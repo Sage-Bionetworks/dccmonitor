@@ -45,6 +45,11 @@ study_overview_ui <- function(id) {
                 reactable::reactableOutput(ns("data_details"))
               )
             )
+          ),
+          tabPanel(
+            "Annotations",
+            br(),
+            edit_annotations_ui(ns("annots"))
           )
         )
       )
@@ -94,6 +99,7 @@ study_overview_server <- function(input, output, session,
     }
 
     data$study_view <- get_all_file_data(fileview(), syn)
+    callModule(edit_annotations_server, "annots", data$study_view)
     data$all_results <- validate_study(data$study_view, annotations, syn)
     if (length(data$all_results) > 0) {
       stat_values$success_rate <- percent_pass_validation(data$all_results)

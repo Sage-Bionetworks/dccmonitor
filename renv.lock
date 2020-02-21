@@ -189,8 +189,9 @@
       "Version": "0.1.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteUsername": "Sage-Bionetworks",
+      "RemoteHost": "api.github.com",
       "RemoteRepo": "dccvalidator",
+      "RemoteUsername": "Sage-Bionetworks",
       "RemoteRef": "master",
       "RemoteSha": "21f474cef51d00db81d55a635634c3d7d38aa437",
       "RemoteHost": "api.github.com",
@@ -744,6 +745,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "f895dafd39733c4a70d425f605a832e7"
+    },
+    "shinyWidgets": {
+      "Package": "shinyWidgets",
+      "Version": "0.5.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "fdf6a1a363579afab3d454887936f8cd"
     },
     "shinydashboard": {
       "Package": "shinydashboard",
