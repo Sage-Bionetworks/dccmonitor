@@ -93,13 +93,6 @@
       "Repository": "CRAN",
       "Hash": "e9f705633dc932bfd5b02b17a5053a06"
     },
-    "base64enc": {
-      "Package": "base64enc",
-      "Version": "0.1-3",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "543776ae6848fde2f48ff3816d0628bc"
-    },
     "brew": {
       "Package": "brew",
       "Version": "1.0-6",
@@ -109,10 +102,10 @@
     },
     "callr": {
       "Package": "callr",
-      "Version": "3.4.2",
+      "Version": "3.4.1",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "d16f6e202179e69c1400cc1f845bfc09"
+      "Hash": "f3c7c37950ae9a772b3676e4c172f978"
     },
     "cellranger": {
       "Package": "cellranger",
@@ -193,15 +186,16 @@
     },
     "dccvalidator": {
       "Package": "dccvalidator",
-      "Version": "0.1.0.9001",
+      "Version": "0.1.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "dccvalidator",
       "RemoteUsername": "Sage-Bionetworks",
       "RemoteRef": "master",
-      "RemoteSha": "58e7da345161e8ad3a3767168c47cca53e45f087",
-      "Hash": "e2aa045660b8a38d5ac0dc5d8bc6335d"
+      "RemoteSha": "21f474cef51d00db81d55a635634c3d7d38aa437",
+      "RemoteHost": "api.github.com",
+      "Hash": "7939032b3983d887b55de613ca89ff29"
     },
     "desc": {
       "Package": "desc",
@@ -224,10 +218,10 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.24",
+      "Version": "0.6.23",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "dc0030cea0d85397ba3ba5b930c82c6a"
+      "Hash": "931fd68809dab4609b4d4b5702206066"
     },
     "dockerfiler": {
       "Package": "dockerfiler",
@@ -495,6 +489,13 @@
       "Repository": "CRAN",
       "Hash": "2ebd34a38f4248281096cc723535b66d"
     },
+    "pander": {
+      "Package": "pander",
+      "Version": "0.6.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "121198ce37b5a6b5227edc5a38223da4"
+    },
     "pillar": {
       "Package": "pillar",
       "Version": "1.4.3",
@@ -574,10 +575,10 @@
     },
     "ps": {
       "Package": "ps",
-      "Version": "1.3.2",
+      "Version": "1.3.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "98777535b61c57d1749344345e2a4ccd"
+      "Hash": "919a32c940a25bc95fd464df9998a6ba"
     },
     "purrr": {
       "Package": "purrr",
@@ -637,15 +638,15 @@
     },
     "remotes": {
       "Package": "remotes",
-      "Version": "2.1.1.9000",
+      "Version": "2.1.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "remotes",
       "RemoteUsername": "r-lib",
+      "RemoteRepo": "remotes",
       "RemoteRef": "master",
-      "RemoteSha": "dc10b550458576884435786cf6e6418d85214ed5",
-      "Hash": "07102ed097321b23046a2a6104867280"
+      "RemoteSha": "8d8d545cb6a1725bd943522cb953c5c2755c2cf4",
+      "RemoteHost": "api.github.com",
+      "Hash": "021f01559ccf720968c99b12d45f8c0b"
     },
     "renv": {
       "Package": "renv",
@@ -653,13 +654,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "c1a367437d8a8a44bec4b9d4974cb20c"
-    },
-    "repr": {
-      "Package": "repr",
-      "Version": "1.1.0",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "466aee1b69232becb73769daa894c171"
     },
     "reshape2": {
       "Package": "reshape2",
@@ -782,14 +776,15 @@
       "RemoteRepo": "shinyjs",
       "RemoteRef": "master",
       "RemoteSha": "52542599fe72957e66957ed04d20a719bc9cadd3",
+      "RemoteHost": "api.github.com",
       "Hash": "ba392da93db53e09900eeb9bc845632b"
     },
     "skimr": {
       "Package": "skimr",
-      "Version": "2.1",
+      "Version": "1.0.7",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "e662c5c3727463bfcd076133f8bcafa6"
+      "Hash": "09d844aa374e08f4bf9c11b463214430"
     },
     "sourcetools": {
       "Package": "sourcetools",
@@ -800,10 +795,10 @@
     },
     "stringi": {
       "Package": "stringi",
-      "Version": "1.4.6",
+      "Version": "1.4.5",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "e99d8d656980d2dd416a962ae55aec90"
+      "Hash": "ced3b63472796155f74abc4eb5266c78"
     },
     "stringr": {
       "Package": "stringr",
@@ -841,8 +836,9 @@
       "RemoteUsername": "tidyverse",
       "RemoteRepo": "tidyr",
       "RemoteRef": "master",
-      "RemoteSha": "44d0ec717b63f81ca733d052a569ac1687053df1",
-      "Hash": "2d96f53ca34ab7270b8a9ac8336a8d10"
+      "RemoteSha": "67178106703f230941ad082e9ea79f3d08650ac6",
+      "RemoteHost": "api.github.com",
+      "Hash": "6e597be736f386aef51f12114ee86a28"
     },
     "tidyselect": {
       "Package": "tidyselect",
