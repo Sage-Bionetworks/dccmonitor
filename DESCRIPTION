@@ -22,6 +22,7 @@ Imports:
     ggplot2,
     glue,
     golem,
+    htmltools,
     purrr,
     reactable,
     readr,
@@ -29,7 +30,9 @@ Imports:
     shiny,
     shinyBS,
     shinydashboard,
+    shinydashboardPlus,
     shinyjs (>= 1.0.1.9006),
+    shinyWidgets,
     skimr,
     tibble,
     visdat

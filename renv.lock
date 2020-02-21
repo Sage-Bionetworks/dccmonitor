@@ -752,6 +752,13 @@
       "Repository": "CRAN",
       "Hash": "f895dafd39733c4a70d425f605a832e7"
     },
+    "shinyWidgets": {
+      "Package": "shinyWidgets",
+      "Version": "0.5.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "fdf6a1a363579afab3d454887936f8cd"
+    },
     "shinydashboard": {
       "Package": "shinydashboard",
       "Version": "0.7.1",
@@ -771,9 +778,8 @@
       "Version": "1.1.0.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "shinyjs",
       "RemoteUsername": "daattali",
+      "RemoteRepo": "shinyjs",
       "RemoteRef": "master",
       "RemoteSha": "52542599fe72957e66957ed04d20a719bc9cadd3",
       "Hash": "ba392da93db53e09900eeb9bc845632b"
@@ -832,9 +838,8 @@
       "Version": "1.0.2.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "tidyr",
       "RemoteUsername": "tidyverse",
+      "RemoteRepo": "tidyr",
       "RemoteRef": "master",
       "RemoteSha": "44d0ec717b63f81ca733d052a569ac1687053df1",
       "Hash": "2d96f53ca34ab7270b8a9ac8336a8d10"
