@@ -40,7 +40,7 @@ Suggests:
     devtools,
     testthat
 Remotes:
-    Sage-Bionetworks/dccvalidator
+    Sage-Bionetworks/dccvalidator@basename-bug
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.0.2
