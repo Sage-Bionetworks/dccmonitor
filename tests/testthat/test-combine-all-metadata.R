@@ -229,3 +229,28 @@ test_that("combine_all_metadata returns NULL if no metadata files", {
   expect_null(res1)
   expect_null(res2)
 })
+
+test_that("combine_all_metadata works if IDs are different types", {
+  indiv <- tibble::tibble(
+    individualID = c(1, 2, 3),
+    otherIndivCol = c("a", "b", "c")
+  )
+  manifest <- tibble::tibble(
+    individualID = c("1", "2", "3"),
+    specimenID = c("4", "5", "6")
+  )
+  biosp <- tibble::tibble(
+    specimenID = c(1, 2, 3)
+  )
+  view <- tibble::tibble(
+    metadataType = c("manifest", "individual", "biospecimen"),
+    file_data = c(list(manifest), list(indiv), list(biosp))
+  )
+  res <- combine_all_metadata(view)
+  expected <- tibble::tibble(
+    individualID = c("1", "2", "3"),
+    specimenID = c("4", "5", "6"),
+    otherIndivCol = c("a", "b", "c")
+  )
+  expect_equal(res, expected)
+})
