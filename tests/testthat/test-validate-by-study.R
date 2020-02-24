@@ -124,10 +124,14 @@ test_that("validate_all_studies() gets results for all studies", {
 
   # Should be a list with another list per study
   expect_true(inherits(res1, "list"))
-  expect_true(all(purrr::map_lgl(res1, function(x) {inherits(x, "list")})))
+  expect_true(all(purrr::map_lgl(res1, function(x) {
+    inherits(x, "list")
+  })))
   expect_equal(names(res1), c("mystudy1", "mystudy2"))
   expect_true(inherits(res2, "list"))
-  expect_true(all(purrr::map_lgl(res2, function(x) {inherits(x, "list")})))
+  expect_true(all(purrr::map_lgl(res2, function(x) {
+    inherits(x, "list")
+  })))
   expect_equal(names(res2), "mystudy1")
 })
 
@@ -138,4 +142,3 @@ test_that("validate_all_studies() gets results for all studies", {
   res <- validate_all_studies(view, annotations, syn)
   expect_null(res)
 })
-

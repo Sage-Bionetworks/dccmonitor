@@ -2,6 +2,7 @@ context("utils.R")
 
 test_that("get_most_recent_time gets the most recent time", {
   times1 <- c(NULL)
+  # nolint start
   times2 <- c(
     as.POSIXct(strptime("2019-12-15 01:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC")
   )
@@ -25,6 +26,7 @@ test_that("get_most_recent_time gets the most recent time", {
     as.POSIXct(strptime("2019-12-04 10:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC"),
     as.POSIXct(strptime("2019-11-03 8:45:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC")
   )
+  # nolint end
   res1 <- get_most_recent_time(times1)
   res2 <- get_most_recent_time(unclass(times2))
   res3 <- get_most_recent_time(unclass(times3))
@@ -34,22 +36,32 @@ test_that("get_most_recent_time gets the most recent time", {
   expect_equal(res1, NULL)
   expect_equal(
     res2,
-    unclass(as.POSIXct(strptime("2019-12-15 01:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC"))[1]
+    unclass(as.POSIXct(
+      strptime("2019-12-15 01:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC")
+    )[1]
   )
   expect_equal(
     res3,
-    unclass(as.POSIXct(strptime("2019-12-15 01:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC"))[1]
+    unclass(as.POSIXct(
+      strptime("2019-12-15 01:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC")
+    )[1]
   )
   expect_equal(
     res4,
-    unclass(as.POSIXct(strptime("2019-12-15 01:30:01", "%Y-%m-%d %H:%M:%S"), tz = "UTC"))[1]
+    unclass(as.POSIXct(
+      strptime("2019-12-15 01:30:01", "%Y-%m-%d %H:%M:%S"), tz = "UTC")
+    )[1]
   )
   expect_equal(
     res5,
-    unclass(as.POSIXct(strptime("2019-12-15 16:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC"))[1]
+    unclass(as.POSIXct(
+      strptime("2019-12-15 16:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC")
+    )[1]
   )
   expect_equal(
     res6,
-    unclass(as.POSIXct(strptime("2019-12-04 10:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC"))[1]
+    unclass(as.POSIXct(
+      strptime("2019-12-04 10:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC")
+    )[1]
   )
 })

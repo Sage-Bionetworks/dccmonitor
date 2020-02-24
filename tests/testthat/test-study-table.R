@@ -3,6 +3,7 @@ context("study-table.R")
 test_that("get_study_table_latest only filters metadata files", {
   fileview <- tibble::tribble(
     ~study, ~metadataType, ~modifiedOn,
+    # nolint start
     "a", NA, as.POSIXct(strptime("2019-11-23 19:35:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC"),
     "a", NA, as.POSIXct(strptime("2019-11-23 22:35:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC"),
     "a", "m", as.POSIXct(strptime("2019-11-23 10:02:10", "%Y-%m-%d %H:%M:%S"), tz = "UTC"),
@@ -14,6 +15,7 @@ test_that("get_study_table_latest only filters metadata files", {
     "b", NA, as.POSIXct(strptime("2019-11-21 23:05:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC"),
     "b", "m", as.POSIXct(strptime("2019-11-23 22:35:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC"),
     "b", "m", as.POSIXct(strptime("2019-11-21 06:30:00", "%Y-%m-%d %H:%M:%S"), tz = "UTC")
+    # nolint end
   )
   expected_a <- fileview[c(1, 2, 4, 5, 6), ]
   expected_b <- fileview[c(9, 10), ]

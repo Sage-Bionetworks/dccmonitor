@@ -30,6 +30,11 @@ study_overview_ui <- function(id) {
             "Data Summary",
             br(),
             dccvalidator::file_summary_ui(ns("summary"))
+          ),
+          tabPanel(
+            "Annotations",
+            br(),
+            edit_annotations_ui(ns("annots"))
           )
         )
       )
@@ -75,12 +80,16 @@ study_overview_server <- function(input, output, session,
         data$study_view,
         file_types_present
       )
-      file_list <- reactive({purrr::map(file_indices, function(index) {
-        tibble::as_tibble(data$study_view$file_data[[index]])
-      })})
+      file_list <- reactive({
+        purrr::map(file_indices, function(index) {
+          tibble::as_tibble(data$study_view$file_data[[index]])
+        })
+      })
       callModule(dccvalidator::file_summary_server, "summary", file_list)
     }
 
+    data$study_view <- get_all_file_data(fileview(), syn)
+    callModule(edit_annotations_server, "annots", data$study_view)
     data$all_results <- validate_study(data$study_view, annotations, syn)
     if (length(data$all_results) > 0) {
       stat_values$success_rate <- percent_pass_validation(data$all_results)

@@ -9,14 +9,14 @@ edit_annotations_ui <- function(id) {
   tagList(
     div(
       h4("Instructions"),
+      # nolint start
       tags$ol(
-        # nolint start
         tags$li("Click on 'Get Annotations' to join all metadata to the manifest. See note below."),
         tags$li("Select the desired annotation columns and verify annotations do not contain PII/PHI."),
         tags$li("Below the annotations table, give the name to download the file as and click on 'Download' to download the annotations as a csv file locally.")
-        # nolint end
       ),
       p("Note: All metadata files listed in the table above are joined to the manifest. Verify that only files relevant to the current data release are present."),
+      # nolint end
       dccvalidator::with_busy_indicator_ui(
         actionButton(ns("get_annots"), "Get annotations")
       ),
@@ -69,7 +69,7 @@ edit_annotations_server <- function(input, output, session, fileview) {
 
   observe({
     if (is.null(input$annot_keys)) {
-      output$annot_table <- reactable::renderReactable({NULL})
+      output$annot_table <- reactable::renderReactable(NULL)
     } else {
       metadata_subset <- all_metadata[, input$annot_keys]
       output$annot_table <- reactable::renderReactable({
