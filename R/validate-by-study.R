@@ -22,7 +22,7 @@ validate_all_studies <- function(fileview, annotations, syn) {
   # Run validation checks on each set of study files
   full_results <- purrr::map(
     study_names,
-    function (name) {
+    function(name) {
       study_table <- filter_study_table_latest(fileview, name)
       results <- validate_study(study_table, annotations, syn)
       results

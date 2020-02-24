@@ -30,6 +30,7 @@ study_overview_ui <- function(id) {
             "Data Summary",
             br(),
             dccvalidator::file_summary_ui(ns("summary"))
+          ),
           tabPanel(
             "Annotations",
             br(),
@@ -79,9 +80,11 @@ study_overview_server <- function(input, output, session,
         data$study_view,
         file_types_present
       )
-      file_list <- reactive({purrr::map(file_indices, function(index) {
-        tibble::as_tibble(data$study_view$file_data[[index]])
-      })})
+      file_list <- reactive({
+        purrr::map(file_indices, function(index) {
+          tibble::as_tibble(data$study_view$file_data[[index]])
+        })
+      })
       callModule(dccvalidator::file_summary_server, "summary", file_list)
     }
 
