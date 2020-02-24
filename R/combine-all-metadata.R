@@ -29,11 +29,19 @@ combine_all_metadata <- function(fileview) {
       c(which(is.na(manifest$specimenID)), which(is.na(manifest$individualID)))
     )
     # Remove NA id rows from manifest
-    fileview$file_data[file_indices$manifest][[1]] <- manifest[-na_ids, ]
+    if (length(na_ids) > 0) {
+      fileview$file_data[file_indices$manifest][[1]] <- manifest[-na_ids, ]
+    }
   }
-
+  # Convert all columns to character separately; using pipe results in error
+  all_files <- purrr::map(
+    fileview$file_data[unlist(file_indices)],
+    function(x) {
+      dplyr::mutate_all(x, as.character)
+    }
+  )
   # Manifest, if exists, should be first in list and should be joined on
-  all_metadata <- fileview$file_data[unlist(file_indices)] %>%
+  all_metadata <- all_files %>%
     Reduce(dplyr::left_join, .)
 
   all_metadata
