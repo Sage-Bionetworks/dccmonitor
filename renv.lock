@@ -200,8 +200,8 @@
       "RemoteRepo": "dccvalidator",
       "RemoteUsername": "Sage-Bionetworks",
       "RemoteRef": "master",
-      "RemoteSha": "58e7da345161e8ad3a3767168c47cca53e45f087",
-      "Hash": "e2aa045660b8a38d5ac0dc5d8bc6335d"
+      "RemoteSha": "35a34ccb9c742eda58834bf75780b3ca306b0d14",
+      "Hash": "79cf70f1b0f4f67b847ccdbc2dc9df46"
     },
     "desc": {
       "Package": "desc",
@@ -224,10 +224,10 @@
     },
     "digest": {
       "Package": "digest",
-      "Version": "0.6.24",
+      "Version": "0.6.25",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "dc0030cea0d85397ba3ba5b930c82c6a"
+      "Hash": "f697db7d92b7028c4b3436e9603fb636"
     },
     "dockerfiler": {
       "Package": "dockerfiler",
@@ -782,6 +782,7 @@
       "RemoteRepo": "shinyjs",
       "RemoteRef": "master",
       "RemoteSha": "52542599fe72957e66957ed04d20a719bc9cadd3",
+      "RemoteHost": "api.github.com",
       "Hash": "ba392da93db53e09900eeb9bc845632b"
     },
     "skimr": {
@@ -838,11 +839,12 @@
       "Version": "1.0.2.9000",
       "Source": "GitHub",
       "RemoteType": "github",
-      "RemoteUsername": "tidyverse",
+      "RemoteHost": "api.github.com",
       "RemoteRepo": "tidyr",
+      "RemoteUsername": "tidyverse",
       "RemoteRef": "master",
-      "RemoteSha": "44d0ec717b63f81ca733d052a569ac1687053df1",
-      "Hash": "2d96f53ca34ab7270b8a9ac8336a8d10"
+      "RemoteSha": "6b26af8cccc43cf9f94df263dcf6cb2d509b9d25",
+      "Hash": "8fed586b65622dbfc8d7f80f02a9d1aa"
     },
     "tidyselect": {
       "Package": "tidyselect",
@@ -867,10 +869,10 @@
     },
     "vctrs": {
       "Package": "vctrs",
-      "Version": "0.2.2",
+      "Version": "0.2.3",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "a1de558a76d2843a10f766209b9a545f"
+      "Hash": "2c0f41d87be7a186139a6d3d5215848e"
     },
     "viridisLite": {
       "Package": "viridisLite",
