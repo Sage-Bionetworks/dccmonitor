@@ -7,34 +7,41 @@
 #' @param id Id for the module
 study_overview_ui <- function(id) {
   ns <- NS(id)
-
-  tagList(
-    div(
-      id = id,
-      box(
-        title = id,
-        width = 12,
-        status = "primary",
-        solidHeader = TRUE,
-        collapsible = TRUE,
-        collapsed = TRUE,
-        uiOutput(ns("infobox_ui")),
-        tableOutput(ns("infotable")),
-        tabsetPanel(
-          tabPanel(
-            "Validation Results",
-            br(),
-            dccvalidator::results_boxes_ui(ns("results"))
-          ),
-          tabPanel(
-            "Data Summary",
-            br(),
-            dccvalidator::file_summary_ui(ns("summary"))
-          ),
-          tabPanel(
-            "Annotations",
-            br(),
-            edit_annotations_ui(ns("annots"))
+  tabPanel(
+    id,
+    fluidPage(
+      div(
+        id = id,
+        box(
+          title = id,
+          width = 12,
+          status = "primary",
+          solidHeader = TRUE,
+          tabsetPanel(
+            tabPanel(
+              "Validation",
+              br(),
+              uiOutput(ns("infobox_ui")),
+              reactable::reactableOutput(ns("infotable")),
+              br(),
+              tabsetPanel(
+                tabPanel(
+                  "Validation Results",
+                  br(),
+                  dccvalidator::results_boxes_ui(ns("results"))
+                ),
+                tabPanel(
+                  "Data Summary",
+                  br(),
+                  dccvalidator::file_summary_ui(ns("summary"))
+                )
+              )
+            ),
+            tabPanel(
+              "Annotations",
+              br(),
+              edit_annotations_ui(ns("annots"))
+            )
           )
         )
       )
@@ -65,8 +72,11 @@ study_overview_server <- function(input, output, session,
     study_view = fileview()
   )
   observe({
-    output$infotable <- renderTable({
-      create_info_table(fileview(), syn)
+    output$infotable <- reactable::renderReactable({
+      reactable::reactable(
+        create_info_table(fileview(), syn),
+        resizable = TRUE
+      )
     })
     data$study_view <- get_all_file_data(fileview(), syn)
     # File summary module setup

@@ -8,35 +8,28 @@
 #' @param request Shiny request
 #' @export
 app_ui <- function(request) {
-  dashboardPage(
-    dashboardHeader(
-      title = "Metadata Validation Monitor",
-      titleWidth = "100%"
-    ),
 
-    dashboardSidebar(
-      sidebarMenu(
-        menuItem("Validation Status", tabName = "validation")
-      )
-    ),
+  tagList(
+    # Add resources in www
+    golem_add_external_resources(),
 
-    dashboardBody(
+    dashboardPage(
+      dashboardHeader(
+        title = "Metadata Validation Monitor",
+        titleWidth = "100%"
+      ),
 
-      # Add resources in www
-      golem_add_external_resources(),
+      dashboardSidebar(disable = TRUE),
 
-      tags$div(
-        # Validation tab UI
-        tabItem(
-          tabName = "validation",
-
-          # Use shinyjs
-          shinyjs::useShinyjs(),
-
-          # UI for all studies
-          uiOutput("all_studies")
-        ),
-        class = "tab-content"
+      dashboardBody(
+        navlistPanel(
+          id = "studies",
+          tabPanel(
+            "Start",
+            h1("Welcome to dccmonitor"),
+            p("The app is loaded when all the studies appear as tabs in the sidebar.") # nolint
+          )
+        )
       )
     )
   )
