@@ -51,3 +51,9 @@ summary {
   padding: 5px;
 }
 
+/* Used in file summary mod from dccvalidator*/
+.detailbox {
+  color: #FFFFFF;
+  background-color: #367FA8;
+  padding: 3%;
+}
