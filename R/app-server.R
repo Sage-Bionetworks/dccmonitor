@@ -56,13 +56,15 @@ app_server <- function(input, output, session) {
       # Get the Fileview in team directory & make into a dataframe
       fileview <- get_all_studies_table(fileview_id, syn)
 
-      output$all_studies <- renderUI({
-        set_up_ui(fileview)
-      })
-
       # Setup study server functions
       studies <- unique(fileview$study)
-      for (study in studies) {
+      purrr::walk(studies, function(study) {
+        insertTab(
+          inputId = "studies",
+          study_overview_ui(study),
+          target = "Start",
+          position = "after"
+        )
         view <- reactive({
           filter_study_table_latest(fileview, study)
         })
@@ -74,22 +76,7 @@ app_server <- function(input, output, session) {
           annotations = annotations,
           syn = syn
         )
-      }
+      })
     }
   })
-}
-
-#' @title Setup UI for all studies
-#'
-#' @description Setup UI for all studies in the fileview.
-#'
-#' @param fileview A data frame with at least
-#'   one column, `study`.
-set_up_ui <- function(fileview) {
-  studies <- unique(fileview$study)
-  html_studies <- ""
-  for (study in studies) {
-    html_studies <- c(html_studies, study_overview_ui(study))
-  }
-  html_studies
 }

@@ -38,3 +38,16 @@ footer {
 summary {
     display: list-item
 }
+
+.col-sm-4 {
+  width: 15%;
+}
+
+.col-sm-8 {
+  width: 85%;
+}
+
+.well {
+  padding: 5px;
+}
+
