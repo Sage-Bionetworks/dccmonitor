@@ -12,7 +12,7 @@ edit_annotations_ui <- function(id) {
       # nolint start
       tags$ol(
         tags$li("Click on 'Get Annotations' to join all metadata to the manifest. See note below."),
-        tags$li("Select the desired annotation columns and verify annotations do not contain PII/PHI."),
+        tags$li("Select or deselect the desired annotation keys and verify annotations do not contain PII/PHI."),
         tags$li("Below the annotations table, give the name to download the file as and click on 'Download' to download the annotations as a csv file locally.")
       ),
       p("Note: All metadata files listed in the table above are joined to the manifest. Verify that only files relevant to the current data release are present."),
