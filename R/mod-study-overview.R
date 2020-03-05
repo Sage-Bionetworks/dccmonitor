@@ -24,6 +24,10 @@ study_overview_ui <- function(id) {
               uiOutput(ns("infobox_ui")),
               reactable::reactableOutput(ns("infotable")),
               br(),
+              dccvalidator::with_busy_indicator_ui(
+                actionButton(ns("validate"), "Validate")
+              ),
+              br(),
               tabsetPanel(
                 tabPanel(
                   "Validation Results",
@@ -68,9 +72,20 @@ study_overview_server <- function(input, output, session,
     success_rate = 0
   )
 
+  observe({
+    output$infobox_ui <- renderUI({
+      get_info_box_ui(
+        stat_values$num_docs,
+        stat_values$num_files,
+        stat_values$success_rate
+      )
+    })
+  })
+
   data <- reactiveValues(
     study_view = fileview()
   )
+
   observe({
     output$infotable <- reactable::renderReactable({
       reactable::reactable(
@@ -100,10 +115,14 @@ study_overview_server <- function(input, output, session,
 
     data$study_view <- get_all_file_data(fileview(), syn)
     callModule(edit_annotations_server, "annots", data$study_view)
-    data$all_results <- validate_study(data$study_view, annotations, syn)
-    if (length(data$all_results) > 0) {
-      stat_values$success_rate <- percent_pass_validation(data$all_results)
-    }
+    observeEvent(input$validate, {
+      dccvalidator::with_busy_indicator_server("validate", {
+        data$all_results <- validate_study(data$study_view, annotations, syn)
+        if (length(data$all_results) > 0) {
+          stat_values$success_rate <- percent_pass_validation(data$all_results)
+        }
+      })
+    })
   })
 
   observeEvent(data$all_results, {
@@ -113,31 +132,39 @@ study_overview_server <- function(input, output, session,
       session = session,
       results = data$all_results
     )
-
-    output$infobox_ui <- renderUI({
-      fluidRow(
-        valueBox(
-          stat_values$num_docs,
-          "# Documents",
-          width = 3,
-          icon = icon("file-alt"),
-          color = box_docs_color(stat_values$num_docs)
-        ),
-        valueBox(
-          stat_values$num_files,
-          "# Metadata Files",
-          width = 3,
-          icon = icon("table"),
-          color = box_meta_color(stat_values$num_files)
-        ),
-        valueBox(
-          stat_values$success_rate,
-          "% Success",
-          width = 3,
-          icon = icon("percentage"),
-          color = box_success_color(stat_values$success_rate)
-        )
-      )
-    })
   })
+}
+
+#' @title Get info box UI
+#'
+#' @description Creates the html for the info box UI.
+#'
+#' @param num_docs Number of documentation files.
+#' @param num_meta Number of metadata files.
+#' @param percent_success Integer value between 0 and 100 representing the
+#'   success rate for validation.
+get_info_box_ui <- function(num_docs, num_meta, percent_success) {
+  fluidRow(
+    valueBox(
+      num_docs,
+      "# Documents",
+      width = 3,
+      icon = icon("file-alt"),
+      color = box_docs_color(num_docs)
+    ),
+    valueBox(
+      num_meta,
+      "# Metadata Files",
+      width = 3,
+      icon = icon("table"),
+      color = box_meta_color(num_meta)
+    ),
+    valueBox(
+      percent_success,
+      "% Success",
+      width = 3,
+      icon = icon("percentage"),
+      color = box_success_color(percent_success)
+    )
+  )
 }
