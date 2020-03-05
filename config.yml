@@ -2,6 +2,9 @@ default:
   consortium_fileview: "syn21027019"
   annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
+  annotation_keys:
+    - "age"
+    - "primaryDiagnosis"
   teams:
     - "3346847"
   templates:
@@ -37,6 +40,9 @@ amp-ad:
   annotations_table:
     - "syn10242922"
     - "syn21459391"
+  annotation_keys:
+    - "age"
+    - "primaryDiagnosis"
   teams:
     - "3346847"
   templates:
@@ -66,6 +72,9 @@ amp-ad:
 pec:
   annotations_table: "syn20981788"
   annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"
+  annotation_keys:
+    - "age"
+    - "primaryDiagnosis"
   consortium_fileview: "syn21560413"
   teams:
     - "3328037"

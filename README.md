@@ -60,6 +60,7 @@ Of the configuration options, only two are specific to dccmonitor while the rest
     - individual metadata: study, species, metadataType = individual
     - biospecimen metadata: study, species, metadataType = biospecimen
     - assay metadata: study, species, assay, metadataType = assay
+- `annotation_keys`: List of annotation keys that should **not** be included in annotations. These keys would be any that could be considered PHI/PII.
 
 A brief overview of the dccvalidator specific configurations are below, but more information can be found in the [dccvalidator documentation](https://sage-bionetworks.github.io/dccvalidator/articles/customizing-dccvalidator.html#configuration-options):
 
