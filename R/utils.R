@@ -39,3 +39,6 @@ get_most_recent_time <- function(times) {
   }
   most_recent
 }
+
+#' @importFrom magrittr %>%
+magrittr::`%>%`

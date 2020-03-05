@@ -23,6 +23,7 @@ Imports:
     glue,
     golem,
     htmltools,
+    magrittr,
     purrr,
     reactable,
     readr,
