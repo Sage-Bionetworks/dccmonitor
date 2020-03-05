@@ -44,6 +44,15 @@ app_server <- function(input, output, session) {
     )
 
     if (inherits(membership, "check_pass")) {
+      # Add folder to upload annotations to if doesn't exist already
+      annots_folder <- try({
+        new_folder <- synapse$Folder(
+          name = user$userName,
+          parent = config::get("annotations_storage")
+          )
+        syn$store(new_folder)
+      })
+
       # Download annotation definitions
       annotations <- purrr::map_dfr(
         config::get("annotations_table"),
@@ -74,7 +83,9 @@ app_server <- function(input, output, session) {
           session = getDefaultReactiveDomain(),
           fileview = view,
           annotations = annotations,
-          syn = syn
+          annots_folder = annots_folder,
+          syn = syn,
+          synapseclient = synapse
         )
       })
     }

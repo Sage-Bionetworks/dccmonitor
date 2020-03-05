@@ -1,5 +1,6 @@
 default:
   consortium_fileview: "syn21027019"
+  annotations_storage: "syn21703007"
   annotations_table: "syn10242922"
   annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
   teams:
@@ -34,6 +35,7 @@ default:
 amp-ad:
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   consortium_fileview: "syn21448475"
+  annotations_storage: "syn21698384"
   annotations_table:
     - "syn10242922"
     - "syn21459391"
