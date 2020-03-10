@@ -5,3 +5,5 @@
 ^renv\.lock$
 ^config\.yml$
 ^app\.R$
+^codecov\.yml$
+^\.github$
