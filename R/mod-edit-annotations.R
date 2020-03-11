@@ -11,11 +11,15 @@ edit_annotations_ui <- function(id) {
       h4("Instructions"),
       # nolint start
       tags$ol(
-        tags$li("Click on 'Get Annotations' to join all metadata to the manifest. See note below."),
+        tags$li("Click on 'Get Annotations' to join all metadata to the manifest."),
         tags$li("Select the desired annotation columns and verify annotations do not contain PII/PHI."),
-        tags$li("Below the annotations table, give the name to download the file as and click on 'Download' to download the annotations as a csv file locally.")
+        tags$li("Below the annotations table, give the name to upload the file as and click on 'Upload' to save the annotations as a csv file in Synapse.")
       ),
-      p("Note: All metadata files listed in the table above are joined to the manifest. Verify that only files relevant to the current data release are present."),
+      h4("Important:"),
+      tags$ul(
+        tags$li("In order to save to Synapse, the annotations file is first downloaded to a local, temporary file. Double-check that PII/PHI data has not been included."),
+        tags$li("All metadata files listed in the table above are joined to the manifest. Verify that only files relevant to the current data release are present.")
+      ),
       # nolint end
       dccvalidator::with_busy_indicator_ui(
         actionButton(ns("get_annots"), "Get annotations")
@@ -32,10 +36,10 @@ edit_annotations_ui <- function(id) {
       reactable::reactableOutput(ns("annot_table")),
       textOutput(ns("no_annots")),
       br(),
-      textInput(ns("file_name"), "Enter file name to download as:"),
+      textInput(ns("file_name"), "Enter file name to upload as:"),
       shinyjs::disabled(
         dccvalidator::with_busy_indicator_ui(
-          downloadButton(ns("download"), "Download")
+          actionButton(ns("upload"), "Upload")
         )
       )
     )
@@ -47,7 +51,9 @@ edit_annotations_ui <- function(id) {
 #' @description Server function for the edit annotations module.
 #'
 #' @inheritParams study_overview_server
-edit_annotations_server <- function(input, output, session, fileview) {
+edit_annotations_server <- function(input, output, session,
+                                    fileview, annots_folder,
+                                    syn, synapseclient) {
   session <- getDefaultReactiveDomain()
 
   all_metadata <- NULL
@@ -86,22 +92,31 @@ edit_annotations_server <- function(input, output, session, fileview) {
     }
   })
 
+  # Require important info to be able to push upload button
   observe({
-    if (input$file_name == "" || is.null(input$file_name) || input$annot_keys == "" || is.null(input$annot_keys)) { # nolint
-      shinyjs::disable("download")
+    if (input$file_name == "" || is.null(input$file_name)
+        || input$annot_keys == "" || is.null(input$annot_keys)) {
+      shinyjs::disable("upload")
     } else {
-      shinyjs::enable("download")
+      shinyjs::enable("upload")
     }
   })
-    dccvalidator::with_busy_indicator_server("download", {
-      output$download <- downloadHandler(
-        filename = function() {
-          paste0(input$file_name, ".csv")
-        },
-        content = function(file) {
-          metadata_subset <- all_metadata[, input$annot_keys]
-          utils::write.csv(metadata_subset, file, row.names = FALSE)
-        }
+
+  # Upload handling
+  observeEvent(input$upload, {
+    dccvalidator::with_busy_indicator_server("upload", {
+      metadata_subset <- all_metadata[, input$annot_keys]
+      temp <- tempfile(pattern = input$file_name, fileext = ".csv")
+      utils::write.csv(metadata_subset, file = temp, row.names = FALSE)
+      file_to_upload <- synapseclient$File(
+        temp,
+        parent = annots_folder,
+        name = input$file_name,
+        annotations = list(
+          study = unique(fileview$study[!is.na(fileview$study)])
+        )
       )
+      syn$store(file_to_upload)
     })
+  })
 }

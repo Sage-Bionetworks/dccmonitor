@@ -62,8 +62,11 @@ study_overview_ui <- function(id) {
 #' @param fileview The fileview for a specific study.
 #' @param annotations A dataframe of annotation definitions.
 #' @param syn Synapse client object.
+#' @param synapseclient Synapse client.
+#' @param annots_folder Synapse folder ID to store generated annotation csvs in.
 study_overview_server <- function(input, output, session,
-                                  fileview, annotations, syn) {
+                                  fileview, annotations, annots_folder,
+                                  syn, synapseclient) {
   session <- getDefaultReactiveDomain()
 
   stat_values <- reactiveValues(
@@ -113,8 +116,18 @@ study_overview_server <- function(input, output, session,
       callModule(dccvalidator::file_summary_server, "summary", file_list)
     }
 
+    # Annotations module
     data$study_view <- get_all_file_data(fileview(), syn)
-    callModule(edit_annotations_server, "annots", data$study_view)
+    callModule(
+      edit_annotations_server,
+      "annots",
+      data$study_view,
+      annots_folder,
+      syn = syn,
+      synapseclient = synapseclient
+    )
+
+    # Validate button
     observeEvent(input$validate, {
       dccvalidator::with_busy_indicator_server("validate", {
         data$all_results <- validate_study(data$study_view, annotations, syn)
@@ -125,6 +138,7 @@ study_overview_server <- function(input, output, session,
     })
   })
 
+  # Populate validation resulst
   observeEvent(data$all_results, {
     callModule(
       dccvalidator::results_boxes_server,
