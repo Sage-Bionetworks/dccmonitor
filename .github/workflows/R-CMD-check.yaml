@@ -82,3 +82,11 @@ jobs:
         with:
           name: ${{ runner.os }}-r${{ matrix.config.r }}-results
           path: check
+
+      - name: Lint
+        if: runner.os == 'Windows'
+        run: |
+          install.packages("lintr")
+          lintr::lint_package()
+        shell: Rscript {0}
+
