@@ -67,6 +67,7 @@ amp-ad:
 
 pec:
   annotations_table: "syn20981788"
+  annotations_storage: "syn21763155"
   annotations_link: "https://www.synapse.org/#!Synapse:syn20729790"
   consortium_fileview: "syn21560413"
   teams:
