@@ -59,18 +59,21 @@ edit_annotations_server <- function(input, output, session,
   all_metadata <- NULL
   observeEvent(input$get_annots, {
     dccvalidator::with_busy_indicator_server("get_annots", {
-        all_metadata <<- combine_all_metadata(fileview)
+      all_metadata <<- combine_all_metadata(fileview)
+      annot_keys <- names(all_metadata)
+      disallowed_keys <- config::get("annotation_keys")
+      annot_keys_subset <- setdiff(annot_keys, disallowed_keys)
 
-        if (!is.null(all_metadata)) {
-          shinyWidgets::updateMultiInput(
-            session = session,
-            "annot_keys",
-            label = "Choose Annotation Keys",
-            choices = names(all_metadata)
-          )
-        }
+      if (!is.null(all_metadata)) {
+        shinyWidgets::updateMultiInput(
+          session = session,
+          "annot_keys",
+          label = "Choose Annotation Keys",
+          choices = annot_keys,
+          selected = annot_keys_subset
+        )
       }
-    )
+    })
   })
 
   observe({
