@@ -2,8 +2,6 @@
 
 This package is intended to assist Sage Bionetworks data curators to check the status of metadata and documentation files uploaded via the [dccvalidator](https://sage-bionetworks.github.io/dccvalidator/) shiny application. The dccmonitor package contains functions to gather validation information. Optionally, the included Shiny application can be used to view the results.
 
-**Note:** The application takes time to fully populate the validation information and currently does not have a progress indicator. The application will initialize the study boxes after checking for team membership and gathering the studies represented in the `consortium_fileview` (see Customization for details on this file view). After this, the application will populate the study boxes after the validation checks have run for all represented studies.
-
 ## Requirements
 
 dccmonitor uses the reticulate package with the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient). See the [reticulate documentation](https://rstudio.github.io/reticulate/#python-version) for more information on setting up reticulate to work with your local Python environment. Additionally, see the [Synapse Python Client](https://github.com/Sage-Bionetworks/synapsePythonClient) for installation instructions. The Synapse Python Client should be installed in the same Python environment used by reticulate.
@@ -54,6 +52,7 @@ A configuration file is required for the application to behave correctly. Create
 Of the configuration options, only two are specific to dccmonitor while the rest are used to customize the dccvalidator checks. The dccmonitor specific configurations are:
 
 - `teams`: Synapse administration team ID. The app data should only be accessible to curators with admin privileges.
+- `annotations_storage`: Synapse folder ID for storing annotation csv files created in the. The folder should only be accessible to curators with admin privileges.
 - `consortium_fileview`: Synapse file view ID. A Synapse file view that shows all the files in the `parent` folder (this is the folder that dccvalidator uploads metadata and documentation files to), along with their annotations. The file view should include the columns: id, name, createdOn, createdBy, modifiedOn, currentVersion, study, metadataType, species, assay. Note that the following file-specific annotations are required for dccmonitor to function properly:
     - documentation: study
     - manifest: study, metadataType = manifest
@@ -72,15 +71,5 @@ A brief overview of the dccvalidator specific configurations are below, but more
   
 ### Validation Checks
 
-dccmonitor uses dccvalidator to validate the metadata and manifest files. Currently, this is done in a set of functions that are updated to mirror the most recent version of the dccvalidator application. To customize the validation checks performed, the following functions would need to be changed:
+dccmonitor uses the [dccvalidator's `check_all()`](https://github.com/Sage-Bionetworks/dccvalidator/blob/master/R/check-all.R) to validate the metadata and manifest files. Currently, there is not a simple way to change the validation checks that are done.
 
-#### validate-by-study.R
-
-- `validate_study()`: handles the validation of an individual study, sending files on to be validated by themselves and doing validation checks across files.
-
-#### validate-by-file.R
-
-- `validate_manifest()`: validation checks specific to the manifest.
-- `validate_individual_meta()`: validation checks specific to the individual metadata.
-- `validate_biospecimen_meta()`: validation checks specific to the biospecimen metadata.
-- `validate_assay_meta()`: validation checks specific to the assay metadata.
