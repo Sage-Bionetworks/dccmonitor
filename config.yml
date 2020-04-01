@@ -56,7 +56,6 @@ amp-ad:
     individual_templates:
       human: "syn12973254"
       other mouse or animal model: "syn12973253"
-      mouse or other animal model: "syn12973253"
       MODEL-AD mouse model: "syn21084071"
     assay_templates:
       proteomics: "syn12973255"
