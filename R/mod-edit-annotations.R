@@ -88,7 +88,7 @@ edit_annotations_server <- function(input, output, session,
           searchable = TRUE,
           resizable = TRUE,
           showPageSizeOptions = TRUE,
-          pageSizeOptions = c(10, 25, 50, 100),
+          pageSizeOptions = c(1, 5, 10, 25, 50, 100),
           outlined = TRUE
         )
       })
