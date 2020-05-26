@@ -63,6 +63,8 @@ amp-ad:
       MODEL-AD mouse model: "syn12973252"
       drosophila: "syn20673251"
     assay_templates:
+      ATACseq: "syn22024364"
+      autorad: "syn22087295"
       proteomics: "syn12973255"
       single cell RNAseq: "syn21018360"
       wholeGenomeSeq: "syn21018358"
@@ -70,6 +72,9 @@ amp-ad:
       NanoString: "syn21082744"
       snpArray: "syn21372586"
       TMT quantitation: "syn21433357"
+      methylationArray: "syn22036881"
+      MRI: "syn22087332"
+      PET: "syn22087299"
   complete_columns:
     manifest:
       - "consortium"
