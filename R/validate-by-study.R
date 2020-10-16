@@ -47,8 +47,9 @@ validate_all_studies <- function(fileview, annotations, syn) {
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: 'key', 'value', and 'columnType'.
 #' @param syn Synapse client object.
+#' @param study Name of the study.
 #' @return Named list of check results. Returns `NULL` if there are no rows.
-validate_study <- function(study_table, annotations, syn) {
+validate_study <- function(study_table, annotations, syn, study) {
 
   # Check that there is one row per metadata type
   # If not, add "dummy" row
@@ -66,6 +67,11 @@ validate_study <- function(study_table, annotations, syn) {
       )
     }
   } # else all present and it's okay to do checks
-  results <- dccvalidator::check_all(study_table, annotations, syn)
+  results <- dccvalidator::check_all(
+    data = study_table,
+    annotations = annotations,
+    syn = syn,
+    study = study
+  )
   results
 }

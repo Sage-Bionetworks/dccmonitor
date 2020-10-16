@@ -85,7 +85,8 @@ app_server <- function(input, output, session) {
           annotations = annotations,
           annots_folder = annots_folder,
           syn = syn,
-          synapseclient = synapse
+          synapseclient = synapse,
+          study = study
         )
       })
     }
