@@ -9,6 +9,7 @@ Authors@R:
       person(given = "Sage Bionetworks",
              role = "cph"))
 Maintainer: The package maintainer <nicole.kauer@sagebase.org>
+URL: https://github.com/Sage-Bionetworks/dccmonitor
 Description: Allows for monitoring of data uploaded via the
     dccvalidator application. Functions for getting information
     on the uploaded files, metadata validation status, and more.
@@ -39,7 +40,8 @@ Imports:
     visdat
 Suggests:
     devtools,
-    testthat
+    testthat,
+    covr
 Remotes:
     Sage-Bionetworks/dccvalidator
 Encoding: UTF-8
