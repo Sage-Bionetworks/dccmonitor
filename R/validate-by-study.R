@@ -24,7 +24,12 @@ validate_all_studies <- function(fileview, annotations, syn) {
     study_names,
     function(name) {
       study_table <- filter_study_table_latest(fileview, name)
-      results <- validate_study(study_table, annotations, syn)
+      results <- validate_study(
+        study_table = study_table,
+        annotations = annotations,
+        syn = syn,
+        study = name
+      )
       results
     }
   )

@@ -63,7 +63,12 @@ test_that("validate_study() returns a list", {
     "mystudy", "file3", "human", "rnaSeq", "assay", assay_template, assay,
     "mystudy", "file4", NA, NA, "manifest", manifest_template, manifest
   )
-  res <- validate_study(view, annotations, syn)
+  res <- validate_study(
+    study_table = view,
+    annotations = annotations,
+    syn = syn,
+    study = "mystudy"
+  )
   expect_true(inherits(res, "list"))
 })
 
@@ -85,9 +90,24 @@ test_that("validate_study() doesn't have check_all error if missing metadata", {
     "mystudy", "file3", NA, NA, "manifest", manifest_template, manifest
   )
 
-  res1 <- validate_study(view1, annotations, syn)
-  res2 <- validate_study(view2, annotations, syn)
-  res3 <- validate_study(view3, annotations, syn)
+  res1 <- validate_study(
+    study_table = view1,
+    annotations = annotations,
+    syn = syn,
+    study = "mystudy"
+  )
+  res2 <- validate_study(
+    study_table = view2,
+    annotations = annotations,
+    syn = syn,
+    study = "mystudy"
+  )
+  res3 <- validate_study(
+    study_table = view3,
+    annotations = annotations,
+    syn = syn,
+    study = "mystudy"
+  )
 
   # Should get lists back for all, not errors
   expect_true(inherits(res1, "list"))
@@ -99,7 +119,12 @@ test_that("validate_study() returns NULL if no metadata", {
   view <- tibble::tribble(
     ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data
   )
-  res <- validate_study(view, annotations, syn)
+  res <- validate_study(
+    study_table = view,
+    annotations = annotations,
+    syn = syn,
+    study = "mystudy"
+  )
 
   expect_null(res)
 })
@@ -119,8 +144,16 @@ test_that("validate_all_studies() gets results for all studies", {
     "mystudy1", "f1", "human", NA, "individual", indiv_template, individual,
     "mystudy1", "f2", "human", NA, "biospecimen", biosp_template, biospecimen
   )
-  res1 <- validate_all_studies(view1, annotations, syn)
-  res2 <- validate_all_studies(view2, annotations, syn)
+  res1 <- validate_all_studies(
+    fileview = view1,
+    annotations = annotations,
+    syn = syn
+  )
+  res2 <- validate_all_studies(
+    fileview = view2,
+    annotations = annotations,
+    syn = syn
+  )
 
   # Should be a list with another list per study
   expect_true(inherits(res1, "list"))
@@ -135,10 +168,14 @@ test_that("validate_all_studies() gets results for all studies", {
   expect_equal(names(res2), "mystudy1")
 })
 
-test_that("validate_all_studies() gets results for all studies", {
+test_that("validate_all_studies() returns null if no studies", {
   view <- tibble::tribble(
     ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data
   )
-  res <- validate_all_studies(view, annotations, syn)
+  res <- validate_all_studies(
+    fileview = view,
+    annotations = annotations,
+    syn = syn
+  )
   expect_null(res)
 })

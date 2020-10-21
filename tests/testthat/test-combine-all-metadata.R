@@ -45,15 +45,15 @@ assay3 <- tibble::tibble(
   otherAssay = c("1", NA, "3")
 )
 manifest1 <- tibble::tibble(
-  individualID = c("a", "b", "c", NA),
-  other = c("1", "2", "3", NA),
-  path = c(NA, NA, NA, "indiv.csv")
+  individualID = c("a", "b", "c"),
+  other = c("1", "2", "3"),
+  path = c("indiv.csv", NA, NA)
 )
 manifest2 <- tibble::tibble(
-  individualID = c("a", "b", "c", NA, NA, NA),
-  specimenID = c("a1", "b1", "c1", NA, NA, NA),
-  other = c("1", "2", "3", NA, NA, NA),
-  path = c(NA, NA, NA, "assay.csv", "biosp.csv", "indiv.csv")
+  individualID = c("a", "b", "c"),
+  specimenID = c("a1", "b1", "c1"),
+  other = c("1", "2", "3"),
+  path = c("assay.csv", "biosp.csv", "indiv.csv")
 )
 manifest3 <- tibble::tibble(
   individualID = c(NA, "b", "c", NA, NA, NA),
@@ -64,7 +64,7 @@ manifest3 <- tibble::tibble(
 
 test_that("combine_all_metadata returns expected join with manifest and no missing data", { # nolint
 
-  # Only manifest and individual files with no missing IDs
+  # Only manifest and individual files with no missing IDs outide of metadata
   view1 <- tibble::tibble(
     metadataType = c("individual", "manifest"),
     file_data = c(list(indiv1), list(manifest1))
@@ -73,7 +73,7 @@ test_that("combine_all_metadata returns expected join with manifest and no missi
   expected1 <- tibble::tibble(
     individualID = c("a", "b", "c"),
     other = c("1", "2", "3"),
-    path = as.character(c(NA, NA, NA)),
+    path = c("indiv.csv", NA, NA),
     otherIndiv = c("1", "2", "3")
   )
   expect_equal(res1, expected1)
@@ -88,63 +88,32 @@ test_that("combine_all_metadata returns expected join with manifest and no missi
     individualID = c("a", "b", "c"),
     specimenID = c("a1", "b1", "c1"),
     other = c("1", "2", "3"),
-    path = as.character(c(NA, NA, NA)),
-    otherIndiv = c("1", "2", "3"),
+    path = c("assay.csv", "biosp.csv", "indiv.csv"),
     otherBiosp = c("1", "2", "3"),
-    otherAssay = c("1", "2", "3")
+    otherAssay = c("1", "2", "3"),
+    otherIndiv = c("1", "2", "3")
   )
   expect_equal(res2, expected2)
 })
 
 test_that("combine_all_metadata returns expected join with manifest and missing IDs", { # nolint
 
-  # Only manifest and individual files with missing IDs
-  view1 <- tibble::tibble(
-    metadataType = c("individual", "manifest"),
-    file_data = c(list(indiv2), list(manifest1))
-  )
-  res1 <- combine_all_metadata(view1)
-  expected1 <- tibble::tibble(
-    individualID = c("a", "b", "c"),
-    other = c("1", "2", "3"),
-    path = as.character(c(NA, NA, NA)),
-    otherIndiv = c("1", NA, "3")
-  )
-  expect_equal(res1, expected1)
-
-  # All file types with missing IDs
-  view2 <- tibble::tibble(
-    metadataType = c("biospecimen", "manifest", "individual", "assay"),
-    file_data = c(list(biosp2), list(manifest2), list(indiv2), list(assay2))
-  )
-  res2 <- combine_all_metadata(view2)
-  expected2 <- tibble::tibble(
-    individualID = c("a", "b", "c"),
-    specimenID = c("a1", "b1", "c1"),
-    other = c("1", "2", "3"),
-    path = as.character(c(NA, NA, NA)),
-    otherBiosp = c("1", "2", NA),
-    otherAssay = c("1", "2", NA),
-    otherIndiv = c("1", NA, "3")
-  )
-  expect_equal(res2, expected2)
-
   # All file types with missing IDs in manifest
-  view3 <- tibble::tibble(
+  view <- tibble::tibble(
     metadataType = c("biospecimen", "manifest", "individual", "assay"),
     file_data = c(list(biosp2), list(manifest3), list(indiv2), list(assay2))
   )
-  res3 <- combine_all_metadata(view3)
-  expected3 <- tibble::tibble(
-    individualID = "c",
-    specimenID = "c1",
-    other = "3",
-    path = as.character(NA),
-    otherBiosp = as.character(NA),
-    otherAssay = as.character(NA),
-    otherIndiv = "3"
+  res <- combine_all_metadata(view)
+  expected <- tibble::tibble(
+    individualID = c(NA, "b", "c", NA, NA, NA),
+    specimenID = c("a1", NA, "c1", NA, NA, NA),
+    other = c("1", "2", "3", NA, NA, NA),
+    path = c(NA, NA, NA, "assay.csv", "biosp.csv", "indiv.csv"),
+    otherBiosp = as.character(c(NA, NA, NA, NA, NA, NA)),
+    otherAssay = c("1", "3", NA, "3", "3", "3"),
+    otherIndiv = c("2", NA, "3", "2", "2", "2")
   )
-  expect_equal(res3, expected3)
+  expect_equal(res, expected)
 })
 
 test_that("combine_all_metadata returns expected join with manifest and missing data", { # nolint
@@ -158,7 +127,7 @@ test_that("combine_all_metadata returns expected join with manifest and missing 
   expected1 <- tibble::tibble(
     individualID = c("a", "b", "c"),
     other = c("1", "2", "3"),
-    path = as.character(c(NA, NA, NA)),
+    path = c("indiv.csv", NA, NA),
     otherIndiv = c("1", NA, NA)
   )
   expect_equal(res1, expected1)
@@ -173,7 +142,7 @@ test_that("combine_all_metadata returns expected join with manifest and missing 
     individualID = c("a", "b", "c"),
     specimenID = c("a1", "b1", "c1"),
     other = c("1", "2", "3"),
-    path = as.character(c(NA, NA, NA)),
+    path = c("assay.csv", "biosp.csv", "indiv.csv"),
     otherBiosp = c("1", NA, NA),
     otherAssay = c("1", NA, NA),
     otherIndiv = c("1", NA, NA)
@@ -197,10 +166,10 @@ test_that("combine_all_metadata returns expected data join without manifest", {
   )
   res2 <- combine_all_metadata(view2)
   expected2 <- tibble::tibble(
-    individualID = c("a", "b", "c"),
     specimenID = c("a1", "b1", "c1"),
-    otherIndiv = c("1", "2", "3"),
-    otherBiosp = c("1", "2", "3")
+    individualID = c("a", "b", "c"),
+    otherBiosp = c("1", "2", "3"),
+    otherIndiv = c("1", "2", "3")
   )
   expect_equal(res2, expected2)
 
@@ -211,8 +180,8 @@ test_that("combine_all_metadata returns expected data join without manifest", {
   )
   res3 <- combine_all_metadata(view3)
   expected3 <- tibble::tibble(
-    individualID = c("a", "b", "c"),
     specimenID = c("a1", "b1", "c1"),
+    individualID = c("a", "b", "c"),
     otherBiosp = c("1", "2", "3"),
     otherAssay = c("1", "2", "3")
   )
