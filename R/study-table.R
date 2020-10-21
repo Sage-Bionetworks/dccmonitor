@@ -43,7 +43,7 @@ filter_study_table_latest <- function(fileview, study_name = NULL) {
     if (length(file_indices) > 1) {
       times <- fileview$modifiedOn[file_indices]
       times <- times[!is.na(times)]
-      most_recent_time <- get_most_recent_time(times)
+      most_recent_time <- max(times)
       to_remove <- intersect(
         file_indices,
         which(fileview$modifiedOn != most_recent_time)
