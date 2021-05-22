@@ -1,4 +1,5 @@
 default:
+  production: TRUE
   consortium_fileview: "syn21027019"
   samples_table: "syn21578908"
   annotations_storage: "syn21703007"
@@ -35,6 +36,9 @@ default:
       - "specimenID"
     assay:
       - "specimenID"
+
+dev:
+  production: FALSE
 
 amp-ad:
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
