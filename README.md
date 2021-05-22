@@ -51,6 +51,7 @@ A configuration file is required for the application to behave correctly. Create
 
 Of the configuration options, only two are specific to dccmonitor while the rest are used to customize the dccvalidator checks. The dccmonitor specific configurations are:
 
+- `production`: `TRUE` to use production Synapse endpoints; `FALSE` to use staging endpoints. Used for testing new versions of the client before they are officially released. See [Synapse client documentation](https://python-docs.synapse.org/build/html/index.html?highlight=endpoints#synapseclient.Synapse.setEndpoints) for information on endpoints.
 - `teams`: Synapse administration team ID. The app data should only be accessible to curators with admin privileges.
 - `annotations_storage`: Synapse folder ID for storing annotation csv files created in the. The folder should only be accessible to curators with admin privileges.
 - `consortium_fileview`: Synapse file view ID. A Synapse file view that shows all the files in the `parent` folder (this is the folder that dccvalidator uploads metadata and documentation files to), along with their annotations. The file view should include the columns: id, name, createdOn, createdBy, modifiedOn, currentVersion, study, metadataType, species, assay. Note that the following file-specific annotations are required for dccmonitor to function properly:

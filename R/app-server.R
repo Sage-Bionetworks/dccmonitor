@@ -12,6 +12,11 @@
 #' @export
 app_server <- function(input, output, session) {
   syn <- synapse$Synapse()
+
+  if (!config::get("production")) {
+    dccvalidator::set_staging_endpoints(syn)
+  }
+
   session$sendCustomMessage(type = "readCookie", message = list())
 
   # Show message if user is not logged in to synapse
