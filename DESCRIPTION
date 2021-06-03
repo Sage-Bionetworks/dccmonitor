@@ -39,9 +39,10 @@ Imports:
     tibble,
     visdat
 Suggests:
+    covr,
     devtools,
-    testthat,
-    covr
+    pkgdown,
+    testthat
 Remotes:
     Sage-Bionetworks/dccvalidator
 Encoding: UTF-8
