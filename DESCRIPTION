@@ -1,6 +1,6 @@
 Package: dccmonitor
 Title: Monitor Data Validation
-Version: 0.0.0.9006
+Version: 0.0.0.9007
 Authors@R: 
     c(person(given = "Nicole",
              family = "Kauer",
@@ -9,12 +9,13 @@ Authors@R:
       person(given = "Sage Bionetworks",
              role = "cph"))
 Maintainer: The package maintainer <nicole.kauer@sagebase.org>
+URL: https://github.com/Sage-Bionetworks/dccmonitor
 Description: Allows for monitoring of data uploaded via the
     dccvalidator application. Functions for getting information
     on the uploaded files, metadata validation status, and more.
 License: MIT + file LICENSE
 Depends:
-    dccvalidator (>= 0.1.0.9001),
+    dccvalidator (>= 0.3.0.9018),
     R (>= 3.4)
 Imports:
     config,
@@ -39,9 +40,11 @@ Imports:
     visdat
 Suggests:
     devtools,
-    testthat
+    testthat,
+    covr
 Remotes:
     Sage-Bionetworks/dccvalidator
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.1
+SystemRequirements: synapseclient (>= 2.3.1) (pypi.org/project/synapseclient)

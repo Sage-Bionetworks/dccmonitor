@@ -20,19 +20,6 @@ combine_all_metadata <- function(fileview) {
     return(NULL)
   }
 
-  # Get manifest, if present
-  if (!is.null(file_indices$manifest)) {
-    manifest <- fileview$file_data[file_indices$manifest][[1]]
-    # Should have NA in specimenID and/or individualID for rows referring to the
-    # metadata files in manifest
-    na_ids <- unique(
-      c(which(is.na(manifest$specimenID)), which(is.na(manifest$individualID)))
-    )
-    # Remove NA id rows from manifest
-    if (length(na_ids) > 0) {
-      fileview$file_data[file_indices$manifest][[1]] <- manifest[-na_ids, ]
-    }
-  }
   # Convert all columns to character separately; using pipe results in error
   all_files <- purrr::map(
     fileview$file_data[unlist(file_indices)],

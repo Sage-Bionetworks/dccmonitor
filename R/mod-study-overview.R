@@ -64,9 +64,10 @@ study_overview_ui <- function(id) {
 #' @param syn Synapse client object.
 #' @param synapseclient Synapse client.
 #' @param annots_folder Synapse folder ID to store generated annotation csvs in.
+#' @param study Name of the study.
 study_overview_server <- function(input, output, session,
                                   fileview, annotations, annots_folder,
-                                  syn, synapseclient) {
+                                  syn, synapseclient, study) {
   session <- getDefaultReactiveDomain()
 
   stat_values <- reactiveValues(
@@ -130,7 +131,12 @@ study_overview_server <- function(input, output, session,
     # Validate button
     observeEvent(input$validate, {
       dccvalidator::with_busy_indicator_server("validate", {
-        data$all_results <- validate_study(data$study_view, annotations, syn)
+        data$all_results <- validate_study(
+          study_table = data$study_view,
+          annotations = annotations,
+          syn = syn,
+          study = study
+        )
         if (length(data$all_results) > 0) {
           stat_values$success_rate <- percent_pass_validation(data$all_results)
         }

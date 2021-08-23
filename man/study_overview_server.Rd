@@ -12,7 +12,8 @@ study_overview_server(
   annotations,
   annots_folder,
   syn,
-  synapseclient
+  synapseclient,
+  study
 )
 }
 \arguments{
@@ -31,6 +32,8 @@ study_overview_server(
 \item{syn}{Synapse client object.}
 
 \item{synapseclient}{Synapse client.}
+
+\item{study}{Name of the study.}
 }
 \description{
 Server for the study overview module.

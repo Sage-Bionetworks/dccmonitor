@@ -4,7 +4,7 @@
 \alias{validate_study}
 \title{Validate a study}
 \usage{
-validate_study(study_table, annotations, syn)
+validate_study(study_table, annotations, syn, study)
 }
 \arguments{
 \item{study_table}{Tibble with fileview information for
@@ -16,6 +16,8 @@ a single study. Expected columns are: 'metadataType',
 Must contain at least three columns: 'key', 'value', and 'columnType'.}
 
 \item{syn}{Synapse client object.}
+
+\item{study}{Name of the study.}
 }
 \value{
 Named list of check results. Returns `NULL` if there are no rows.
