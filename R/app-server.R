@@ -27,7 +27,7 @@ app_server <- function(input, output, session) {
     attempt_login(syn)
   } else {
     ## Oauth
-    syn <- dccvalidator::mod_synapse_oauth_server(
+    syn <- mod_synapse_oauth_server(
       id = "oauth",
       syn = syn
     )
