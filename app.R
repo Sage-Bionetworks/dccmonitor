@@ -5,4 +5,5 @@
 Sys.setenv(R_CONFIG_ACTIVE = "default") # Replace "default" with your config
 pkgload::load_all()
 options("golem.app.prod" = TRUE)
+options(shiny.autoload.r=FALSE)
 dccmonitor::run_app() # add parameters here (if any)
