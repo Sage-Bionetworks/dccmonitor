@@ -19,7 +19,7 @@ app_ui <- function(request) {
     ## Running locally; skip OAuth
     mod_main_ui("main")
   } else {
-    mod_synapse_oauth_ui(id = "oauth", request = request)
+    dccvalidator::mod_synapse_oauth_ui(id = "oauth", request = request)
   }
 }
 
