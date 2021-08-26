@@ -4,7 +4,7 @@
 \alias{study_overview_ui}
 \title{UI for the study overview module}
 \usage{
-study_overview_ui(id)
+study_overview_ui(id, study)
 }
 \arguments{
 \item{id}{Id for the module}

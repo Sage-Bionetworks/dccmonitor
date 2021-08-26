@@ -48,7 +48,8 @@ validate_all_studies <- function(fileview, annotations, syn) {
 #' @param study_table Tibble with fileview information for
 #'   a single study. Expected columns are: 'metadataType',
 #'   'file_data' (tibble column with data for each file), 'assay',
-#'   'species'. Should have, at most, one row per metadataType.
+#'   'species', 'biospecimen_type' (optional). Should have, at most, one row
+#'   per metadataType.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: 'key', 'value', and 'columnType'.
 #' @param syn Synapse client object.
@@ -71,7 +72,10 @@ validate_study <- function(study_table, annotations, syn, study) {
         metadataType = type
       )
     }
-  } # else all present and it's okay to do checks
+  } # else all present and it's okay to move on
+
+  # Grab all metadata templates from config
+  study_table <- add_template_col(study_table = study_table)
   results <- dccvalidator::check_all(
     data = study_table,
     annotations = annotations,
@@ -79,4 +83,78 @@ validate_study <- function(study_table, annotations, syn, study) {
     study = study
   )
   results
+}
+
+#' @title Add template column
+#'
+#' @description Add a template column to the `study_table`. The `study_table`
+#' requires columns metadataType, assay, species, and allows optional
+#' biospecimenType. Must have one row per `metadataType`: individual, assay,
+#' biospecimen, manifest.
+#'
+#' @noRd
+#' @inheritParams validate_study
+add_template_col <- function(study_table) {
+  # Ensure the needed columns exist
+  if (!all(c("metadataType", "assay", "species") %in% names(study_table))) {
+    stop("The study table should have the columns metadataType, assay, species")
+  }
+  if ("biospecimenType" %in% names(study_table)) {
+    biospecimen_type <- unique(stats::na.omit(study_table[["biospecimenType"]]))
+    # It's possible to get a column of NaN, NA, NULL; check length in case
+    if (length(biospecimen_type) < 1) {
+      biospecimen_type <- NA
+    }
+  } else {
+    biospecimen_type <- NA
+  }
+  species <- unique(stats::na.omit(study_table[["species"]]))
+  assay <- unique(stats::na.omit(study_table[["assay"]]))
+  study_table[, "template"] <- unlist(purrr::map(study_table[["metadataType"]], function(x) {
+    switch(
+      x,
+      manifest = gather_template_ids("manifest"),
+      individual = gather_template_ids("individual", species = species),
+      assay = {
+        if (length(assay) < 1 | !is.na(assay)) {
+          gather_template_ids("assay", species = species, assay = assay)
+        } else {
+          return(NA)
+        }
+      },
+      biospecimen = {
+        if (!is.na(biospecimen_type)) {
+          gather_template_ids(
+            "biospecimen",
+            species = species,
+            biospecimen_type = biospecimen_type
+          )
+        } else {
+          gather_template_ids(
+            "biospecimen",
+            species = species
+          )
+        }
+      }
+    )
+  }))
+  # Hacky grossness -- There's most certainly a better, more elegant way
+  # study_table[, "template"] <- as.character(NA)
+  # study_table[, "template"] <- c(
+  #   gather_template_ids(type = "manifest"),
+  #   gather_template_ids(
+  #     type = "individual",
+  #     species = unique(na.omit(study_table[["species"]]))
+  #   ),
+  #   gather_template_ids(
+  #     type = "biospecimen",
+  #     species = unique(na.omit(study_table[["species"]])),
+  #     biospecimen_type = biospecimen_type
+  #   ),
+  #   gather_template_ids(
+  #     type = "assay",
+  #     assay = unique(na.omit(study_table[["assay"]]))
+  #   )
+  # )
+  return(study_table)
 }

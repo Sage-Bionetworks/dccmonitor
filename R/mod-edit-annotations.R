@@ -51,75 +51,77 @@ edit_annotations_ui <- function(id) {
 #' @description Server function for the edit annotations module.
 #'
 #' @inheritParams study_overview_server
-edit_annotations_server <- function(input, output, session,
-                                    fileview, annots_folder,
+edit_annotations_server <- function(id, fileview, annots_folder,
                                     syn, synapseclient) {
-  session <- getDefaultReactiveDomain()
+  moduleServer(
+    id,
+    function(input, output, session) {
+      all_metadata <- NULL
+      observeEvent(input$get_annots, {
+        dccvalidator::with_busy_indicator_server("get_annots", {
+          all_metadata <<- combine_all_metadata(fileview)
+          annot_keys <- names(all_metadata)
+          disallowed_keys <- get_golem_config("annotation_keys")
+          annot_keys_subset <- setdiff(annot_keys, disallowed_keys)
 
-  all_metadata <- NULL
-  observeEvent(input$get_annots, {
-    dccvalidator::with_busy_indicator_server("get_annots", {
-      all_metadata <<- combine_all_metadata(fileview)
-      annot_keys <- names(all_metadata)
-      disallowed_keys <- config::get("annotation_keys")
-      annot_keys_subset <- setdiff(annot_keys, disallowed_keys)
+          if (!is.null(all_metadata)) {
+            shinyWidgets::updateMultiInput(
+              session = session,
+              "annot_keys",
+              label = "Choose Annotation Keys",
+              choices = annot_keys,
+              selected = annot_keys_subset
+            )
+          }
+        })
+      })
 
-      if (!is.null(all_metadata)) {
-        shinyWidgets::updateMultiInput(
-          session = session,
-          "annot_keys",
-          label = "Choose Annotation Keys",
-          choices = annot_keys,
-          selected = annot_keys_subset
-        )
-      }
-    })
-  })
+      observe({
+        if (is.null(input$annot_keys)) {
+          output$annot_table <- reactable::renderReactable(NULL)
+        } else {
+          metadata_subset <- all_metadata[, input$annot_keys]
+          output$annot_table <- reactable::renderReactable({
+            reactable::reactable(
+              metadata_subset,
+              highlight = TRUE,
+              searchable = TRUE,
+              resizable = TRUE,
+              showPageSizeOptions = TRUE,
+              pageSizeOptions = c(1, 5, 10, 25, 50, 100),
+              outlined = TRUE
+            )
+          })
+        }
+      })
 
-  observe({
-    if (is.null(input$annot_keys)) {
-      output$annot_table <- reactable::renderReactable(NULL)
-    } else {
-      metadata_subset <- all_metadata[, input$annot_keys]
-      output$annot_table <- reactable::renderReactable({
-        reactable::reactable(
-          metadata_subset,
-          highlight = TRUE,
-          searchable = TRUE,
-          resizable = TRUE,
-          showPageSizeOptions = TRUE,
-          pageSizeOptions = c(1, 5, 10, 25, 50, 100),
-          outlined = TRUE
-        )
+      # Require important info to be able to push upload button
+      observe({
+        if (input$file_name == "" || is.null(input$file_name)
+            || input$annot_keys == "" || is.null(input$annot_keys)) {
+          shinyjs::disable("upload")
+        } else {
+          shinyjs::enable("upload")
+        }
+      })
+
+      # Upload handling
+      observeEvent(input$upload, {
+        dccvalidator::with_busy_indicator_server("upload", {
+          metadata_subset <- all_metadata[, input$annot_keys]
+          temp <- tempfile(pattern = input$file_name, fileext = ".csv")
+          utils::write.csv(metadata_subset, file = temp, row.names = FALSE)
+          file_to_upload <- synapseclient$File(
+            temp,
+            parent = annots_folder,
+            name = input$file_name,
+            annotations = list(
+              study = unique(fileview$study[!is.na(fileview$study)])
+            )
+          )
+          syn$store(file_to_upload)
+        })
       })
     }
-  })
-
-  # Require important info to be able to push upload button
-  observe({
-    if (input$file_name == "" || is.null(input$file_name)
-        || input$annot_keys == "" || is.null(input$annot_keys)) {
-      shinyjs::disable("upload")
-    } else {
-      shinyjs::enable("upload")
-    }
-  })
-
-  # Upload handling
-  observeEvent(input$upload, {
-    dccvalidator::with_busy_indicator_server("upload", {
-      metadata_subset <- all_metadata[, input$annot_keys]
-      temp <- tempfile(pattern = input$file_name, fileext = ".csv")
-      utils::write.csv(metadata_subset, file = temp, row.names = FALSE)
-      file_to_upload <- synapseclient$File(
-        temp,
-        parent = annots_folder,
-        name = input$file_name,
-        annotations = list(
-          study = unique(fileview$study[!is.na(fileview$study)])
-        )
-      )
-      syn$store(file_to_upload)
-    })
-  })
+  )
 }

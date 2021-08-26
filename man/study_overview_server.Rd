@@ -5,9 +5,7 @@
 \title{Server for the study overview module}
 \usage{
 study_overview_server(
-  input,
-  output,
-  session,
+  id,
   fileview,
   annotations,
   annots_folder,
@@ -17,12 +15,6 @@ study_overview_server(
 )
 }
 \arguments{
-\item{input}{Shiny input}
-
-\item{output}{Shiny output}
-
-\item{session}{Shiny session}
-
 \item{fileview}{The fileview for a specific study.}
 
 \item{annotations}{A dataframe of annotation definitions.}

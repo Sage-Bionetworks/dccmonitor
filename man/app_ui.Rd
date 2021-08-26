@@ -7,9 +7,19 @@
 app_ui(request)
 }
 \arguments{
-\item{request}{Shiny request}
+\item{request}{Shiny request object}
+}
+\value{
+A shinydashboard page
 }
 \description{
-Create the UI component of the dccmonitor
-Shiny app.
+If not running interactively (i.e. locally), launches the
+\code{\link{mod_synapse_oauth_ui}} to start dccmonitor using OAuth for
+login. Otherwise, launches the \code{\link{mod_main_ui}} to start
+dccvalidator using login credentials stored in a .synapseConfig.
+}
+\examples{
+\dontrun{
+shinyApp(ui = app_ui, server = app_server)
+}
 }

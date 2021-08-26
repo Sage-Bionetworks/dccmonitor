@@ -4,23 +4,9 @@
 \alias{edit_annotations_server}
 \title{Edit annotations module server}
 \usage{
-edit_annotations_server(
-  input,
-  output,
-  session,
-  fileview,
-  annots_folder,
-  syn,
-  synapseclient
-)
+edit_annotations_server(id, fileview, annots_folder, syn, synapseclient)
 }
 \arguments{
-\item{input}{Shiny input}
-
-\item{output}{Shiny output}
-
-\item{session}{Shiny session}
-
 \item{fileview}{The fileview for a specific study.}
 
 \item{annots_folder}{Synapse folder ID to store generated annotation csvs in.}

@@ -15,7 +15,7 @@ Description: Allows for monitoring of data uploaded via the
     on the uploaded files, metadata validation status, and more.
 License: MIT + file LICENSE
 Depends:
-    dccvalidator (>= 0.3.0.9018),
+    dccvalidator (>= 0.3.0.9025),
     R (>= 3.4)
 Imports:
     config,
@@ -47,4 +47,4 @@ Remotes:
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
-SystemRequirements: synapseclient (>= 2.3.1) (pypi.org/project/synapseclient)
+SystemRequirements: synapseclient (>= 2.4.0) (pypi.org/project/synapseclient)

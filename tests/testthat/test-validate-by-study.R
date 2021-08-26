@@ -1,5 +1,7 @@
 context("validate-by-study.R")
 
+Sys.setenv(R_CONFIG_ACTIVE = "dev")
+
 manifest <- tibble::tribble(
   ~path, ~parent, ~individualID, ~specimenID,
   "/mypath/assay.csv", "syn499234", NA, NA,
@@ -57,11 +59,11 @@ annotations <- tibble::tribble(
 test_that("validate_study() returns a list", {
   skip_if_not(logged_in(syn = syn))
   view <- tibble::tribble(
-    ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data,
-    "mystudy", "file1", "human", NA, "individual", indiv_template, individual,
-    "mystudy", "file2", "human", NA, "biospecimen", biosp_template, biospecimen,
-    "mystudy", "file3", "human", "rnaSeq", "assay", assay_template, assay,
-    "mystudy", "file4", NA, NA, "manifest", manifest_template, manifest
+    ~study, ~name, ~species, ~assay, ~metadataType, ~file_data,
+    "mystudy", "file1", "human", NA, "individual", individual,
+    "mystudy", "file2", "human", NA, "biospecimen", biospecimen,
+    "mystudy", "file3", "human", "rnaSeq", "assay", assay,
+    "mystudy", "file4", NA, NA, "manifest", manifest
   )
   res <- validate_study(
     study_table = view,
@@ -75,19 +77,19 @@ test_that("validate_study() returns a list", {
 test_that("validate_study() doesn't have check_all error if missing metadata", {
   skip_if_not(logged_in(syn = syn))
   view1 <- tibble::tribble(
-    ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data,
-    "mystudy", "file1", "human", "rnaSeq", "assay", assay_template, assay
+    ~study, ~name, ~species, ~assay, ~metadataType, ~file_data,
+    "mystudy", "file1", "human", "rnaSeq", "assay", assay
   )
   view2 <- tibble::tribble(
-    ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data,
-    "mystudy", "file1", "human", "rnaSeq", "assay", assay_template, assay,
-    "mystudy", "file2", "human", NA, "biospecimen", biosp_template, biospecimen
+    ~study, ~name, ~species, ~assay, ~metadataType, ~file_data,
+    "mystudy", "file1", "human", "rnaSeq", "assay", assay,
+    "mystudy", "file2", "human", NA, "biospecimen", biospecimen
   )
   view3 <- tibble::tribble(
-    ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data,
-    "mystudy", "file1", "human", NA, "individual", indiv_template, individual,
-    "mystudy", "file2", "human", NA, "biospecimen", biosp_template, biospecimen,
-    "mystudy", "file3", NA, NA, "manifest", manifest_template, manifest
+    ~study, ~name, ~species, ~assay, ~metadataType, ~file_data,
+    "mystudy", "file1", "human", NA, "individual", individual,
+    "mystudy", "file2", "human", NA, "biospecimen", biospecimen,
+    "mystudy", "file3", NA, NA, "manifest", manifest
   )
 
   res1 <- validate_study(
@@ -117,7 +119,7 @@ test_that("validate_study() doesn't have check_all error if missing metadata", {
 
 test_that("validate_study() returns NULL if no metadata", {
   view <- tibble::tribble(
-    ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data
+    ~study, ~name, ~species, ~assay, ~metadataType, ~file_data
   )
   res <- validate_study(
     study_table = view,
@@ -133,16 +135,16 @@ test_that("validate_study() returns NULL if no metadata", {
 test_that("validate_all_studies() gets results for all studies", {
   skip_if_not(logged_in(syn = syn))
   view1 <- tibble::tribble(
-    ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data,
-    "mystudy1", "f1", "human", NA, "individual", indiv_template, individual,
-    "mystudy1", "f2", "human", NA, "biospecimen", biosp_template, biospecimen,
-    "mystudy2", "file3", "human", "rnaSeq", "assay", assay_template, assay,
-    "mystudy2", "file4", NA, NA, "manifest", manifest_template, manifest
+    ~study, ~name, ~species, ~assay, ~metadataType, ~file_data,
+    "mystudy1", "f1", "human", NA, "individual", individual,
+    "mystudy1", "f2", "human", NA, "biospecimen", biospecimen,
+    "mystudy2", "file3", "human", "rnaSeq", "assay", assay,
+    "mystudy2", "file4", NA, NA, "manifest", manifest
   )
   view2 <- tibble::tribble(
-    ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data,
-    "mystudy1", "f1", "human", NA, "individual", indiv_template, individual,
-    "mystudy1", "f2", "human", NA, "biospecimen", biosp_template, biospecimen
+    ~study, ~name, ~species, ~assay, ~metadataType, ~file_data,
+    "mystudy1", "f1", "human", NA, "individual", individual,
+    "mystudy1", "f2", "human", NA, "biospecimen", biospecimen
   )
   res1 <- validate_all_studies(
     fileview = view1,
@@ -170,7 +172,7 @@ test_that("validate_all_studies() gets results for all studies", {
 
 test_that("validate_all_studies() returns null if no studies", {
   view <- tibble::tribble(
-    ~study, ~name, ~species, ~assay, ~metadataType, ~template, ~file_data
+    ~study, ~name, ~species, ~assay, ~metadataType, ~file_data
   )
   res <- validate_all_studies(
     fileview = view,

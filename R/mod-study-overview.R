@@ -5,16 +5,17 @@
 #'
 #' @importFrom dccvalidator results_boxes_ui
 #' @param id Id for the module
-study_overview_ui <- function(id) {
+study_overview_ui <- function(id, study) {
   ns <- NS(id)
-  tabPanel(
-    id,
-    fluidPage(
+    fluidRow(
       div(
-        id = id,
+        id = ns(id),
+        column(
+          10,
+          offset = 1,
         box(
-          title = id,
-          width = 12,
+          title = study,
+          width = NULL,
           status = "primary",
           solidHeader = TRUE,
           tabsetPanel(
@@ -65,94 +66,84 @@ study_overview_ui <- function(id) {
 #' @param synapseclient Synapse client.
 #' @param annots_folder Synapse folder ID to store generated annotation csvs in.
 #' @param study Name of the study.
-study_overview_server <- function(input, output, session,
-                                  fileview, annotations, annots_folder,
+study_overview_server <- function(id, fileview, annotations, annots_folder,
                                   syn, synapseclient, study) {
-  session <- getDefaultReactiveDomain()
-
-  stat_values <- reactiveValues(
-    num_files = num_meta_files(fileview()),
-    num_docs = num_doc_files(fileview()),
-    success_rate = 0
-  )
-
-  observe({
-    output$infobox_ui <- renderUI({
-      get_info_box_ui(
-        stat_values$num_docs,
-        stat_values$num_files,
-        stat_values$success_rate
+  moduleServer(
+    id,
+    function(input, output, session) {
+      stat_values <- reactiveValues(
+        num_files = num_meta_files(fileview()),
+        num_docs = num_doc_files(fileview()),
+        success_rate = 0
       )
-    })
-  })
 
-  data <- reactiveValues(
-    study_view = fileview()
-  )
+      output$infobox_ui <- renderUI({
+        get_info_box_ui(
+          stat_values$num_docs,
+          stat_values$num_files,
+          stat_values$success_rate
+        )
+      })
 
-  observe({
-    output$infotable <- reactable::renderReactable({
-      reactable::reactable(
-        create_info_table(fileview(), syn),
-        resizable = TRUE
+      output$infotable <- reactable::renderReactable({
+        reactable::reactable(
+          create_info_table(fileview(), syn),
+          resizable = TRUE
+        )
+      })
+      study_view <- isolate(get_all_file_data(fileview(), syn))
+      # File summary module setup
+      file_types_present <- unique(
+        study_view$metadataType[
+          !is.na(study_view$metadataType)
+          ]
       )
-    })
-    data$study_view <- get_all_file_data(fileview(), syn)
-    # File summary module setup
-    file_types_present <- unique(
-      data$study_view$metadataType[
-        !is.na(data$study_view$metadataType)
-      ]
-    )
-    if (length(file_types_present) > 0) {
-      file_indices <- get_file_indices_named(
-        data$study_view,
-        file_types_present
+      if (length(file_types_present) > 0) {
+        req(study_view)
+        file_indices <- get_file_indices_named(
+          study_view,
+          file_types_present
+        )
+        file_list <- reactive({
+          purrr::map(file_indices, function(index) {
+            tibble::as_tibble(study_view$file_data[[index]])
+          })
+        })
+        callModule(dccvalidator::file_summary_server, "summary", file_list)
+      }
+
+      # Annotations module
+      edit_annotations_server(
+        id = "annots",
+        fileview = study_view,
+        annots_folder = annots_folder,
+        syn = syn,
+        synapseclient = synapseclient
       )
-      file_list <- reactive({
-        purrr::map(file_indices, function(index) {
-          tibble::as_tibble(data$study_view$file_data[[index]])
+
+      # Validate button
+      observeEvent(input$validate, {
+        req(study_view)
+        dccvalidator::with_busy_indicator_server("validate", {
+          all_results <- validate_study(
+            study_table = study_view[!is.na(study_view[["metadataType"]]), ],
+            annotations = annotations,
+            syn = syn,
+            study = study
+          )
+          if (length(all_results) > 0) {
+            stat_values$success_rate <- percent_pass_validation(all_results)
+          }
+          callModule(
+            dccvalidator::results_boxes_server,
+            id = "results",
+            session = session,
+            results = all_results
+          )
         })
       })
-      callModule(dccvalidator::file_summary_server, "summary", file_list)
     }
-
-    # Annotations module
-    data$study_view <- get_all_file_data(fileview(), syn)
-    callModule(
-      edit_annotations_server,
-      "annots",
-      data$study_view,
-      annots_folder,
-      syn = syn,
-      synapseclient = synapseclient
-    )
-
-    # Validate button
-    observeEvent(input$validate, {
-      dccvalidator::with_busy_indicator_server("validate", {
-        data$all_results <- validate_study(
-          study_table = data$study_view,
-          annotations = annotations,
-          syn = syn,
-          study = study
-        )
-        if (length(data$all_results) > 0) {
-          stat_values$success_rate <- percent_pass_validation(data$all_results)
-        }
-      })
-    })
-  })
-
-  # Populate validation resulst
-  observeEvent(data$all_results, {
-    callModule(
-      dccvalidator::results_boxes_server,
-      id = "results",
-      session = session,
-      results = data$all_results
-    )
-  })
+  )
 }
 
 #' @title Get info box UI

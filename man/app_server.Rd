@@ -13,6 +13,14 @@ app_server(input, output, session)
 
 \item{session}{Shiny session}
 }
+\value{
+none
+}
 \description{
-Create the server-side component of the dccmonitor Shiny app.
+Create the server-side component of the dccvalidator Shiny app.
+}
+\examples{
+\dontrun{
+shinyApp(ui = app_ui, server = app_server)
+}
 }

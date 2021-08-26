@@ -1,53 +1,45 @@
-#' @title Create a nice, printable version of the file info
+#' @title Create a nicer version of the file info
 #'
-#' @description Uses the fileview to create a table of relevant
-#' file information.
+#' @description Updates come default Synapse columns to be more useful.
+#' The column 'currentVersion' is changed to 'version' to reduce width of column
+#' name. The columns 'createdBy' and 'modifiedBy' are changed to user names
+#' instead of profile IDs. The columns 'createdOn' and 'modifiedOn' are changed
+#' to a date. Note that these columns do not need to exist in the fileview.
 #'
-#' @param fileview The fileview table. Assumes the following
-#'   columns exist:
-#'     name, id, currentVersion, metadataType, species,
-#'     assay, createdBy, createdOn, modifiedOn.
+#' @param fileview The fileview table.
 #' @param syn Synapse client object.
 create_info_table <- function(fileview, syn) {
-  info_table <- fileview[, c(
-    "name",
-    "id",
-    "currentVersion",
-    "metadataType",
-    "species",
-    "assay",
-    "createdBy",
-    "createdOn",
-    "modifiedOn"
-  )]
-
-  # Rename currentVersion to just version for better printing
-  names(info_table)[which(names(info_table) == "currentVersion")] <-
-    "version"
-
+  # Fix some columns based on prior knowledge of how these look/get loaded
+  # Only altering default Synapse columns
+  if ("currentVersion" %in% names(fileview)) {
+    # Rename currentVersion to just version for better printing
+    names(fileview)[names(fileview) %in% "currentVersion"] <- "version"
+  }
   # Give user name versus user id
-  info_table$createdBy <- purrr::map( # nolint
-    info_table$createdBy,
-    function(x) {
-      get_user_name(x, syn)
-    }
-  )
+  if ("createdBy" %in% names(fileview)) {
+    fileview[["createdBy"]] <- unlist(purrr::map(
+      fileview[["createdBy"]], function(x) get_user_name(x, syn)
+    ))
+  }
+  if ("modifiedBy" %in% names(fileview)) {
+    fileview[["modifiedBy"]] <- unlist(purrr::map(
+      fileview[["modifiedBy"]], function(x) get_user_name(x, syn)
+    ))
+  }
 
   # Fix formatting on dates
-  info_table$createdOn <- purrr::map( # nolint
-    info_table$createdOn,
-    function(x) {
-      format_date(x)
-    }
-  )
-  info_table$modifiedOn <- purrr::map( # nolint
-    info_table$modifiedOn,
-    function(x) {
-      format_date(x)
-    }
-  )
+  if ("createdOn" %in% names(fileview)) {
+    fileview[["createdOn"]] <- unlist(purrr::map(
+      fileview[["createdOn"]], function(x) format_date(x)
+    ))
+  }
+  if ("modifiedOn" %in% names(fileview)) {
+    fileview[["modifiedOn"]] <- unlist(purrr::map(
+      fileview[["modifiedOn"]], function(x) format_date(x)
+    ))
+  }
 
-  info_table
+  return(fileview)
 }
 
 #' @title Get the user name
