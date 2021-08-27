@@ -20,7 +20,7 @@ app_server <- function(input, output, session) {
 
   ## Set client endpoints to staging, if needed
   if (!get_golem_config("production")) {
-    set_staging_endpoints(syn)
+    dccvalidator::set_staging_endpoints(syn)
   }
 
   if (interactive()) {

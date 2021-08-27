@@ -5,8 +5,8 @@
 #'
 #' @import shiny
 #' @import shinydashboard
-#' @param request Shiny request
-#' @export
+#' @param id Module id.
+#' @noRd
 mod_main_ui <- function(id) {
   ns <- NS(id)
   dashboardPage(
@@ -14,9 +14,7 @@ mod_main_ui <- function(id) {
       title = "Metadata Validation Monitor",
       titleWidth = "100%"
     ),
-
     dashboardSidebar(disable = TRUE),
-
     dashboardBody(
       # Add resources in www
       golem_add_external_resources(),
@@ -48,6 +46,13 @@ mod_main_ui <- function(id) {
   )
 }
 
+#' @title Main app server
+#'
+#' @description Server for the dccmonitor app.
+#'
+#' @inheritParams mod_main_ui
+#' @param syn Synapse client object
+#' @noRd
 mod_main_server <- function(id, syn) {
   moduleServer(
     id,
@@ -71,7 +76,7 @@ mod_main_server <- function(id, syn) {
 
       ## If pass checks, do stuff
       if (inherits(membership, "check_pass") &
-          inherits(certified, "check_pass")) {
+        inherits(certified, "check_pass")) {
         # Add folder to upload annotations to if doesn't exist already
         annots_folder <- try({
           new_folder <- synapse$Folder(
@@ -117,7 +122,6 @@ mod_main_server <- function(id, syn) {
               annotations = annotations,
               annots_folder = annots_folder,
               syn = syn,
-              synapseclient = synapse,
               study = input$study_name
             )
           }

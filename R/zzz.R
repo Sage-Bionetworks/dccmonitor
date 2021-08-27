@@ -7,7 +7,7 @@ app_url <- NULL
 claims_param <- NULL
 authorization_url <- NULL
 
-.onLoad <- function(libname, pkgname) {
+.onLoad <- function(libname, pkgname) { # nolint
   synapse <<- reticulate::import("synapseclient", delay_load = TRUE)
   if (!interactive()) {
     setup_global_oauth_vars(
@@ -64,11 +64,8 @@ authorization_url <- NULL
 #' }
 mod_synapse_oauth_ui <- function(id, request,
                                  main_ui = mod_main_ui, main_ui_id = "main") {
-  ns <- NS(id)
-
   # If access token not available, launch OAuth, else launch main app UI
   if (!has_auth_code(parseQueryString(request$QUERY_STRING))) {
-    # authorization_url = httr::oauth2.0_authorize_url(api, app, scope = scope)
     return(
       tags$script(
         HTML(sprintf("location.replace(\"%s\");", authorization_url))
@@ -166,7 +163,6 @@ has_auth_code <- function(params) {
 #' Otherwise, kicks off the OAuth process and returns an access token for
 #' log in.
 oauth_process <- function(params) {
-  # params <- parseQueryString(isolate(session$clientData$url_search))
   if (!has_auth_code(params)) {
     return()
   }

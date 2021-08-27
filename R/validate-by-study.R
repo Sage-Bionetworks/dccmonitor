@@ -110,51 +110,42 @@ add_template_col <- function(study_table) {
   }
   species <- unique(stats::na.omit(study_table[["species"]]))
   assay <- unique(stats::na.omit(study_table[["assay"]]))
-  study_table[, "template"] <- unlist(purrr::map(study_table[["metadataType"]], function(x) {
-    switch(
-      x,
-      manifest = gather_template_ids("manifest"),
-      individual = gather_template_ids("individual", species = species),
-      assay = {
-        if (length(assay) < 1 | !is.na(assay)) {
-          gather_template_ids("assay", species = species, assay = assay)
-        } else {
-          return(NA)
+  study_table[, "template"] <- unlist(purrr::map(
+    study_table[["metadataType"]],
+    function(x) {
+      switch(x,
+        manifest = dccvalidator::gather_template_ids("manifest"),
+        individual = dccvalidator::gather_template_ids(
+          "individual",
+          species = species
+        ),
+        assay = {
+          if (any(c(length(assay) < 1, !is.na(assay)))) {
+            dccvalidator::gather_template_ids(
+              "assay",
+              species = species,
+              assay = assay
+            )
+          } else {
+            return(NA)
+          }
+        },
+        biospecimen = {
+          if (!is.na(biospecimen_type)) {
+            dccvalidator::gather_template_ids(
+              "biospecimen",
+              species = species,
+              biospecimen_type = biospecimen_type
+            )
+          } else {
+            dccvalidator::gather_template_ids(
+              "biospecimen",
+              species = species
+            )
+          }
         }
-      },
-      biospecimen = {
-        if (!is.na(biospecimen_type)) {
-          gather_template_ids(
-            "biospecimen",
-            species = species,
-            biospecimen_type = biospecimen_type
-          )
-        } else {
-          gather_template_ids(
-            "biospecimen",
-            species = species
-          )
-        }
-      }
-    )
-  }))
-  # Hacky grossness -- There's most certainly a better, more elegant way
-  # study_table[, "template"] <- as.character(NA)
-  # study_table[, "template"] <- c(
-  #   gather_template_ids(type = "manifest"),
-  #   gather_template_ids(
-  #     type = "individual",
-  #     species = unique(na.omit(study_table[["species"]]))
-  #   ),
-  #   gather_template_ids(
-  #     type = "biospecimen",
-  #     species = unique(na.omit(study_table[["species"]])),
-  #     biospecimen_type = biospecimen_type
-  #   ),
-  #   gather_template_ids(
-  #     type = "assay",
-  #     assay = unique(na.omit(study_table[["assay"]]))
-  #   )
-  # )
+      )
+    }
+  ))
   return(study_table)
 }

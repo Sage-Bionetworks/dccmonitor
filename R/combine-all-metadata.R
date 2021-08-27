@@ -6,7 +6,7 @@
 #' an error.
 #'
 #' @export
-#' @inheritParams edit_annotations_server
+#' @param fileview The fileview for a specific study.
 combine_all_metadata <- function(fileview) {
   if (is.null(fileview)) {
     return(NULL)
@@ -28,8 +28,7 @@ combine_all_metadata <- function(fileview) {
     }
   )
   # Manifest, if exists, should be first in list and should be joined on
-  all_metadata <- all_files %>%
-    Reduce(dplyr::left_join, .)
+  all_metadata <- Reduce(dplyr::left_join, all_files)
 
   all_metadata
 }

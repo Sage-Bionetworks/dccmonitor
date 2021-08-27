@@ -3,16 +3,18 @@
 #' @description Creates the UI for the study overview
 #' module.
 #'
+#' @inheritParams mod_main_ui
 #' @importFrom dccvalidator results_boxes_ui
-#' @param id Id for the module
+#' @param study The study name.
+#' @noRd
 study_overview_ui <- function(id, study) {
   ns <- NS(id)
-    fluidRow(
-      div(
-        id = ns(id),
-        column(
-          10,
-          offset = 1,
+  fluidRow(
+    div(
+      id = ns(id),
+      column(
+        10,
+        offset = 1,
         box(
           title = study,
           width = NULL,
@@ -58,16 +60,16 @@ study_overview_ui <- function(id, study) {
 #'
 #' @description Server for the study overview module.
 #'
+#' @noRd
 #' @importFrom dccvalidator results_boxes_server
-#' @inheritParams app_server
+#' @param id Module id.
 #' @param fileview The fileview for a specific study.
 #' @param annotations A dataframe of annotation definitions.
-#' @param syn Synapse client object.
-#' @param synapseclient Synapse client.
 #' @param annots_folder Synapse folder ID to store generated annotation csvs in.
 #' @param study Name of the study.
+#' @param syn Synapse client object
 study_overview_server <- function(id, fileview, annotations, annots_folder,
-                                  syn, synapseclient, study) {
+                                  syn, study) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -96,7 +98,7 @@ study_overview_server <- function(id, fileview, annotations, annots_folder,
       file_types_present <- unique(
         study_view$metadataType[
           !is.na(study_view$metadataType)
-          ]
+        ]
       )
       if (length(file_types_present) > 0) {
         req(study_view)
@@ -117,8 +119,7 @@ study_overview_server <- function(id, fileview, annotations, annots_folder,
         id = "annots",
         fileview = study_view,
         annots_folder = annots_folder,
-        syn = syn,
-        synapseclient = synapseclient
+        syn = syn
       )
 
       # Validate button

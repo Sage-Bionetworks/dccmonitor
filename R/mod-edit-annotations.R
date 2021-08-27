@@ -2,7 +2,8 @@
 #'
 #' @description UI function for the edit annotations module.
 #'
-#' @param id Module id.
+#' @noRd
+#' @inheritParams mod_main_ui
 edit_annotations_ui <- function(id) {
   ns <- NS(id)
 
@@ -50,9 +51,13 @@ edit_annotations_ui <- function(id) {
 #'
 #' @description Server function for the edit annotations module.
 #'
-#' @inheritParams study_overview_server
+#' @noRd
+#' @param id Module id.
+#' @param fileview The fileview for a specific study.
+#' @param annots_folder Synapse synID folder to upload annotation table to.
+#' @param syn Synapse client object
 edit_annotations_server <- function(id, fileview, annots_folder,
-                                    syn, synapseclient) {
+                                    syn) {
   moduleServer(
     id,
     function(input, output, session) {
@@ -97,8 +102,8 @@ edit_annotations_server <- function(id, fileview, annots_folder,
 
       # Require important info to be able to push upload button
       observe({
-        if (input$file_name == "" || is.null(input$file_name)
-            || input$annot_keys == "" || is.null(input$annot_keys)) {
+        if (input$file_name == "" || is.null(input$file_name) ||
+          input$annot_keys == "" || is.null(input$annot_keys)) {
           shinyjs::disable("upload")
         } else {
           shinyjs::enable("upload")
@@ -111,7 +116,7 @@ edit_annotations_server <- function(id, fileview, annots_folder,
           metadata_subset <- all_metadata[, input$annot_keys]
           temp <- tempfile(pattern = input$file_name, fileext = ".csv")
           utils::write.csv(metadata_subset, file = temp, row.names = FALSE)
-          file_to_upload <- synapseclient$File(
+          file_to_upload <- synapse$File(
             temp,
             parent = annots_folder,
             name = input$file_name,

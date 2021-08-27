@@ -16,7 +16,7 @@ A shinydashboard page
 If not running interactively (i.e. locally), launches the
 \code{\link{mod_synapse_oauth_ui}} to start dccmonitor using OAuth for
 login. Otherwise, launches the \code{\link{mod_main_ui}} to start
-dccvalidator using login credentials stored in a .synapseConfig.
+dccmonitor using login credentials stored in a .synapseConfig.
 }
 \examples{
 \dontrun{

@@ -17,7 +17,7 @@ app_server(input, output, session)
 none
 }
 \description{
-Create the server-side component of the dccvalidator Shiny app.
+Create the server-side component of the dccmonitor Shiny app.
 }
 \examples{
 \dontrun{

@@ -40,6 +40,8 @@ Imports:
     visdat
 Suggests:
     devtools,
+    httr,
+    jsonlite,
     testthat,
     covr
 Remotes:
