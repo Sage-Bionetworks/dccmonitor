@@ -214,8 +214,8 @@
       "RemoteRepo": "dccvalidator",
       "RemoteUsername": "Sage-Bionetworks",
       "RemoteRef": "HEAD",
-      "RemoteSha": "75424f73a5efa7984229ef85569155990c2a8a3e",
-      "Hash": "6d91f31b147f60b263a0ab45cbed5163"
+      "RemoteSha": "04e1b433c88b790b307e2debbaa643f01521e0f8",
+      "Hash": "e1bee8e948a7401014269712e3c7bc29"
     },
     "desc": {
       "Package": "desc",
