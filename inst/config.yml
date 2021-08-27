@@ -47,7 +47,7 @@ amp-ad:
   consortium_fileview: "syn21448475"
   samples_table: "syn21578908"
   annotations_storage: "syn21698384"
-  annotations_table: "syn10242922"
+  annotations_table: "syn21459391"
   annotation_keys:
     - "age"
     - "primaryDiagnosis"
