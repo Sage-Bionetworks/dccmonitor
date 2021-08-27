@@ -64,6 +64,11 @@ validate_study <- function(study_table, annotations, syn, study) {
   if (!any(required %in% study_table$metadataType)) {
     return(NULL)
   }
+  # Check if biospecimenType exists in table
+  # If yes, make sure it's a character column
+  if ("biospecimenType" %in% names(study_table)) {
+    class(study_table$biospecimenType) <- "character"
+  }
   if (!all(required %in% study_table$metadataType)) {
     present_types <- which(required %in% study_table$metadataType)
     for (type in required[-present_types]) {
@@ -71,6 +76,7 @@ validate_study <- function(study_table, annotations, syn, study) {
         study_table,
         metadataType = type
       )
+
     }
   } # else all present and it's okay to move on
 
@@ -102,7 +108,10 @@ add_template_col <- function(study_table) {
   if ("biospecimenType" %in% names(study_table)) {
     biospecimen_type <- unique(stats::na.omit(study_table[["biospecimenType"]]))
     # It's possible to get a column of NaN, NA, NULL; check length in case
-    if (length(biospecimen_type) < 1) {
+    if (any(c(
+      length(biospecimen_type) < 1),
+      biospecimen_type %in% c("NaN", ""))
+    ) {
       biospecimen_type <- NA
     }
   } else {
@@ -114,36 +123,43 @@ add_template_col <- function(study_table) {
     study_table[["metadataType"]],
     function(x) {
       switch(x,
-        manifest = dccvalidator::gather_template_ids("manifest"),
-        individual = dccvalidator::gather_template_ids(
-          "individual",
-          species = species
-        ),
-        assay = {
-          if (any(c(length(assay) < 1, !is.na(assay)))) {
-            dccvalidator::gather_template_ids(
-              "assay",
-              species = species,
-              assay = assay
-            )
-          } else {
-            return(NA)
-          }
-        },
-        biospecimen = {
-          if (!is.na(biospecimen_type)) {
-            dccvalidator::gather_template_ids(
-              "biospecimen",
-              species = species,
-              biospecimen_type = biospecimen_type
-            )
-          } else {
-            dccvalidator::gather_template_ids(
-              "biospecimen",
-              species = species
-            )
-          }
-        }
+             manifest = dccvalidator::gather_template_ids("manifest"),
+             individual = dccvalidator::gather_template_ids(
+               "individual",
+               species = species
+             ),
+             assay = {
+               if (any(c(length(assay) < 1, !is.na(assay)))) {
+                 dccvalidator::gather_template_ids(
+                   "assay",
+                   species = species,
+                   assay = assay
+                 )
+               } else {
+                 return(NA)
+               }
+             },
+             biospecimen = {
+               if (!is.na(biospecimen_type)) {
+                 template <- dccvalidator::gather_template_ids(
+                   "biospecimen",
+                   species = species,
+                   biospecimen_type = biospecimen_type
+                 )
+               } else {
+                 template <- dccvalidator::gather_template_ids(
+                   "biospecimen",
+                   species = species
+                 )
+               }
+               # Should only have a single template, but if there was no biospecimen
+               # and the config has biospecimen types, then will have all possible
+               # Just return NA in that case
+               if (length(template) > 1) {
+                 return(NA)
+               }
+               template
+             }
       )
     }
   ))
