@@ -2,19 +2,19 @@
 % Please edit documentation in R/file-info-table.R
 \name{create_info_table}
 \alias{create_info_table}
-\title{Create a nice, printable version of the file info}
+\title{Create a nicer version of the file info}
 \usage{
 create_info_table(fileview, syn)
 }
 \arguments{
-\item{fileview}{The fileview table. Assumes the following
-columns exist:
-  name, id, currentVersion, metadataType, species,
-  assay, createdBy, createdOn, modifiedOn.}
+\item{fileview}{The fileview table.}
 
 \item{syn}{Synapse client object.}
 }
 \description{
-Uses the fileview to create a table of relevant
-file information.
+Updates come default Synapse columns to be more useful.
+The column 'currentVersion' is changed to 'version' to reduce width of column
+name. The columns 'createdBy' and 'modifiedBy' are changed to user names
+instead of profile IDs. The columns 'createdOn' and 'modifiedOn' are changed
+to a date. Note that these columns do not need to exist in the fileview.
 }

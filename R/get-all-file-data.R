@@ -37,14 +37,19 @@ get_all_file_data <- function(fileview, syn) {
 #' @param syn Synapse client object.
 #' @return Data from file in tibble.
 get_data <- function(id, meta_type, syn) {
-  data <- NULL
   file_info <- syn$get(id)
 
-  if (meta_type == "manifest") {
-    data <- readr::read_tsv(file_info$path)
-  } else {
-    data <- readr::read_csv(file_info$path)
-  }
-
+  data <- tryCatch(
+    {
+      if (meta_type == "manifest") {
+        readr::read_tsv(file_info$path)
+      } else {
+        readr::read_csv(file_info$path)
+      }
+    },
+    error = function(e) {
+      stop(glue::glue("There was a problem opening the {meta_type} file"))
+    }
+  )
   return(data)
 }

@@ -48,7 +48,8 @@ validate_all_studies <- function(fileview, annotations, syn) {
 #' @param study_table Tibble with fileview information for
 #'   a single study. Expected columns are: 'metadataType',
 #'   'file_data' (tibble column with data for each file), 'assay',
-#'   'species'. Should have, at most, one row per metadataType.
+#'   'species', 'biospecimen_type' (optional). Should have, at most, one row
+#'   per metadataType.
 #' @param annotations A data frame of annotation definitions.
 #'   Must contain at least three columns: 'key', 'value', and 'columnType'.
 #' @param syn Synapse client object.
@@ -63,6 +64,11 @@ validate_study <- function(study_table, annotations, syn, study) {
   if (!any(required %in% study_table$metadataType)) {
     return(NULL)
   }
+  # Check if biospecimenType exists in table
+  # If yes, make sure it's a character column
+  if ("biospecimenType" %in% names(study_table)) {
+    class(study_table$biospecimenType) <- "character"
+  }
   if (!all(required %in% study_table$metadataType)) {
     present_types <- which(required %in% study_table$metadataType)
     for (type in required[-present_types]) {
@@ -70,8 +76,12 @@ validate_study <- function(study_table, annotations, syn, study) {
         study_table,
         metadataType = type
       )
+
     }
-  } # else all present and it's okay to do checks
+  } # else all present and it's okay to move on
+
+  # Grab all metadata templates from config
+  study_table <- add_template_col(study_table = study_table)
   results <- dccvalidator::check_all(
     data = study_table,
     annotations = annotations,
@@ -79,4 +89,79 @@ validate_study <- function(study_table, annotations, syn, study) {
     study = study
   )
   results
+}
+
+#' @title Add template column
+#'
+#' @description Add a template column to the `study_table`. The `study_table`
+#' requires columns metadataType, assay, species, and allows optional
+#' biospecimenType. Must have one row per `metadataType`: individual, assay,
+#' biospecimen, manifest.
+#'
+#' @noRd
+#' @inheritParams validate_study
+add_template_col <- function(study_table) {
+  # Ensure the needed columns exist
+  if (!all(c("metadataType", "assay", "species") %in% names(study_table))) {
+    stop("The study table should have the columns metadataType, assay, species")
+  }
+  if ("biospecimenType" %in% names(study_table)) {
+    biospecimen_type <- unique(stats::na.omit(study_table[["biospecimenType"]]))
+    # It's possible to get a column of NaN, NA, NULL; check length in case
+    if (any(c(
+      length(biospecimen_type) < 1),
+      biospecimen_type %in% c("NaN", ""))
+    ) {
+      biospecimen_type <- NA
+    }
+  } else {
+    biospecimen_type <- NA
+  }
+  species <- unique(stats::na.omit(study_table[["species"]]))
+  assay <- unique(stats::na.omit(study_table[["assay"]]))
+  study_table[, "template"] <- unlist(purrr::map(
+    study_table[["metadataType"]],
+    function(x) {
+      switch(x,
+             manifest = dccvalidator::gather_template_ids("manifest"),
+             individual = dccvalidator::gather_template_ids(
+               "individual",
+               species = species
+             ),
+             assay = {
+               if (any(c(length(assay) < 1, !is.na(assay)))) {
+                 dccvalidator::gather_template_ids(
+                   "assay",
+                   species = species,
+                   assay = assay
+                 )
+               } else {
+                 return(NA)
+               }
+             },
+             biospecimen = {
+               if (!is.na(biospecimen_type)) {
+                 template <- dccvalidator::gather_template_ids(
+                   "biospecimen",
+                   species = species,
+                   biospecimen_type = biospecimen_type
+                 )
+               } else {
+                 template <- dccvalidator::gather_template_ids(
+                   "biospecimen",
+                   species = species
+                 )
+               }
+               # Should only have a single template, but if there was no biospecimen
+               # and the config has biospecimen types, then will have all possible
+               # Just return NA in that case
+               if (length(template) > 1) {
+                 return(NA)
+               }
+               template
+             }
+      )
+    }
+  ))
+  return(study_table)
 }

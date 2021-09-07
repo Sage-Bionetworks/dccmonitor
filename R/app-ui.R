@@ -1,38 +1,26 @@
 #' @title App UI
 #'
-#' @description Create the UI component of the dccmonitor
-#' Shiny app.
+#' @description If not running interactively (i.e. locally), launches the
+#' \code{\link{mod_synapse_oauth_ui}} to start dccmonitor using OAuth for
+#' login. Otherwise, launches the \code{\link{mod_main_ui}} to start
+#' dccmonitor using login credentials stored in a .synapseConfig.
 #'
+#' @export
 #' @import shiny
 #' @import shinydashboard
-#' @param request Shiny request
-#' @export
+#' @param request Shiny request object
+#' @return A shinydashboard page
+#' @examples
+#' \dontrun{
+#' shinyApp(ui = app_ui, server = app_server)
+#' }
 app_ui <- function(request) {
-
-  tagList(
-    # Add resources in www
-    golem_add_external_resources(),
-
-    dashboardPage(
-      dashboardHeader(
-        title = "Metadata Validation Monitor",
-        titleWidth = "100%"
-      ),
-
-      dashboardSidebar(disable = TRUE),
-
-      dashboardBody(
-        navlistPanel(
-          id = "studies",
-          tabPanel(
-            "Start",
-            h1("Welcome to dccmonitor"),
-            p("The app is loaded when all the studies appear as tabs in the sidebar.") # nolint
-          )
-        )
-      )
-    )
-  )
+  if (interactive()) {
+    ## Running locally; skip OAuth
+    mod_main_ui("main")
+  } else {
+    mod_synapse_oauth_ui(id = "oauth", request = request)
+  }
 }
 
 #' @import shiny

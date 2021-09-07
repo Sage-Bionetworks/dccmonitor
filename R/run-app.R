@@ -2,8 +2,8 @@
 #'
 #' @description Run the Shiny application
 #'
-#' @param ... Additional golem options passed to [golem::with_golem_options()]
 #' @export
+#' @param ... Additional golem options passed to [golem::with_golem_options()]
 #' @importFrom shiny shinyApp
 #' @importFrom golem with_golem_options
 run_app <- function(...) {

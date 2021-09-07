@@ -10,7 +10,8 @@ validate_study(study_table, annotations, syn, study)
 \item{study_table}{Tibble with fileview information for
 a single study. Expected columns are: 'metadataType',
 'file_data' (tibble column with data for each file), 'assay',
-'species'. Should have, at most, one row per metadataType.}
+'species', 'biospecimen_type' (optional). Should have, at most, one row
+per metadataType.}
 
 \item{annotations}{A data frame of annotation definitions.
 Must contain at least three columns: 'key', 'value', and 'columnType'.}

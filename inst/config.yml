@@ -1,4 +1,5 @@
 default:
+  app_url: "https://shinypro.synapse.org/users/nkauer/dccmonitor-test/"
   production: TRUE
   consortium_fileview: "syn21027019"
   samples_table: "syn21578908"
@@ -41,11 +42,12 @@ dev:
   production: FALSE
 
 amp-ad:
+  app_url: "https://shinypro.synapse.org/users/nkauer/dccmonitor-ad/"
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   consortium_fileview: "syn21448475"
   samples_table: "syn21578908"
   annotations_storage: "syn21698384"
-  annotations_table: "syn10242922"
+  annotations_table: "syn21459391"
   annotation_keys:
     - "age"
     - "primaryDiagnosis"
@@ -62,9 +64,15 @@ amp-ad:
       other mouse or animal model: "syn12973253"
       MODEL-AD mouse model: "syn21084071"
     biospecimen_templates:
-      human: "syn12973252"
-      other mouse or animal model: "syn12973252"
-      MODEL-AD mouse model: "syn12973252"
+      human:
+        in vivo, postmortem, other: "syn12973252"
+        in vitro: "syn25955510"
+      other mouse or animal model:
+        in vivo, postmortem, other: "syn12973252"
+        in vitro: "syn25955510"
+      MODEL-AD mouse model:
+        in vivo, postmortem, other: "syn12973252"
+        in vitro: "syn25955510"
       drosophila: "syn20673251"
     assay_templates:
       ATACseq: "syn22024364"
@@ -76,6 +84,7 @@ amp-ad:
       wholeExomeSeq: "syn21078272"
       NanoString: "syn21082744"
       snpArray: "syn21372586"
+      STARRSeq: "syn26125115"
       TMT quantitation: "syn21433357"
       methylationArray: "syn22036881"
       MRI: "syn22087332"
@@ -101,6 +110,7 @@ amp-ad:
       - "specimenID"
 
 pec:
+  app_url: "https://shinypro.synapse.org/users/kmontgomery/dccmonitor/"
   samples_table: "syn22175287"
   annotations_table: "syn20981788"
   annotations_storage: "syn21763155"
@@ -115,21 +125,26 @@ pec:
     manifest_template: "syn20782058"
     individual_templates:
       human: "syn20781820"
-      animal model: "syn21053116"
+      animal: "syn21053116"
     biospecimen_templates:
-      animal model: "syn20768131"
-      human: "syn20768131"
+      human:
+        in vivo, postmortem, other: "syn20768131"
+        in vitro: "syn26011297"
+      other mouse or animal model:
+        in vivo, postmortem, other: "syn20768131"
+        in vitro: "syn26011297"
     assay_templates:
-      wholeGenomeSeq: "syn20980993"
-      rnaSeq: "syn20768650"
       ATACSeq: "syn20768526"
-      TMT quantitation: "syn21680761"
-      HI-C: "syn21680758"
-      snpArray: "syn21680759"
-      ChIPSeq: "syn21861858"
       bisulfiteSeq: "syn23017098"
-      methylationArray: "syn25805391"
+      ChIPSeq: "syn21861858"
+      HI-C: "syn21680758"
       immunoassay: "syn25805392"
+      methylationArray: "syn25805391"
+      rnaSeq: "syn20768650"
+      snpArray: "syn21680759"
+      STARRSeq: "syn26011215"
+      TMT quantitation: "syn21680761"
+      wholeGenomeSeq: "syn20980993"
   species_list:
     - "human"
     - "animal model"

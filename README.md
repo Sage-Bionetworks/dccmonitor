@@ -20,7 +20,7 @@ dccmonitor can be installed via devtools:
 devtools::install_github("Sage-Bionetworks/dccmonitor")
 ```
 
-To run the Shiny application, there needs to be a config.yml file in the working directory with the required options (see [Customization](https://github.com/Sage-Bionetworks/dccmonitor/tree/update-readme#customization)). After creating the config.yml file, the application can be run with:
+To run the Shiny application locally, there needs to be a config.yml file in the working directory with the required options (see [Customization](https://github.com/Sage-Bionetworks/dccmonitor/tree/update-readme#customization)). After creating the config.yml file, the application can be run with:
 
 ``` R
 library(dccmonitor)
@@ -38,6 +38,10 @@ If your working directory is the application directory, you can change the app.R
 renv::restore() # Update project package library
 shiny::runApp()
 ```
+
+## Deploying dccmonitor
+
+Deploying dccmonitor has extra steps due to Synapse OAuth. See the vignettes in [dccvalidator](https://sage-bionetworks.github.io/dccvalidator/articles/deploying-dccvalidator.html) for information on setting up this feature.
 
 ## Customization
 
