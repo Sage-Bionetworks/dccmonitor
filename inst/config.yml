@@ -42,7 +42,7 @@ dev:
   production: FALSE
 
 amp-ad:
-  app_url: "https://shinypro.synapse.org/users/nkauer/dccmonitor-ad/"
+  app_url: "https://shinypro.synapse.org/users/nkauer/dccmonitor/"
   annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
   consortium_fileview: "syn21448475"
   samples_table: "syn21578908"
