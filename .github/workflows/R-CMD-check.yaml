@@ -59,6 +59,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install libxml2
+          brew install libgit2
 
       - name: Install system dependencies (Linux)
         if: runner.os == 'Linux'
