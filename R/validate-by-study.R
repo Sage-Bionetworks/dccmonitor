@@ -107,6 +107,8 @@ add_template_col <- function(study_table) {
   }
   if ("biospecimenType" %in% names(study_table)) {
     biospecimen_type <- unique(stats::na.omit(study_table[["biospecimenType"]]))
+    biospecimen_type[biospecimen_type == "NaN"] <- NA # Convert NaN to NA
+    biospecimen_type <- unique(stats::na.omit(biospecimen_type))
     # It's possible to get a column of NaN, NA, NULL; check length in case
     if (any(c(
       length(biospecimen_type) < 1),
