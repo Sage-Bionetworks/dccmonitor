@@ -83,7 +83,7 @@ validate_study <- function(study_table, annotations, syn, study) {
   # Grab all metadata templates from config
   study_table <- add_template_col(study_table = study_table)
   samples_table = get_golem_config("samples_table")
-  if is.null(samples_table) samples_table <- NA
+  if (is.null(samples_table)) samples_table <- NA
   results <- dccvalidator::check_all(
     data = study_table,
     annotations = annotations,
