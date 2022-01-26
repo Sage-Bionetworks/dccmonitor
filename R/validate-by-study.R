@@ -82,11 +82,14 @@ validate_study <- function(study_table, annotations, syn, study) {
 
   # Grab all metadata templates from config
   study_table <- add_template_col(study_table = study_table)
+  samples_table = get_golem_config("samples_table")
+  if (is.null(samples_table)) samples_table <- NA
   results <- dccvalidator::check_all(
     data = study_table,
     annotations = annotations,
     syn = syn,
-    study = study
+    study = study,
+    samples_table = samples_table
   )
   results
 }
@@ -107,6 +110,8 @@ add_template_col <- function(study_table) {
   }
   if ("biospecimenType" %in% names(study_table)) {
     biospecimen_type <- unique(stats::na.omit(study_table[["biospecimenType"]]))
+    biospecimen_type[biospecimen_type == "NaN"] <- NA # Convert NaN to NA
+    biospecimen_type <- unique(stats::na.omit(biospecimen_type))
     # It's possible to get a column of NaN, NA, NULL; check length in case
     if (any(c(
       length(biospecimen_type) < 1),
