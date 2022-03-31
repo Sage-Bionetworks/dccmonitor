@@ -2,7 +2,8 @@
 # To deploy, run: rsconnect::deployApp()
 # Or use the blue button on top of this file
 
-Sys.setenv(R_CONFIG_ACTIVE = "default") # Replace "default" with your config
+Sys.setenv(R_CONFIG_ACTIVE = "amp-ad", # Replace "default" with your config
+           R_CONFIG_FILE = "inst/config.yml")
 pkgload::load_all()
 options("golem.app.prod" = TRUE)
 dccmonitor::run_app() # add parameters here (if any)
