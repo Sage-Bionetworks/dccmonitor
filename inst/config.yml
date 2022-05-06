@@ -1,11 +1,11 @@
 default:
-  app_url: "https://shinypro.synapse.org/users/nkauer/dccmonitor-test/"
+  app_url: "https://shinypro.synapse.org/users/awilliams/dccmonitor-test/"
   production: TRUE
   consortium_fileview: "syn21027019"
   samples_table: "syn21578908"
   annotations_storage: "syn21703007"
   annotations_table: "syn10242922"
-  annotations_link: "https://shinypro.synapse.org/users/nsanati/annotationUI/"
+  annotations_link: "https://shinypro.synapse.org/users/nkauer/amp-ad-metadata-dictionary/"
   annotation_keys:
     - "age"
     - "primaryDiagnosis"
@@ -42,8 +42,8 @@ dev:
   production: FALSE
 
 amp-ad:
-  app_url: "https://shinypro.synapse.org/users/nkauer/dccmonitor/"
-  annotations_link: "https://shinypro.synapse.org/users/kwoo/amp-ad-metadata-dictionary/"
+  app_url: "https://shinypro.synapse.org/users/awilliams/dccmonitor/"
+  annotations_link: "https://shinypro.synapse.org/users/nkauer/amp-ad-metadata-dictionary/"
   consortium_fileview: "syn21448475"
   samples_table: "syn21578908"
   annotations_storage: "syn21698384"
