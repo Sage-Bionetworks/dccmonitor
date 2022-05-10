@@ -174,3 +174,55 @@ pec:
       - "libraryPrep"
       - "libraryPreparationMethod"
       - "runType"
+
+1kD:
+  app_url: "https://shinypro.synapse.org/users/danlu/dccmonitor_1kD/"
+  samples_table: "syn27817789"
+  annotations_table: "syn27806892"
+  annotations_storage: "syn27605404"
+  annotations_link: "https://www.synapse.org/#!Synapse:syn27817580"
+  annotation_keys:
+    - "age"
+    - "primaryDiagnosis"
+  consortium_fileview: "syn27646655"
+  teams:
+    - "3433360"
+  templates:
+    manifest_template: "syn27832372"
+    individual_templates:
+      human: "syn29358381"
+    biospecimen_templates:
+      human: "syn29358373"
+    assay_templates:
+  species_list:
+    - "human"
+  complete_columns:
+    manifest:
+      - "path"
+      - "parent"
+      - "fileFormat"
+      - "program"
+      - "project"
+      - "study"
+      - "resourceType"
+    individual:
+      - "program"
+      - "project"
+      - "study"
+      - "individualID"
+      - "householdID"
+      - "person"
+      - "sex"
+      - "noOfChildren"
+      - "noOfAdults"
+      - "spokenLanguage"
+    biospecimen:
+      - "program"
+      - "project"
+      - "study"
+      - "person"
+      - "individualID"
+      - "specimenID"
+      - "specimenType"
+      - "samplingAge"
+      - "samplingAgeUnits"
