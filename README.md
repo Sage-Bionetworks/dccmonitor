@@ -27,6 +27,14 @@ library(dccmonitor)
 Sys.setenv(R_CONFIG_ACTIVE = "default") # Replace "default" with the configuration name if not using default.
 run_app()
 ```
+## Debug
+Users might run into this error when launching the app: 
+
+```Error : Python module synapseclient was not found.```
+
+To resolve this issue, please change your working directory to renv/python/r-reticulate/bin/ and install the synapseclient by running:
+
+```pip install synapseclient --ignore-installed certifi```
 
 ### Cloning Repository
 
