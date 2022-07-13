@@ -33,6 +33,10 @@ get_all_studies_table <- function(fileview_id, syn) {
 filter_study_table_latest <- function(fileview, study_name = NULL) {
   if (!is.null(study_name)) {
     fileview <- fileview[fileview$study == study_name, ]
+    #convert interger64 to time for modifiedOn column 
+    fileview <- fileview %>% mutate(modifiedOn = as_datetime(modifiedOn/1000, tz = "US/Pacific"))
+    #extract date from modifieOn column
+    fileview <- fileview %>% mutate(modifiedOn_date = as_date(modifiedOn))
   }
   metadata_types <- unique(
     fileview$metadataType[!is.na(fileview$metadataType)]
@@ -41,12 +45,12 @@ filter_study_table_latest <- function(fileview, study_name = NULL) {
   for (type in metadata_types) {
     file_indices <- get_file_indices_vector(fileview, type)
     if (length(file_indices) > 1) {
-      times <- fileview$modifiedOn[file_indices]
+      times <- fileview$modifiedOn_date[file_indices]
       times <- times[!is.na(times)]
       most_recent_time <- max(times)
       to_remove <- intersect(
         file_indices,
-        which(fileview$modifiedOn != most_recent_time)
+        which(fileview$modifiedOn_date != most_recent_time)
       )
       if (length(to_remove) > 0) {
         fileview <- fileview[-to_remove, ]
